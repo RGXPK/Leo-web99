@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منتدى المجموعات | الأصفر والأسود</title>
+    
+    <!-- استيراد خطوط عربية من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script type="module" src="Firebase.js"></script>
+    
+    <style>
+        :root {
+            --primary: #FFC107;
+            --primary-dark: #FFA000;
+            --secondary: #FFD54F;
+            --light: #f8f9fa;
+            --dark: #212121;
+            --gray: #424242;
+            --light-gray: #757575;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #212121, #000);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--light);
+            direction: rtl;
+            line-height: 1.6;
+        }
+        
+        /* شريط التنقل العلوي */
+        .navbar {
+            background: rgba(33, 33, 33, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .user-info img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        /* التصميم الرئيسي */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 6rem 1rem 2rem;
+        }
+        
+        .container {
+            background: rgba(33, 33, 33, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .container:hover {
+            box-shadow: 0 12px 30px rgba(255, 193, 7, 0.2);
+        }
+        
+        h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+        }
+        
+        h3 i {
+            font-size: 1.4rem;
+        }
+        
+        /* تصميم المجموعات */
+        .group-item {
+            background: rgba(66, 66, 66, 0.7);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .group-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(255, 193, 7, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .group-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        
+        .group-info {
+            flex: 1;
+        }
+        
+        .group-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+        
+        .group-type {
+            font-size: 0.85rem;
+            background: rgba(255, 213, 79, 0.15);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        /* تصميم المنشورات */
+        .post {
+            background: rgba(66, 66, 66, 0.7);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            transition: var(--transition);
+        }
+        
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 193, 7, 0.2);
+        }
+        
+        .post-content {
+            padding-right: 35px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--light);
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .post-author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--primary);
+        }
+        
+        .post-author span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        /* الأزرار */
+        button, .back-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+        }
+        
+        button:hover, .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(255, 193, 7, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+        
+        .back-btn {
+            margin-bottom: 15px;
+            padding: 10px 16px;
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(244, 67, 54, 0.15);
+            color: var(--danger);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .delete-btn:hover {
+            background: var(--danger);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* حقول الإدخال */
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--light-gray);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(33, 33, 33, 0.8);
+            color: var(--light);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: var(--light-gray);
+        }
+        
+        /* رسائل التنبيه */
+        .alert {
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-success {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .alert-error {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .alert-info {
+            background: rgba(255, 213, 79, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        /* رسوم متحركة */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            animation: spin 1s linear infinite;
+            margin: 0 10px;
+        }
+        
+        /* التصميم للجوّال */
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            
+            .main-content {
+                padding: 5rem 1rem 1rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .group-item {
+                padding: 12px;
+            }
+            
+            button, .back-btn {
+                padding: 10px 16px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* تصميم رفع الملفات */
+        .file-upload {
+            margin: 15px 0;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, #FFD54F, #FFC107);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-preview {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .preview-container {
+            position: relative;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .preview-container img, 
+        .preview-container video {
+            display: block;
+            max-width: 100%;
+            max-height: 250px;
+            margin: 0 auto;
+        }
+        
+        .remove-file {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .file-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 0 0 8px 8px;
+            font-size: 0.85rem;
+            color: var(--light);
+        }
+        
+        .drop-area {
+            border: 2px dashed var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .drop-area:hover, .drop-area.drag-over {
+            border-color: var(--primary);
+            background: rgba(255, 193, 7, 0.05);
+        }
+        
+        .drop-area i {
+            font-size: 2.5rem;
+            color: var(--light-gray);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .drop-area:hover i {
+            color: var(--primary);
+        }
+        
+        .drop-area p {
+            margin: 0;
+            color: var(--light-gray);
+        }
+        
+        .media-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--primary);
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .loading-content {
+            text-align: center;
+            background: var(--dark);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--primary);
+        }
+        
+        /* واجهة تسجيل الدخول */
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            color: var(--light-gray);
+        }
+        
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: -2px;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--light-gray);
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
+    <!-- مكتبة أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar" id="navbar" style="display: none;">
+        <div class="logo">
+            <i class="fas fa-users"></i>
+            <span>منتدى المجموعات</span>
+        </div>
+        <div class="user-info" id="userInfo">
+            <span id="usernameDisplay">مستخدم</span>
+            <img src="https://ui-avatars.com/api/?name=مستخدم&background=FFC107&color=212121" id="userAvatar" alt="صورة المستخدم">
+        </div>
+    </nav>
+    
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <i class="fas fa-spinner spinner" style="font-size: 2.5rem; color: #FFC107;"></i>
+            <p style="margin-top: 15px; font-weight: 500; color: #FFC107;">جاري معالجة طلبك...</p>
+        </div>
+    </div>
+    
+    <!-- واجهة تسجيل الدخول -->
+    <div class="main-content" id="authView">
+        <div class="container">
+            <div class="auth-container">
+                <h3><i class="fas fa-lock"></i> تسجيل الدخول</h3>
+                
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="showAuthForm('loginForm')">تسجيل الدخول</div>
+                    <div class="auth-tab" onclick="showAuthForm('registerForm')">إنشاء حساب</div>
+                </div>
+                
+                <!-- نموذج تسجيل الدخول -->
+                <div class="auth-form active" id="loginForm">
+                    <div class="alert alert-error" id="loginError" style="display:none;">
+                        <i class="fas fa-exclamation-circle"></i> <span id="loginErrorMsg"></span>
+                    </div>
+                    
+                    <input type="text" id="loginUsername" placeholder="اسم المستخدم">
+                    <input type="password" id="loginPassword" placeholder="كلمة المرور">
+                    <button onclick="login()">
+                        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                    </button>
+                    
+                    <div class="form-footer">
+                        <a href="#" onclick="showAuthForm('registerForm')">ليس لديك حساب؟ سجل الآن</a>
+                    </div>
+                </div>
+                
+                <!-- نموذج إنشاء حساب -->
+                <div class="auth-form" id="registerForm">
+                    <div class="alert alert-error" id="registerError" style="display:none;">
+                        <i class="fas fa-exclamation-circle"></i> <span id="registerErrorMsg"></span>
+                    </div>
+                    
+                    <input type="text" id="registerName" placeholder="الاسم الكامل">
+                    <input type="text" id="registerUsername" placeholder="اسم المستخدم">
+                    <input type="email" id="registerEmail" placeholder="البريد الإلكتروني">
+                    <input type="password" id="registerPassword" placeholder="كلمة المرور">
+                    <input type="password" id="registerConfirmPassword" placeholder="تأكيد كلمة المرور">
+                    <button onclick="register()">
+                        <i class="fas fa-user-plus"></i> إنشاء حساب
+                    </button>
+                    
+                    <div class="form-footer">
+                        <a href="#" onclick="showAuthForm('loginForm')">لديك حساب بالفعل؟ سجل دخول</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- المحتوى الرئيسي بعد تسجيل الدخول -->
+    <div class="main-content" id="appView" style="display: none;">
+        <!-- واجهة المجموعات الرئيسية -->
+        <div class="container" id="mainView">
+            <h3><i class="fas fa-layer-group"></i> مجموعاتي</h3>
+            
+            <!-- رسائل التنبيه -->
+            <div class="alert alert-success" id="successAlert" style="display:none;">
+                <i class="fas fa-check-circle"></i> تم إنشاء المجموعة بنجاح
+            </div>
+            <div class="alert alert-error" id="errorAlert" style="display:none;">
+                <i class="fas fa-exclamation-circle"></i> يرجى كتابة اسم المجموعة
+            </div>
+            
+            <input type="text" id="groupName" placeholder="اسم المجموعة">
+            <select id="groupType">
+                <option value="public">عامة</option>
+                <option value="private">خاصة</option>
+            </select>
+            <button onclick="createGroup()">
+                <i class="fas fa-plus"></i> إنشاء مجموعة
+            </button>
+            
+            <div class="groups-header" style="margin: 25px 0 15px; display: flex; align-items: center; justify-content: space-between;">
+                <h4 style="font-weight: 600; color: var(--primary);">المجموعات المتاحة</h4>
+                <span id="groupsCount">(0 مجموعة)</span>
+            </div>
+            <div id="groupsList"></div>
+        </div>
+        
+        <!-- واجهة المجموعة المفردة -->
+        <div class="container" id="groupView" style="display:none;">
+            <button class="back-btn" onclick="backToGroups()">
+                <i class="fas fa-arrow-right"></i> رجوع
+            </button>
+            <h3 id="groupTitle"></h3>
+            
+            <div class="alert alert-success" id="postSuccessAlert" style="display:none;">
+                <i class="fas fa-check-circle"></i> تم نشر المنشور بنجاح
+            </div>
+            <div class="alert alert-error" id="postErrorAlert" style="display:none;">
+                <i class="fas fa-exclamation-circle"></i> يرجى كتابة المنشور أو رفع ملف
+            </div>
+            
+            <input type="text" id="postText" placeholder="اكتب منشور هنا (اختياري)">
+            
+            <!-- منطقة سحب وإسقاط الملفات -->
+            <div class="drop-area" id="dropArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>اسحب وأسقط الصور أو الفيديوهات هنا<br>أو انقر لاختيار ملف</p>
+            </div>
+            
+            <!-- زر رفع ملف مخفي -->
+            <input type="file" id="fileInput" class="file-input" accept="image/*,video/*">
+            
+            <!-- معاينة الملفات -->
+            <div class="file-preview" id="filePreview"></div>
+            
+            <button onclick="addPost()">
+                <i class="fas fa-paper-plane"></i> نشر
+            </button>
+            
+            <div class="posts-header" style="margin: 25px 0 15px; display: flex; align-items: center; justify-content: space-between;">
+                <h4 style="font-weight: 600; color: var(--primary);">المنشورات</h4>
+                <span id="postsCount">(0 منشور)</span>
+            </div>
+            <div id="postsList"></div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات التطبيق
+        let groups = [];
+        let currentGroupId = null;
+        let selectedFile = null;
+        let currentUser = null;
+        
+        // ===== نظام تسجيل الدخول =====
+        function showAuthForm(formId) {
+            // إخفاء جميع النماذج
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // إزالة النشط من جميع التبويبات
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // إظهار النموذج المحدد
+            document.getElementById(formId).classList.add('active');
+            
+            // تعيين التبويب النشط
+            const tab = document.querySelector(`.auth-tab[onclick="showAuthForm('${formId}')"]`);
+            if (tab) {
+                tab.classList.add('active');
+            }
+        }
+        
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            // التحقق من المدخلات
+            if (!username || !password) {
+                showError('loginError', 'يرجى ملء جميع الحقول');
+                return;
+            }
+            
+            // جلب بيانات المستخدمين من localStorage
+            const users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+            
+            // البحث عن المستخدم
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                // تسجيل دخول ناجح
+                currentUser = user;
+                showApp();
+            } else {
+                showError('loginError', 'اسم المستخدم أو كلمة المرور غير صحيحة');
+            }
+        }
+        
+        function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
+            
+            // التحقق من المدخلات
+            if (!name || !username || !email || !password || !confirmPassword) {
+                showError('registerError', 'يرجى ملء جميع الحقول');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('registerError', 'كلمتا المرور غير متطابقتين');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('registerError', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+                return;
+            }
+            
+            // جلب بيانات المستخدمين من localStorage
+            const users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+            
+            // التحقق من عدم وجود مستخدم بنفس الاسم
+            if (users.some(u => u.username === username)) {
+                showError('registerError', 'اسم المستخدم موجود مسبقاً');
+                return;
+            }
+            
+            // إنشاء مستخدم جديد
+            const newUser = {
+                id: Date.now(),
+                name,
+                username,
+                email,
+                password,
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=FFC107&color=212121`
+            };
+            
+            // إضافة المستخدم الجديد
+            users.push(newUser);
+            localStorage.setItem('forumUsers', JSON.stringify(users));
+            
+            // تسجيل الدخول تلقائياً
+            currentUser = newUser;
+            showApp();
+            
+            // إظهار رسالة نجاح
+            showAlert('successAlert', 'تم إنشاء الحساب بنجاح!');
+        }
+        
+        function showError(formId, message) {
+            const errorDiv = document.getElementById(formId);
+            const errorMsg = document.getElementById(`${formId}Msg`);
+            
+            errorMsg.textContent = message;
+            errorDiv.style.display = 'flex';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+        
+        function showApp() {
+            document.getElementById('authView').style.display = 'none';
+            document.getElementById('appView').style.display = 'block';
+            document.getElementById('navbar').style.display = 'flex';
+            
+            // تحديث معلومات المستخدم
+            document.getElementById('usernameDisplay').textContent = currentUser.name;
+            document.getElementById('userAvatar').src = currentUser.avatar;
+            
+            // تحميل المجموعات
+            loadGroups();
+        }
+        
+        function logout() {
+            currentUser = null;
+            document.getElementById('appView').style.display = 'none';
+            document.getElementById('navbar').style.display = 'none';
+            document.getElementById('authView').style.display = 'block';
+            
+            // إعادة تعيين حقول تسجيل الدخول
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+        
+        // ===== نظام المجموعات والمنشورات =====
+        function loadGroups() {
+            // جلب بيانات المجموعات من localStorage
+            groups = JSON.parse(localStorage.getItem('forumGroups')) || [];
+            
+            // إضافة مجموعات افتراضية إذا لم تكن موجودة
+            if (groups.length === 0) {
+                groups = [
+                    {
+                        id: 1,
+                        name: "مجموعة المطورين",
+                        type: "public",
+                        icon: "fa-code",
+                        posts: [
+                            {
+                                id: 101, 
+                                text: "مرحباً بالجميع! كيف يمكنني البدء بتعلم تطوير الويب؟",
+                                author: { id: 1, name: "أحمد محمد", avatar: "https://ui-avatars.com/api/?name=أحمد+محمد&background=FFC107&color=212121" },
+                                file: null
+                            }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        name: "مجموعة التصميم",
+                        type: "private",
+                        icon: "fa-paint-brush",
+                        posts: [
+                            {
+                                id: 201, 
+                                text: "هل لديكم اقتراحات لأفضل أدوات التصميم في 2023؟",
+                                author: { id: 2, name: "سارة علي", avatar: "https://ui-avatars.com/api/?name=سارة+علي&background=FFC107&color=212121" },
+                                file: null
+                            }
+                        ]
+                    }
+                ];
+                saveGroups();
+            }
+            
+            renderGroups();
+        }
+        
+        function saveGroups() {
+            localStorage.setItem('forumGroups', JSON.stringify(groups));
+        }
+        
+        function createGroup() {
+            const name = document.getElementById('groupName').value.trim();
+            const type = document.getElementById('groupType').value;
+            
+            if (!name) {
+                showAlert('errorAlert');
+                return;
+            }
+            
+            const group = { 
+                id: Date.now(), 
+                name, 
+                type, 
+                posts: [],
+                icon: type === 'public' ? 'fa-globe' : 'fa-lock'
+            };
+            
+            groups.push(group);
+            document.getElementById('groupName').value = '';
+            saveGroups();
+            renderGroups();
+            showAlert('successAlert');
+        }
+        
+        function renderGroups() {
+            const groupsList = document.getElementById('groupsList');
+            groupsList.innerHTML = '';
+            document.getElementById('groupsCount').textContent = `(${groups.length} مجموعة)`;
+            
+            if (groups.length === 0) {
+                groupsList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #FFD54F;">
+                        <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.7;"></i>
+                        <p>لا توجد مجموعات بعد. قم بإنشاء مجموعة جديدة!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            groups.forEach((group, index) => {
+                const div = document.createElement('div');
+                div.className = 'group-item fade-in';
+                div.innerHTML = `
+                    <div class="group-icon">
+                        <i class="fas ${group.icon}"></i>
+                    </div>
+                    <div class="group-info">
+                        <div class="group-name">${group.name}</div>
+                        <div class="group-type">${group.type === 'public' ? 'عامة' : 'خاصة'}</div>
+                    </div>
+                    <i class="fas fa-arrow-left" style="color: #FFD54F;"></i>
+                `;
+                div.onclick = () => openGroup(group.id);
+                groupsList.appendChild(div);
+            });
+        }
+        
+        function openGroup(id) {
+            currentGroupId = id;
+            const group = groups.find(g => g.id === id);
+            document.getElementById('groupTitle').innerHTML = `
+                <i class="fas ${group.icon}"></i> ${group.name}
+            `;
+            document.getElementById('mainView').style.display = 'none';
+            document.getElementById('groupView').style.display = 'block';
+            
+            // إعادة تعيين حالة رفع الملفات
+            removeSelectedFile();
+            document.getElementById('postText').value = '';
+            
+            renderPosts();
+        }
+        
+        function backToGroups() {
+            document.getElementById('mainView').style.display = 'block';
+            document.getElementById('groupView').style.display = 'none';
+        }
+        
+        function addPost() {
+            const text = document.getElementById('postText').value.trim();
+            
+            // التحقق من وجود نص أو ملف
+            if (!text && !selectedFile) {
+                showAlert('postErrorAlert');
+                return;
+            }
+            
+            const group = groups.find(g => g.id === currentGroupId);
+            
+            // إنشاء المنشور
+            const post = { 
+                id: Date.now(), 
+                text: text || (selectedFile ? 'محتوى مرفوع' : ''),
+                author: {
+                    id: currentUser.id,
+                    name: currentUser.name,
+                    avatar: currentUser.avatar
+                },
+                file: null
+            };
+            
+            // إضافة الملف إذا كان موجوداً
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    post.file = {
+                        url: e.target.result,
+                        type: selectedFile.type,
+                        name: selectedFile.name
+                    };
+                    
+                    group.posts.push(post);
+                    saveGroups();
+                    renderPosts();
+                    showAlert('postSuccessAlert');
+                    removeSelectedFile();
+                    document.getElementById('postText').value = '';
+                };
+                reader.readAsDataURL(selectedFile.file);
+            } else {
+                group.posts.push(post);
+                saveGroups();
+                renderPosts();
+                showAlert('postSuccessAlert');
+                document.getElementById('postText').value = '';
+            }
+        }
+        
+        function renderPosts() {
+            const group = groups.find(g => g.id === currentGroupId);
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '';
+            document.getElementById('postsCount').textContent = `(${group.posts.length} منشور)`;
+            
+            if (group.posts.length === 0) {
+                postsList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #FFD54F;">
+                        <i class="fas fa-comment-alt" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.7;"></i>
+                        <p>لا توجد منشورات بعد. كن أول من ينشر!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            group.posts.forEach(post => {
+                const div = document.createElement('div');
+                div.className = 'post fade-in';
+                
+                // إضافة محتوى الملف إذا كان موجوداً
+                let mediaContent = '';
+                if (post.file) {
+                    if (post.file.type === 'image') {
+                        mediaContent = `
+                            <div style="margin-top: 15px; border-radius: 8px; overflow: hidden; position: relative;">
+                                <img src="${post.file.url}" alt="${post.file.name}" style="max-width: 100%; display: block; border-radius: 8px;">
+                                <div class="media-icon">صورة</div>
+                            </div>
+                        `;
+                    } else if (post.file.type === 'video') {
+                        mediaContent = `
+                            <div style="margin-top: 15px; border-radius: 8px; overflow: hidden; position: relative;">
+                                <video controls style="max-width: 100%; display: block; border-radius: 8px;">
+                                    <source src="${post.file.url}" type="video/mp4">
+                                    متصفحك لا يدعم تشغيل الفيديو
+                                </video>
+                                <div class="media-icon">فيديو</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                div.innerHTML = `
+                    <button class='delete-btn' onclick='deletePost(${post.id})'>
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <div class='post-content'>
+                        <div class="post-author">
+                            <img src="${post.author.avatar}" alt="${post.author.name}">
+                            <span>${post.author.name}</span>
+                        </div>
+                        ${post.text ? `<div>${post.text}</div>` : ''}
+                        ${mediaContent}
+                    </div>
+                `;
+                postsList.appendChild(div);
+            });
+        }
+        
+        function deletePost(postId) {
+            const group = groups.find(g => g.id === currentGroupId);
+            group.posts = group.posts.filter(p => p.id !== postId);
+            saveGroups();
+            renderPosts();
+        }
+        
+        // ===== وظائف مساعدة =====
+        function showAlert(alertId) {
+            // إخفاء كل التنبيهات أولاً
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.display = 'none';
+            });
+            
+            const alert = document.getElementById(alertId);
+            alert.style.display = 'flex';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+        
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+        
+        // التهيئة الأولية
+        window.onload = function() {
+            // تهيئة رفع الملفات
+            initFileUpload();
+            
+            // التحقق من وجود مستخدم مسجل
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showApp();
+            }
+        };
+        
+        // ===== وظائف رفع الملفات =====
+        function initFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const dropArea = document.getElementById('dropArea');
+            const filePreview = document.getElementById('filePreview');
+            
+            if (!fileInput || !dropArea || !filePreview) return;
+            
+            // عند النقر على منطقة السحب
+            dropArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // عند اختيار ملف
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileUpload(e.target.files[0]);
+                }
+            });
+            
+            // أحداث سحب وإسقاط الملفات
+            dropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropArea.classList.add('drag-over');
+            });
+            
+            dropArea.addEventListener('dragleave', () => {
+                dropArea.classList.remove('drag-over');
+            });
+            
+            dropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropArea.classList.remove('drag-over');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileUpload(e.dataTransfer.files[0]);
+                }
+            });
+        }
+        
+        function handleFileUpload(file) {
+            const filePreview = document.getElementById('filePreview');
+            const fileType = file.type.split('/')[0];
+            
+            // التحقق من نوع الملف
+            if (fileType !== 'image' && fileType !== 'video') {
+                alert('الرجاء اختيار صورة أو فيديو فقط');
+                return;
+            }
+            
+            // تخزين الملف المختار
+            selectedFile = {
+                name: file.name,
+                type: fileType,
+                size: file.size,
+                file: file
+            };
+            
+            // إنشاء معاينة للملف
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                let previewHTML = '';
+                
+                if (fileType === 'image') {
+                    previewHTML = `
+                        <div class="preview-container">
+                            <img src="${e.target.result}" alt="معاينة الصورة">
+                            <button class="remove-file" onclick="removeSelectedFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="media-icon">صورة</div>
+                        </div>
+                    `;
+                } else if (fileType === 'video') {
+                    previewHTML = `
+                        <div class="preview-container">
+                            <video controls>
+                                <source src="${e.target.result}" type="${file.type}">
+                                متصفحك لا يدعم تشغيل الفيديو
+                            </video>
+                            <button class="remove-file" onclick="removeSelectedFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="media-icon">فيديو</div>
+                        </div>
+                    `;
+                }
+                
+                previewHTML += `
+                    <div class="file-info">
+                        <div><strong>اسم الملف:</strong> ${file.name}</div>
+                        <div><strong>الحجم:</strong> ${formatFileSize(file.size)}</div>
+                    </div>
+                `;
+                
+                filePreview.innerHTML = previewHTML;
+                filePreview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function removeSelectedFile() {
+            selectedFile = null;
+            document.getElementById('filePreview').style.display = 'none';
+            document.getElementById('filePreview').innerHTML = '';
+            document.getElementById('fileInput').value = '';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 بايت';
+            const k = 1024;
+            const sizes = ['بايت', 'كيلوبايت', 'ميجابايت', 'جيجابايت'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        
+    
+    </script>
+</body>
+</html>
