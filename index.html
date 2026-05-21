@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Leo v5</title>
+<title>Leo 5</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{--gold:#F1B76D;--gd:#d49a4e;--gl:#f8d49a;--glow:rgba(241,183,109,.3);--bg:#080808;--bg2:#0f0f0f;--bg3:#050505;--s1:#141414;--s2:#1c1c1c;--br:rgba(241,183,109,.2);--br2:rgba(255,255,255,.06);--tx:#F5EDD8;--dim:#777;--red:#FF5555;--green:#22C55E;--blue:#5B9BD5;--nav:62px;}
@@ -50,7 +50,7 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 #sMsg.success{background:var(--green);color:#fff;}
 #sMsg.error{background:var(--red);color:#fff;}
 #sMsg.info{background:var(--blue);color:#fff;}
-.page{display:none;min-height:100vh;padding-top:var(--nav);}
+.page{display:none;min-height:100vh;padding-top:var(--nav);}.app-locked{filter:blur(8px);pointer-events:none;user-select:none;}
 .page.active{display:block;}
 .wall{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;}
 .wall-card{background:var(--s1);border:1px solid var(--br);border-radius:22px;padding:34px 28px;width:100%;max-width:400px;box-shadow:0 20px 80px rgba(0,0,0,.9);animation:fadeU .4s ease both;}
@@ -239,10 +239,15 @@ footer span{color:var(--gold);font-weight:700;}
 .ltbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .ltit{font-size:16px;font-weight:900;color:var(--gold);flex:1;}
 .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:12px;}
-.lcard_{background:var(--s1);border:1px solid var(--br2);border-radius:11px;padding:13px;transition:all .2s;animation:fadeU .35s ease both;position:relative;overflow:hidden;}
+.lcard_{background:var(--s1);border:1px solid var(--br2);border-radius:13px;padding:14px;transition:all .25s;animation:fadeU .35s ease both;position:relative;overflow:hidden;}
 .lcard_::before{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gold),transparent);opacity:0;transition:opacity .2s;}
-.lcard_:hover{border-color:rgba(241,183,109,.2);box-shadow:0 5px 20px rgba(0,0,0,.6);transform:translateY(-2px);}
+.lcard_:hover{border-color:rgba(241,183,109,.25);box-shadow:0 8px 28px rgba(0,0,0,.6);transform:translateY(-3px);}
 .lcard_:hover::before{opacity:1;}
+.lcard_.pinned{border-color:rgba(241,183,109,.35);background:rgba(241,183,109,.04);}
+.lcard_.pinned::after{content:"📌";position:absolute;top:10px;left:10px;font-size:14px;}
+.pin-btn{width:28px;height:28px;border:1px solid var(--br);border-radius:7px;background:var(--bg2);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.pin-btn:hover{border-color:var(--gold);}
+.pin-btn.pinned{background:rgba(241,183,109,.15);border-color:var(--gold);}
 .lhead{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;}
 .lfav{width:32px;height:32px;border-radius:8px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:1px solid var(--br2);overflow:hidden;}
 .lfav img{width:100%;height:100%;object-fit:contain;}
@@ -373,10 +378,10 @@ footer span{color:var(--gold);font-weight:700;}
 </div>
 
 <!-- LOGIN WALL -->
-<div id="loginWall" class="wall" style="display:none;">
+<div id="loginWall" class="wall" style="display:flex;">
   <div class="wall-card">
     <div class="wall-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 5"/></div>
-    <div class="wall-title">Leo</div>
+    <div class="wall-title">Leo 5</div>
     <div class="wall-sub">سجّل دخولك للوصول إلى الموقع</div>
     <div id="wallErr" class="wall-err"></div>
     <div class="wall-tabs">
@@ -395,7 +400,7 @@ footer span{color:var(--gold);font-weight:700;}
       <input id="wRPass2" type="password" placeholder="تأكيد كلمة المرور" class="wall-inp"/>
       <div style="position:relative;margin-bottom:10px;">
         <input id="wUsername" type="text" placeholder="اسم المستخدم (5 أحرف على الأقل)" class="wall-inp" style="margin-bottom:0;text-transform:lowercase;"/>
-        <div style="font-size:10px;color:var(--dim);margin-top:4px;"> </div>
+        <div style="font-size:10px;color:var(--dim);margin-top:4px;">5 أحرف إنجليزية أو أرقام على الأقل — اسم "leo" للأول فقط</div>
       </div>
       <input id="wInvite" type="text" placeholder="🔑 كود الدعوة" class="wall-inp" style="text-transform:uppercase;letter-spacing:2px;border-color:rgba(241,183,109,.35);background:rgba(241,183,109,.04);"/>
       <div style="font-size:10px;color:var(--dim);margin-bottom:10px;">كود الدعوة مطلوب للتسجيل</div>
@@ -405,10 +410,10 @@ footer span{color:var(--gold);font-weight:700;}
 </div>
 
 <!-- NAV -->
-<nav class="nav">
+<nav class="nav" id="mainNav" style="display:none;">
   <a class="brand" id="homeBrand" href="#">
     <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 5"/></div>
-    <span class="brand-name">Leo</span>
+    <span class="brand-name">Leo 5</span>
   </a>
   <div class="nav-sp"></div>
   <div id="navUserBadge" style="display:none;" class="user-badge" onclick="goTo('profile')">
@@ -440,6 +445,7 @@ footer span{color:var(--gold);font-weight:700;}
 
 <div id="sMsg"></div>
 
+<div id="mainContent" style="display:none;">
 <!-- HOME -->
 <div class="page active" id="page-home">
   <section class="hero">
@@ -457,7 +463,7 @@ footer span{color:var(--gold);font-weight:700;}
     </div>
   </section>
   <section class="feats">
-    <h2 class="feats-t">✨ ما يقدمه Leo </h2>
+    <h2 class="feats-t">✨ ما يقدمه Leo 99</h2>
     <div class="feats-g">
       <div class="fc"><span class="fc-i">🎬</span><div class="fc-t">تصفح الممثلات</div><div class="fc-d">قاعدة بيانات مع فلاتر متعددة وتوصيات ذكية</div></div>
       <div class="fc"><span class="fc-i">🔗</span><div class="fc-t">مدير الروابط</div><div class="fc-d">نظّم روابطك في مجلدات وانسخها بضغطة</div></div>
@@ -465,7 +471,7 @@ footer span{color:var(--gold);font-weight:700;}
       <div class="fc"><span class="fc-i">🔑</span><div class="fc-t">نظام الدعوة</div><div class="fc-d">تسجيل يتطلب كود خاص من المشرف</div></div>
     </div>
   </section>
-  <footer>جميع الحقوق محفوظة © <span>Leo</span> 2025</footer>
+  <footer>جميع الحقوق محفوظة © <span>Leo 5</span> 2025</footer>
 </div>
 
 <!-- ACTRESSES -->
@@ -527,7 +533,7 @@ footer span{color:var(--gold);font-weight:700;}
             <div class="ms-item" data-v="بني" onclick="toggleMsItem('hair','بني',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#8B4513;margin-left:6px;"></span>بني</div>
             <div class="ms-item" data-v="أشقر" onclick="toggleMsItem('hair','أشقر',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#F4C542;margin-left:6px;"></span>أشقر</div>
             <div class="ms-item" data-v="أحمر" onclick="toggleMsItem('hair','أحمر',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#CC2200;margin-left:6px;"></span>أحمر</div>
-            <div class="ms-item" data-v="ازرق" onclick="toggleMsItem('hair','ازرق',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#0400FF;margin-left:6px;"></span>ازرق</div>
+            <div class="ms-item" data-v="رمادي" onclick="toggleMsItem('hair','رمادي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#888;margin-left:6px;"></span>رمادي</div>
             <div class="ms-item" data-v="أبيض" onclick="toggleMsItem('hair','أبيض',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#eee;border:1px solid #999;margin-left:6px;"></span>أبيض</div>
             <div class="ms-item" data-v="وردي" onclick="toggleMsItem('hair','وردي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#FF69B4;margin-left:6px;"></span>وردي</div>
             <div class="ms-item" data-v="بنفسجي" onclick="toggleMsItem('hair','بنفسجي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#9B59B6;margin-left:6px;"></span>بنفسجي</div>
@@ -599,6 +605,12 @@ footer span{color:var(--gold);font-weight:700;}
       <div class="ltbar">
         <div class="ltit" id="lTitle">كل الروابط</div>
         <div class="swrap" style="flex:0;min-width:175px;"><input type="text" id="lSrch" class="cinp" placeholder="ابحث..."/></div>
+        <select id="lSort" class="cinp csel" style="min-width:120px;padding-right:11px;" onchange="renderLinks()">
+          <option value="newest">🆕 الأحدث</option>
+          <option value="oldest">📅 الأقدم</option>
+          <option value="alpha">🔤 أ-ي</option>
+          <option value="clicks">🔥 الأكثر نقراً</option>
+        </select>
         <button class="btn btn-gold bsm" id="addLBtn" style="display:none">➕ رابط</button>
       </div>
       <div class="lgrid" id="lGrid"><div class="loading"><div class="spin"></div><span>جاري التحميل...</span></div></div>
@@ -727,6 +739,8 @@ footer span{color:var(--gold);font-weight:700;}
   </div>
 </div>
 
+</div><!-- end mainContent -->
+
 <!-- MODAL: ACTRESS -->
 <div id="aModal" class="modal">
   <div class="mbox">
@@ -759,7 +773,7 @@ footer span{color:var(--gold);font-weight:700;}
         <label class="chki"><input type="radio" name="hairColor" value="بني" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#8B4513;margin-left:4px;"></span>بني</label>
         <label class="chki"><input type="radio" name="hairColor" value="أشقر" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#F4C542;margin-left:4px;"></span>أشقر</label>
         <label class="chki"><input type="radio" name="hairColor" value="أحمر" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#CC2200;margin-left:4px;"></span>أحمر</label>
-        <label class="chki"><input type="radio" name="hairColor" value="ازرق" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#0400FF;margin-left:4px;"></span>ازرق</label>
+        <label class="chki"><input type="radio" name="hairColor" value="رمادي" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#888;margin-left:4px;"></span>رمادي</label>
         <label class="chki"><input type="radio" name="hairColor" value="أبيض" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#eee;border:1px solid #999;margin-left:4px;"></span>أبيض</label>
         <label class="chki"><input type="radio" name="hairColor" value="وردي" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#FF69B4;margin-left:4px;"></span>وردي</label>
         <label class="chki"><input type="radio" name="hairColor" value="بنفسجي" class="aH"> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#9B59B6;margin-left:4px;"></span>بنفسجي</label>
@@ -779,6 +793,7 @@ footer span{color:var(--gold);font-weight:700;}
     <div class="fg"><label>المجلد</label><select id="lMF" class="cinp csel"></select></div>
     <div class="fg"><label>الأيقونة</label><input type="text" id="lME" placeholder="🌐" maxlength="4"/></div>
     <div class="fg"><label>الوسوم</label><input type="text" id="lMTg" placeholder="تقنية، فيديو"/></div>
+    <div class="fg"><label>📝 ملاحظة خاصة</label><input type="text" id="lMNote" placeholder="ملاحظة اختيارية..."/></div>
     <div class="mfooter"><button class="btn btn-ghost" id="cancelL">إلغاء</button><button class="btn btn-gold" id="saveL">💾 حفظ</button></div>
   </div>
 </div>
@@ -789,6 +804,19 @@ footer span{color:var(--gold);font-weight:700;}
     <h3 id="fMTitle">📁 مجلد جديد</h3>
     <div class="fg"><label>الاسم *</label><input type="text" id="fMN" placeholder="اسم المجلد"/></div>
     <div class="fg"><label>الأيقونة</label><input type="text" id="fME" placeholder="📁" maxlength="4"/></div>
+    <div class="fg"><label>لون المجلد</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+        <div class="fcolor-item on" data-color="" style="width:28px;height:28px;border-radius:7px;background:var(--s2);border:2px solid var(--gold);cursor:pointer;" title="افتراضي"></div>
+        <div class="fcolor-item" data-color="#F1B76D" style="width:28px;height:28px;border-radius:7px;background:#F1B76D;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#5B9BD5" style="width:28px;height:28px;border-radius:7px;background:#5B9BD5;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#22C55E" style="width:28px;height:28px;border-radius:7px;background:#22C55E;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#FF5555" style="width:28px;height:28px;border-radius:7px;background:#FF5555;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#a855f7" style="width:28px;height:28px;border-radius:7px;background:#a855f7;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#f97316" style="width:28px;height:28px;border-radius:7px;background:#f97316;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+        <div class="fcolor-item" data-color="#06b6d4" style="width:28px;height:28px;border-radius:7px;background:#06b6d4;border:2px solid transparent;cursor:pointer;" onclick="selFColor(this)"></div>
+      </div>
+      <input type="hidden" id="fMC" value=""/>
+    </div>
     <div class="mfooter"><button class="btn btn-ghost" id="cancelF">إلغاء</button><button class="btn btn-gold" id="saveF">💾 حفظ</button></div>
   </div>
 </div>
@@ -826,7 +854,11 @@ window.goTo=function(p){
 };
 
 const burger=document.getElementById("burger"),drawer=document.getElementById("drawer");
-function closeDrawer(){burger.classList.remove("open");drawer.classList.remove("open");document.body.style.overflow="";}
+function closeDrawer(){
+  burger.classList.remove("open");
+  drawer.classList.remove("open");
+  document.body.style.overflow="";
+}
 burger.addEventListener("click",()=>{burger.classList.toggle("open");drawer.classList.toggle("open");document.body.style.overflow=drawer.classList.contains("open")?"hidden":"";});
 document.querySelectorAll(".dtab[data-page]").forEach(t=>t.addEventListener("click",()=>goTo(t.dataset.page)));
 document.getElementById("homeBrand").addEventListener("click",e=>{e.preventDefault();goTo("home");});
@@ -960,10 +992,24 @@ document.getElementById("profileLogout").addEventListener("click",async()=>{awai
 // AUTH STATE
 onAuthStateChanged(auth,async u=>{
   curUser=u;
-  // إظهار/إخفاء شاشة الدخول
   const wall=document.getElementById("loginWall");
-  if(!u && wall){wall.style.display="flex";}
-  else if(wall){wall.style.display="none";}
+  const nav=document.getElementById("mainNav");
+  const drawer=document.getElementById("drawer");
+  const mainContent=document.getElementById("mainContent");
+
+  if(!u){
+    // أخفِ كل المحتوى وأظهر شاشة الدخول
+    if(wall)wall.style.display="flex";
+    if(nav)nav.style.display="none";
+    if(drawer)drawer.style.display="none";
+    if(mainContent)mainContent.style.display="none";
+    return;
+  } else {
+    // أظهر المحتوى وأخفِ شاشة الدخول
+    if(wall)wall.style.display="none";
+    if(nav)nav.style.display="flex";
+    if(mainContent)mainContent.style.display="block";
+  }
   if(u){
     try{const ms=await getDoc(doc(db,"settings","maintenance"));maintMode=ms.exists()&&ms.data().enabled===true;}catch{maintMode=false;}
     if(maintMode&&u.email!==ADMIN_EMAIL){document.getElementById("loginWall").style.display="none";document.getElementById("maintScreen").style.display="flex";await signOut(auth);return;}
@@ -1176,7 +1222,22 @@ window.delA=delA;
 // LINKS
 document.getElementById("fAll").addEventListener("click",()=>setFolder("all","كل الروابط"));
 function setFolder(id,name){afolder=id;document.getElementById("lTitle").textContent=name;document.querySelectorAll(".fitem").forEach(el=>el.classList.toggle("on",el.dataset.folder===id));renderLinks();}
-function getFL(){const t=document.getElementById("lSrch").value.trim().toLowerCase();return links.filter(l=>(afolder==="all"||l.folderId===afolder)&&(!t||l.title.toLowerCase().includes(t)||(l.url||"").toLowerCase().includes(t)));}
+function getFL(){
+  const t=document.getElementById("lSrch").value.trim().toLowerCase();
+  const sort=document.getElementById("lSort")?.value||"newest";
+  let f=links.filter(l=>(afolder==="all"||l.folderId===afolder)&&(!t||l.title.toLowerCase().includes(t)||(l.url||"").toLowerCase().includes(t)));
+  // المثبتة أولاً دائماً
+  f.sort((a,b)=>{
+    if(a.pinned&&!b.pinned)return -1;
+    if(!a.pinned&&b.pinned)return 1;
+    if(sort==="newest")return(b.createdAt||"").localeCompare(a.createdAt||"");
+    if(sort==="oldest")return(a.createdAt||"").localeCompare(b.createdAt||"");
+    if(sort==="alpha")return(a.title||"").localeCompare(b.title||"","ar");
+    if(sort==="clicks")return(b.clicks||0)-(a.clicks||0);
+    return 0;
+  });
+  return f;
+}
 function renderLinks(){
   const grid=document.getElementById("lGrid"),f=getFL();grid.innerHTML="";
   if(!f.length){grid.innerHTML='<div class="empty"><div class="empi">🔗</div><p>لا توجد روابط</p></div>';return;}
@@ -1184,9 +1245,46 @@ function renderLinks(){
     const card=document.createElement("div");card.className="lcard_";card.style.animationDelay=i*.04+"s";
     const folder=folders.find(x=>x.id===link.folderId),tags=(link.tags||"").split(",").map(t=>t.trim()).filter(Boolean);
     const domain=(()=>{try{return new URL(link.url).hostname;}catch{return "";}})();
-    card.innerHTML=`<div class="lhead"><div class="lfav">${link.emoji?`<span style="font-size:16px">${link.emoji}</span>`:`<img src="https://www.google.com/s2/favicons?sz=64&domain=${domain}" onerror="this.parentElement.innerHTML='🌐'"/>`}</div><div class="linfo"><div class="lname">${link.title}</div><div class="lurl">${link.url}</div></div></div>${link.desc?`<div class="ldesc_">${link.desc}</div>`:""}${tags.length?`<div class="ltags_">${tags.map(t=>`<span class="ltag">${t}</span>`).join("")}</div>`:""}${folder?`<div class="lfbdg">${folder.emoji||"📁"} ${folder.name}</div>`:""}<div class="lacts"><button class="cpybtn" data-url="${link.url}">📋 نسخ</button><a class="opnbtn" href="${link.url}" target="_blank" rel="noopener">🔗</a>${isAdmin()?`<button class="lebtn" data-id="${link.id}">✏️</button><button class="ldbtn" data-id="${link.id}">🗑️</button>`:""}</div>`;
+    const folderColor=folder?.color||"";
+    card.className="lcard_"+(link.pinned?" pinned":"");
+    card.style.animationDelay=i*.04+"s";
+    card.innerHTML=`
+      <div class="lhead">
+        <div class="lfav" style="${folderColor?`border-color:${folderColor}20;background:${folderColor}15`:""}">${link.emoji?`<span style="font-size:16px">${link.emoji}</span>`:`<img src="https://www.google.com/s2/favicons?sz=64&domain=${domain}" onerror="this.parentElement.innerHTML='🌐'"/>`}</div>
+        <div class="linfo">
+          <div class="lname">${link.title}${link.pinned?' <span style="font-size:10px;color:var(--gold);">📌</span>':""}</div>
+          <div class="lurl">${link.url}</div>
+        </div>
+      </div>
+      ${link.desc?`<div class="ldesc_">${link.desc}</div>`:""}
+      ${tags.length?`<div class="ltags_">${tags.map(t=>`<span class="ltag">${t}</span>`).join("")}</div>`:""}
+      ${folder?`<div class="lfbdg" style="${folderColor?`color:${folderColor}`:""}">${folder.emoji||"📁"} ${folder.name}</div>`:""}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:10px;color:var(--dim);">
+        <span>🖱️ ${link.clicks||0} نقرة</span>
+        ${link.note?`<span style="color:var(--dim);font-style:italic;">📝 ${link.note}</span>`:""}
+      </div>
+      <div class="lacts">
+        <button class="cpybtn" data-url="${link.url}">📋 نسخ</button>
+        <a class="opnbtn" href="${link.url}" target="_blank" rel="noopener" data-id="${link.id}">🔗</a>
+        ${isAdmin()?`
+          <button class="pin-btn${link.pinned?" pinned":""}" data-id="${link.id}" title="${link.pinned?"إلغاء التثبيت":"تثبيت"}">${link.pinned?"📌":"📍"}</button>
+          <button class="lebtn" data-id="${link.id}">✏️</button>
+          <button class="ldbtn" data-id="${link.id}">🗑️</button>
+        `:""}
+      </div>`;
     card.querySelector(".cpybtn").addEventListener("click",function(){navigator.clipboard.writeText(this.dataset.url).then(()=>{this.textContent="✅ تم!";this.classList.add("ok");setTimeout(()=>{this.textContent="📋 نسخ";this.classList.remove("ok");},2000);ss("تم نسخ الرابط ✅");}).catch(()=>ss("فشل النسخ","error"));});
-    if(isAdmin()){card.querySelector(".lebtn")?.addEventListener("click",()=>openLModal(link.id));card.querySelector(".ldbtn")?.addEventListener("click",()=>{if(confirm(`حذف "${link.title}"؟`))delLink(link.id);});}
+    // عداد النقرات
+    card.querySelector(".opnbtn")?.addEventListener("click",async()=>{
+      try{await updateDoc(doc(db,"links",link.id),{clicks:(link.clicks||0)+1});}catch{}
+    });
+    if(isAdmin()){
+      card.querySelector(".pin-btn")?.addEventListener("click",async e=>{
+        e.stopPropagation();
+        try{await updateDoc(doc(db,"links",link.id),{pinned:!link.pinned});ss(link.pinned?"تم إلغاء التثبيت":"تم التثبيت 📌");}catch(err){ss("خطأ","error");}
+      });
+      card.querySelector(".lebtn")?.addEventListener("click",()=>openLModal(link.id));
+      card.querySelector(".ldbtn")?.addEventListener("click",()=>{if(confirm(`حذف "${link.title}"؟`))delLink(link.id);});
+    }
     grid.appendChild(card);
   });
 }
@@ -1195,7 +1293,8 @@ function renderFolders(){
   const list=document.getElementById("fList");document.getElementById("fAllCnt").textContent=links.length;list.innerHTML="";
   folders.forEach(f=>{
     const count=links.filter(l=>l.folderId===f.id).length,div=document.createElement("div");div.className="fitem"+(afolder===f.id?" on":"");div.dataset.folder=f.id;
-    div.innerHTML=`<span>${f.emoji||"📁"}</span><span>${f.name}</span><span class="fcnt">${count}</span>${isAdmin()?`<div class="facts"><button class="fab_" data-edit="${f.id}">✏️</button><button class="fab_ rd" data-del="${f.id}">🗑️</button></div>`:""}`;
+    if(f.color)div.style.borderRight=`3px solid ${f.color}`;
+    div.innerHTML=`<span style="${f.color?`color:${f.color}`:""}">${f.emoji||"📁"}</span><span>${f.name}</span><span class="fcnt" style="${f.color&&afolder===f.id?`background:${f.color}25;color:${f.color}`:""}">${count}</span>${isAdmin()?`<div class="facts"><button class="fab_" data-edit="${f.id}">✏️</button><button class="fab_ rd" data-del="${f.id}">🗑️</button></div>`:""}`;
     div.addEventListener("click",e=>{if(e.target.closest(".facts"))return;setFolder(f.id,f.name);});
     if(isAdmin()){div.querySelector("[data-edit]")?.addEventListener("click",e=>{e.stopPropagation();openFModal(f.id);});div.querySelector("[data-del]")?.addEventListener("click",e=>{e.stopPropagation();if(confirm(`حذف "${f.name}"؟`))delFolder(f.id);});}
     list.appendChild(div);
@@ -1203,8 +1302,8 @@ function renderFolders(){
 }
 function openLModal(id=null){
   if(!isAdmin())return;lEId=id;document.getElementById("lMTitle").textContent=id?"تعديل الرابط":"إضافة رابط";
-  ["lMT","lMU","lMD","lME","lMTg"].forEach(x=>document.getElementById(x).value="");document.getElementById("lMF").value="";
-  if(id){const l=links.find(x=>x.id===id);if(!l)return;document.getElementById("lMT").value=l.title||"";document.getElementById("lMU").value=l.url||"";document.getElementById("lMD").value=l.desc||"";document.getElementById("lME").value=l.emoji||"";document.getElementById("lMTg").value=l.tags||"";document.getElementById("lMF").value=l.folderId||"";}
+  ["lMT","lMU","lMD","lME","lMTg","lMNote"].forEach(x=>document.getElementById(x).value="");document.getElementById("lMF").value="";
+  if(id){const l=links.find(x=>x.id===id);if(!l)return;document.getElementById("lMT").value=l.title||"";document.getElementById("lMU").value=l.url||"";document.getElementById("lMD").value=l.desc||"";document.getElementById("lME").value=l.emoji||"";document.getElementById("lMTg").value=l.tags||"";document.getElementById("lMF").value=l.folderId||"";document.getElementById("lMNote").value=l.note||"";}
   else document.getElementById("lMF").value=afolder!=="all"?afolder:"";openM("lModal");
 }
 window.openLModal=openLModal;
@@ -1214,9 +1313,9 @@ document.getElementById("lModal").addEventListener("click",e=>{if(e.target===doc
 document.getElementById("saveL").addEventListener("click",async()=>{
   if(!isAdmin())return;
   const title=document.getElementById("lMT").value.trim();let url=document.getElementById("lMU").value.trim();
-  const desc=document.getElementById("lMD").value.trim(),emoji=document.getElementById("lME").value.trim(),tags=document.getElementById("lMTg").value.trim(),folderId=document.getElementById("lMF").value;
+  const desc=document.getElementById("lMD").value.trim(),emoji=document.getElementById("lME").value.trim(),tags=document.getElementById("lMTg").value.trim(),folderId=document.getElementById("lMF").value,note=document.getElementById("lMNote").value.trim();
   if(!title)return alert("أدخل العنوان");if(!url)return alert("أدخل الرابط");if(!url.startsWith("http"))url="https://"+url;
-  const data={title,url,desc,emoji,tags,folderId,updatedAt:new Date().toISOString()};
+  const data={title,url,desc,emoji,tags,folderId,note,updatedAt:new Date().toISOString()};
   const btn=document.getElementById("saveL");btn.textContent="⏳...";btn.disabled=true;
   try{if(lEId){await updateDoc(doc(db,"links",lEId),data);ss("تم التحديث ✅");}else{data.createdAt=new Date().toISOString();await addDoc(collection(db,"links"),data);ss("تم الحفظ ✅");}closeM("lModal");}
   catch(err){ss("خطأ: "+err.message,"error");}finally{btn.textContent="💾 حفظ";btn.disabled=false;}
@@ -1236,9 +1335,10 @@ document.getElementById("cancelF").addEventListener("click",()=>closeM("fModal")
 document.getElementById("fModal").addEventListener("click",e=>{if(e.target===document.getElementById("fModal"))closeM("fModal");});
 document.getElementById("saveF").addEventListener("click",async()=>{
   if(!isAdmin())return;const name=document.getElementById("fMN").value.trim(),emoji=document.getElementById("fME").value.trim()||"📁";
+  const color=document.getElementById("fMC").value||"";
   if(!name)return alert("أدخل اسم المجلد");
   const btn=document.getElementById("saveF");btn.textContent="⏳...";btn.disabled=true;
-  try{if(fEId){await updateDoc(doc(db,"linkFolders",fEId),{name,emoji});ss("تم التحديث ✅");}else{await addDoc(collection(db,"linkFolders"),{name,emoji,createdAt:new Date().toISOString()});ss("تم إنشاء المجلد ✅");}closeM("fModal");}
+  try{if(fEId){await updateDoc(doc(db,"linkFolders",fEId),{name,emoji,color});ss("تم التحديث ✅");}else{await addDoc(collection(db,"linkFolders"),{name,emoji,color,createdAt:new Date().toISOString()});ss("تم إنشاء المجلد ✅");}closeM("fModal");}
   catch(err){ss("خطأ: "+err.message,"error");}finally{btn.textContent="💾 حفظ";btn.disabled=false;}
 });
 async function delFolder(id){try{await deleteDoc(doc(db,"linkFolders",id));ss("تم حذف المجلد");}catch(err){ss("خطأ: "+err.message,"error");}}
@@ -1420,6 +1520,20 @@ function renderCtrsBars(){
 window.toggleAllCtrs=function(){window._showAllCtrs=!window._showAllCtrs;renderCtrsBars();};
 
 popCS();popCF();popFS();
+
+// اختيار لون المجلد
+window.selFColor=function(el){
+  document.querySelectorAll(".fcolor-item").forEach(i=>{i.style.border="2px solid transparent";});
+  el.style.border="2px solid var(--gold)";
+  document.getElementById("fMC").value=el.dataset.color;
+};
+// إعادة تعيين لون المجلد عند الفتح
+const firstColorItem=document.querySelector(".fcolor-item");
+if(firstColorItem){firstColorItem.addEventListener("click",function(){
+  document.querySelectorAll(".fcolor-item").forEach(i=>{i.style.border="2px solid transparent";});
+  this.style.border="2px solid var(--gold)";
+  document.getElementById("fMC").value="";
+});}
 
 // تحديث اسم المستخدم من البروفايل
 window.updateUsername=async function(){
