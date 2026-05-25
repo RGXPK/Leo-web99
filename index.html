@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#030303"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Leo 6v"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="description" content="Leo 6v - Secure Data. Powerful Control."/>
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Leo%206v%22%2C%22short_name%22%3A%22Leo%206v%22%2C%22description%22%3A%22Secure%20Data.%20Powerful%20Control.%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030303%22%2C%22theme_color%22%3A%22%23F1B76D%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D"/>
+<link rel="apple-touch-icon" href="https://g.top4top.io/p_3787q4lgv0.png"/>
 <title>Leo 6v</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
@@ -77,7 +85,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);background:var(--gold);}
 
 /* DRAWER */
-.drawer{position:fixed;inset:0;background:rgba(3,3,3,.97);backdrop-filter:blur(40px);z-index:199;display:none;flex-direction:column;padding:80px 24px 24px;gap:4px;overflow-y:auto;animation:sldD .2s ease;}
+.drawer{position:fixed;inset:0;background:rgba(3,3,3,.97);backdrop-filter:blur(40px);z-index:199;display:none;flex-direction:column;padding:80px 24px 24px;gap:4px;overflow-y:auto;}
 .drawer.open{display:flex;}
 .dtab{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:14px;border:1px solid transparent;cursor:pointer;font-family:"Cairo";font-size:14px;font-weight:700;color:var(--dim);transition:all .2s;}
 .dtab:hover{color:var(--tx);border-color:rgba(255,255,255,.05);background:rgba(255,255,255,.02);}
@@ -587,10 +595,100 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
   .hero-logo-big{width:130px;height:130px;}
 }
 </style>
+
+<script>
+// ══ PWA SERVICE WORKER ══
+if('serviceWorker' in navigator){
+  window.addEventListener('load', async()=>{
+    try{
+      // Inline Service Worker
+      const swCode=`
+        const CACHE='leo6v-v1';
+        const ASSETS=['/'];
+        self.addEventListener('install',e=>{
+          e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));
+          self.skipWaiting();
+        });
+        self.addEventListener('activate',e=>{
+          e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
+          self.clients.claim();
+        });
+        self.addEventListener('fetch',e=>{
+          if(e.request.method!=='GET')return;
+          e.respondWith(
+            fetch(e.request).catch(()=>caches.match(e.request))
+          );
+        });
+      `;
+      const blob=new Blob([swCode],{type:'application/javascript'});
+      const swUrl=URL.createObjectURL(blob);
+      await navigator.serviceWorker.register(swUrl);
+      console.log('SW registered');
+    }catch(e){console.log('SW error:',e);}
+  });
+}
+
+// ══ PWA INSTALL PROMPT ══
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  showInstallBtn();
+});
+window.addEventListener('appinstalled',()=>{
+  hideInstallBtn();
+  deferredPrompt=null;
+});
+
+function showInstallBtn(){
+  const btn=document.getElementById('pwaInstallBtn');
+  if(btn)btn.style.display='flex';
+}
+function hideInstallBtn(){
+  const btn=document.getElementById('pwaInstallBtn');
+  if(btn)btn.style.display='none';
+}
+async function installPWA(){
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  const {outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted'){hideInstallBtn();}
+  deferredPrompt=null;
+}
+
+// iOS install hint
+function isIOS(){return/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;}
+function isInStandaloneMode(){return('standalone' in window.navigator)&&window.navigator.standalone;}
+window.addEventListener('load',()=>{
+  if(isIOS()&&!isInStandaloneMode()){
+    setTimeout(()=>{
+      const hint=document.getElementById('iosHint');
+      if(hint)hint.style.display='flex';
+    },3000);
+  }
+});
+</script>
 </head>
 <body>
 
 <!-- MAINTENANCE -->
+
+<!-- PWA INSTALL BTN -->
+<div id="pwaInstallBtn" onclick="installPWA()" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:12px 22px;background:linear-gradient(135deg,#F1B76D,#c8883a);border-radius:100px;cursor:pointer;box-shadow:0 8px 30px rgba(241,183,109,.4);animation:float 3s ease-in-out infinite;border:none;font-family:Cairo;">
+  <img src="https://g.top4top.io/p_3787q4lgv0.png" style="width:26px;height:26px;border-radius:7px;object-fit:cover;"/>
+  <span style="font-size:13px;font-weight:700;color:#0a0a0a;">📲 ثبّت التطبيق</span>
+  <span onclick="event.stopPropagation();document.getElementById('pwaInstallBtn').style.display='none';" style="font-size:16px;color:#0a0a0a;opacity:.6;margin-right:4px;">×</span>
+</div>
+
+<!-- iOS INSTALL HINT -->
+<div id="iosHint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
+  <div style="flex:1;">
+    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo 6v</div>
+    <div style="font-size:11px;color:#0400FF;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
+  </div>
+  <span onclick="document.getElementById('iosHint').style.display='none';" style="font-size:18px;color:#555;cursor:pointer;flex-shrink:0;">×</span>
+</div>
+
 <div id="maintScreen" class="maint">
   <div style="font-size:62px;margin-bottom:18px;animation:float 3s ease-in-out infinite;">🔧</div>
   <div style="font-size:22px;font-weight:900;color:var(--gold);font-family:Tajawal;margin-bottom:8px;">الموقع تحت الصيانة</div>
@@ -699,7 +797,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
     </div>
   </div>
   <div class="features">
-    <div class="features-label">✦ ما يقدمه Leo 6v ✦</div>
+    <div class="features-label">✦ ما يقده Leo 6v ✦</div>
     <div class="features-grid">
       <div class="feat"><div class="feat-icon">🎬</div><div class="feat-title">تصفح الممثلات</div><div class="feat-desc">قاعدة بيانات متقدمة مع فلاتر متعددة وتوصيات ذكية</div></div>
       <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">مدير الروابط</div><div class="feat-desc">نظّم روابطك في مجلدات ملونة وتتبع النقرات</div></div>
@@ -707,7 +805,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
       <div class="feat"><div class="feat-icon">🔑</div><div class="feat-title">نظام دعوة متقدم</div><div class="feat-desc">تسجيل يتطلب كود خاص واسم مستخدم فريد</div></div>
     </div>
   </div>
-  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo 6v</span> 2025 — SECURE DATA. POWERFUL CONTROL.</footer>
+  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo 6v</span> 2025 — </footer>
 </div>
 
 <!-- ACTRESSES -->
@@ -1164,12 +1262,28 @@ window.goTo=function(p){
 };
 
 const burger=document.getElementById("burger"),drawer=document.getElementById("drawer");
+// تأكد من إخفاء الـ drawer عند البداية
+if(drawer)drawer.style.display="none";
 function closeDrawer(){
   burger.classList.remove("open");
   drawer.classList.remove("open");
+  drawer.style.display="none";
   document.body.style.overflow="";
 }
-burger.addEventListener("click",()=>{burger.classList.toggle("open");drawer.classList.toggle("open");document.body.style.overflow=drawer.classList.contains("open")?"hidden":"";});
+burger.addEventListener("click",()=>{
+  const isOpen=drawer.classList.contains("open");
+  if(isOpen){
+    burger.classList.remove("open");
+    drawer.classList.remove("open");
+    drawer.style.display="none";
+    document.body.style.overflow="";
+  } else {
+    burger.classList.add("open");
+    drawer.classList.add("open");
+    drawer.style.display="flex";
+    document.body.style.overflow="hidden";
+  }
+});
 document.querySelectorAll(".dtab[data-page]").forEach(t=>t.addEventListener("click",()=>goTo(t.dataset.page)));
 document.getElementById("homeBrand").addEventListener("click",e=>{e.preventDefault();goTo("home");});
 
@@ -1248,20 +1362,27 @@ document.getElementById("wLoginBtn").addEventListener("click",async function(){
     // تحقق إذا كان اسم مستخدم (لا يحتوي على @)
     if(!em.includes("@")){
       try{
-        // أولاً: ابحث في usernames collection
         const uDoc=await getDoc(doc(db,"usernames",em.toLowerCase()));
-        if(uDoc.exists()){
-          const uid=uDoc.data().uid;
-          const userSnap=await getDoc(doc(db,"users",uid));
-          if(!userSnap.exists()){this.disabled=false;this.textContent="🔑 تسجيل الدخول";return wallErr("الحساب غير موجود ❌");}
-          em=userSnap.data().email;
-        } else {
-          // ثانياً: ابحث في users collection مباشرة
-          const usersSnap=await getDocs(query(collection(db,"users"),where("username","==",em.toLowerCase())));
-          if(usersSnap.empty){this.disabled=false;this.textContent="🔑 تسجيل الدخول";return wallErr("اسم المستخدم غير موجود ❌");}
-          em=usersSnap.docs[0].data().email;
+        if(!uDoc.exists()){
+          this.disabled=false;this.textContent="🔑 تسجيل الدخول";
+          return wallErr("اسم المستخدم غير موجود ❌");
         }
-      }catch(err){this.disabled=false;this.textContent="🔑 تسجيل الدخول";return wallErr("خطأ في البحث عن المستخدم");}
+        const uid=uDoc.data().uid;
+        const userSnap=await getDoc(doc(db,"users",uid));
+        if(!userSnap.exists()){
+          this.disabled=false;this.textContent="🔑 تسجيل الدخول";
+          return wallErr("الحساب غير موجود، تواصل مع المشرف");
+        }
+        const fetchedEmail=userSnap.data().email;
+        if(!fetchedEmail){
+          this.disabled=false;this.textContent="🔑 تسجيل الدخول";
+          return wallErr("بيانات الحساب غير مكتملة");
+        }
+        em=fetchedEmail;
+      }catch(err){
+        this.disabled=false;this.textContent="🔑 تسجيل الدخول";
+        return wallErr("تأكد من صحة اسم المستخدم ❌");
+      }
     }
     const cred=await signInWithEmailAndPassword(auth,em,ps);
     // تحقق من الحظر
