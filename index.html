@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#030303"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Leo 6v"/>
+<meta name="apple-mobile-web-app-title" content="Leo v9"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-<meta name="description" content="Leo 6v - Secure Data. Powerful Control."/>
+<meta name="description" content="Leo v9 - Secure Data. Powerful Control."/>
 <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Leo%206v%22%2C%22short_name%22%3A%22Leo%206v%22%2C%22description%22%3A%22Secure%20Data.%20Powerful%20Control.%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030303%22%2C%22theme_color%22%3A%22%23F1B76D%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D"/>
 <link rel="apple-touch-icon" href="https://g.top4top.io/p_3787q4lgv0.png"/>
-<title>Leo 6v</title>
+<title>Leo v9</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -90,7 +90,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .dtab{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:14px;border:1px solid transparent;cursor:pointer;font-family:"Cairo";font-size:14px;font-weight:700;color:var(--dim);transition:all .2s;}
 .dtab:hover{color:var(--tx);border-color:rgba(255,255,255,.05);background:rgba(255,255,255,.02);}
 .dtab.on{color:var(--gold);border-color:rgba(241,183,109,.18);background:rgba(241,183,109,.04);}
-.dtab-icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:all .2s;}
+.dtab-icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:all .2s;color:var(--dim);}.dtab-icon svg{width:19px;height:19px;}.dtab.on .dtab-icon{color:var(--gold);background:rgba(241,183,109,.08);border-color:rgba(241,183,109,.2);}
 .dtab.on .dtab-icon{background:rgba(241,183,109,.1);border-color:rgba(241,183,109,.2);}
 .dsep{height:1px;background:rgba(255,255,255,.04);margin:8px 0;}
 .d-user{display:flex;align-items:center;gap:12px;padding:15px 18px;border-radius:14px;background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.1);margin-top:auto;}
@@ -108,7 +108,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;padding:6px 14px;border:1px solid rgba(241,183,109,.2);border-radius:100px;background:rgba(241,183,109,.05);}
 .hero-h1{font-size:clamp(48px,8vw,80px);font-weight:900;font-family:"Tajawal";line-height:1;margin-bottom:20px;}
 .hero-h1 .g{background:linear-gradient(135deg,var(--gold),var(--gl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-h1 .w{background:linear-gradient(135deg,#fff,#0400FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-h1 .w{background:linear-gradient(135deg,#fff,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .hero-desc{font-size:15px;color:var(--dim);line-height:1.8;margin-bottom:32px;max-width:420px;}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:0;}
 .hero-stats{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
@@ -143,7 +143,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .search-bar{position:sticky;top:80px;z-index:50;background:rgba(3,3,3,.92);backdrop-filter:blur(30px);border-bottom:1px solid rgba(255,255,255,.04);padding:12px 24px;}
 .search-inner{max-width:1200px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 .search-field{position:relative;flex:1;min-width:200px;}
-.search-field::before{content:"⌕";position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--dim);pointer-events:none;}
+.search-field::before{content:"";position:absolute;right:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23666%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cline x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/%3E%3C/svg%3E');background-size:contain;background-repeat:no-repeat;pointer-events:none;z-index:1;}
 .sinp{width:100%;padding:10px 38px 10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.03);color:var(--tx);font-family:"Cairo";font-size:13px;outline:none;transition:all .25s;appearance:none;}
 .sinp:focus{border-color:rgba(241,183,109,.3);background:rgba(241,183,109,.03);}
 .sinp::placeholder{color:var(--dim);}
@@ -505,14 +505,17 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 
   /* SEARCH BAR */
   .search-bar{padding:10px 14px;top:72px;}
-  .search-inner{gap:8px;}
-  .search-field{min-width:0;}
-  .filter-btn{padding:9px 12px;font-size:11px;}
-  .sort-sel{min-width:100px;padding:9px 10px;font-size:11px;}
-  .add-btn{padding:9px 14px;font-size:11px;}
+  .search-inner{gap:8px;flex-wrap:wrap;}
+  .search-field{min-width:0;flex:1 1 100%;order:1;}
+  .filter-btn{padding:9px 12px;font-size:11px;order:2;flex:1;justify-content:center;}
+  .sort-sel{min-width:0;padding:9px 10px;font-size:11px;order:3;flex:1;}
+  .add-btn{padding:9px 14px;font-size:11px;order:4;flex:0 0 auto;}
   .filters-panel{gap:10px;padding:12px 0 2px;}
-  .fgrp{min-width:140px;}
+  .fgrp{min-width:0;flex:1 1 47%;}
   .results-bar{padding:8px 14px;}
+  .autocomplete-dd{right:0;left:0;max-height:280px;}
+  .ac-item{padding:12px 14px;}
+  .ac-name{font-size:13px;}
 
   /* ACTRESS GRID */
   .grid-wrap{padding:12px 14px;}
@@ -594,6 +597,65 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
   .stats-nums{grid-template-columns:1fr 1fr;}
   .hero-logo-big{width:130px;height:130px;}
 }
+
+/* ══ AUTOCOMPLETE ══ */
+.search-field{position:relative;}
+.autocomplete-dd{position:absolute;top:calc(100% + 6px);right:0;left:0;background:#0a0a0a;border:1px solid rgba(255,255,255,.06);border-radius:13px;z-index:400;max-height:320px;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.8);display:none;}
+.autocomplete-dd.open{display:block;}
+.ac-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.03);}
+.ac-item:last-child{border-bottom:none;}
+.ac-item:hover,.ac-item.hl{background:rgba(241,183,109,.06);}
+.ac-item img{width:38px;height:38px;border-radius:9px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid rgba(255,255,255,.04);}
+.ac-info{flex:1;min-width:0;}
+.ac-name{font-size:13px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ac-name mark{background:rgba(241,183,109,.25);color:var(--gold);border-radius:3px;padding:0 2px;}
+.ac-meta{font-size:10px;color:var(--dim);margin-top:2px;}
+.ac-empty{padding:16px;text-align:center;color:var(--dim);font-size:12px;}
+.ac-fuzzy-tag{font-size:9px;background:rgba(168,85,247,.12);color:#a855f7;padding:2px 7px;border-radius:100px;border:1px solid rgba(168,85,247,.25);flex-shrink:0;}
+
+/* ══ NOTIFICATIONS BELL ══ */
+.bell-btn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:all .2s;flex-shrink:0;}
+.bell-btn:hover{border-color:rgba(241,183,109,.2);color:var(--gold);}
+.bell-badge{position:absolute;top:-4px;left:-4px;background:#FF4444;color:#fff;font-size:9px;font-weight:900;min-width:17px;height:17px;border-radius:100px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0a0a0a;}
+.bell-badge.show{display:flex;}
+.notif-dd{position:absolute;top:calc(100% + 8px);left:0;width:320px;max-width:90vw;background:#0a0a0a;border:1px solid rgba(255,255,255,.06);border-radius:15px;box-shadow:0 20px 60px rgba(0,0,0,.8);z-index:500;display:none;max-height:400px;overflow-y:auto;}
+.notif-dd.open{display:block;}
+.notif-head{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;font-weight:700;color:var(--tx);display:flex;align-items:center;justify-content:space-between;}
+.notif-item{display:flex;align-items:center;gap:11px;padding:11px 16px;cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.03);position:relative;}
+.notif-item:last-child{border-bottom:none;}
+.notif-item:hover{background:rgba(241,183,109,.05);}
+.notif-item.unread::before{content:"";position:absolute;right:6px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--gold);}
+.notif-item img{width:40px;height:40px;border-radius:10px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid rgba(255,255,255,.05);}
+.notif-info{flex:1;min-width:0;}
+.notif-title{font-size:12px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.notif-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+.notif-time{font-size:10px;color:var(--dim2);margin-top:3px;}
+.notif-empty{padding:28px;text-align:center;color:var(--dim);font-size:12px;}
+
+/* ══ HOME SLIDER ══ */
+.home-slider-sec{max-width:1200px;margin:0 auto;padding:0 40px 50px;}
+@media(max-width:768px){.home-slider-sec{padding:0 16px 30px;}}
+.home-slider-title{font-size:13px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:18px;}
+.hslider{position:relative;border-radius:20px;overflow:hidden;width:100%;aspect-ratio:16/8;max-height:360px;background:var(--s1);}
+@media(max-width:768px){.hslider{aspect-ratio:4/5;max-height:440px;border-radius:16px;}}
+.hslider-track{display:flex;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);touch-action:pan-y;}
+.hslide{min-width:100%;height:100%;position:relative;flex-shrink:0;}
+.hslide img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.hslide-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,3,3,.95) 0%,rgba(3,3,3,.25) 50%,transparent 100%);}
+.hslide-info{position:absolute;bottom:0;right:0;left:0;padding:20px 22px;}
+.hslide-name{font-size:clamp(20px,4vw,30px);font-weight:900;color:#fff;font-family:Tajawal;margin-bottom:6px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+.hslide-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.hslide-tag{font-size:11px;font-weight:700;padding:4px 11px;border-radius:100px;border:1px solid currentColor;backdrop-filter:blur(6px);}
+.hslide-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;}
+.hslider-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;z-index:5;}
+.hslider-nav:hover{background:rgba(241,183,109,.3);}
+.hslider-prev{left:12px;}
+.hslider-next{right:12px;}
+@media(max-width:768px){.hslider-nav{display:none;}}
+.hslider-dots{display:flex;justify-content:center;gap:6px;margin-top:14px;}
+.hsdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .3s;cursor:pointer;}
+.hsdot.on{width:22px;border-radius:4px;background:var(--gold);}
+.hslider-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--dim);font-size:13px;}
 </style>
 
 <script>
@@ -603,7 +665,7 @@ if('serviceWorker' in navigator){
     try{
       // Inline Service Worker
       const swCode=`
-        const CACHE='leo6v-v1';
+        const CACHE='leov9-v1';
         const ASSETS=['/'];
         self.addEventListener('install',e=>{
           e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));
@@ -683,8 +745,8 @@ window.addEventListener('load',()=>{
 <!-- iOS INSTALL HINT -->
 <div id="iosHint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
   <div style="flex:1;">
-    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo 6v</div>
-    <div style="font-size:11px;color:#0400FF;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
+    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v9</div>
+    <div style="font-size:11px;color:#888;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
   </div>
   <span onclick="document.getElementById('iosHint').style.display='none';" style="font-size:18px;color:#555;cursor:pointer;flex-shrink:0;">×</span>
 </div>
@@ -706,8 +768,8 @@ window.addEventListener('load',()=>{
 <div id="loginWall" class="wall" style="display:flex;">
   <div class="wall-card">
     <div class="wall-logo-wrap">
-      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 6v" class="wall-logo-img"/>
-      <div class="wall-brand">Leo 6v</div>
+      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9" class="wall-logo-img"/>
+      <div class="wall-brand">Leo v9</div>
       <div class="wall-tagline">SECURE DATA. POWERFUL CONTROL.</div>
     </div>
     <div class="wall-box">
@@ -738,10 +800,20 @@ window.addEventListener('load',()=>{
 <!-- NAV -->
 <nav class="nav" id="mainNav" style="display:none;">
   <a class="brand" id="homeBrand" href="#">
-    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 6v"/></div>
-    <span class="brand-name">Leo 6v</span>
+    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9"/></div>
+    <span class="brand-name">Leo v9</span>
   </a>
   <div class="nav-sp"></div>
+  <div style="position:relative;" id="bellWrap">
+    <button class="bell-btn" id="bellBtn" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="bell-badge" id="bellBadge">0</span>
+    </button>
+    <div class="notif-dd" id="notifDd">
+      <div class="notif-head"><span>🔔 الإشعارات</span><span id="notifClearAll" style="font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;">تعليم كمقروء</span></div>
+      <div id="notifList"><div class="notif-empty">لا توجد إشعارات</div></div>
+    </div>
+  </div>
   <div id="navUserBadge" style="display:none;" class="user-chip" onclick="goTo('profile')">
     <div class="user-chip-av" id="navUserAv">L</div>
     <span class="user-chip-name" id="navUserName">المستخدم</span>
@@ -751,15 +823,17 @@ window.addEventListener('load',()=>{
 
 <!-- DRAWER -->
 <div class="drawer" id="drawer">
-  <div class="dtab on" data-page="home"><div class="dtab-icon">🏠</div> الرئيسية</div>
-  <div class="dtab" data-page="actresses"><div class="dtab-icon">🎬</div> الممثلات</div>
-  <div class="dtab" data-page="links"><div class="dtab-icon">🔗</div> الروابط</div>
-  <div class="dtab" data-page="favorites" id="favTab" style="display:none"><div class="dtab-icon">⭐</div> مفضلتي</div>
-  <div class="dtab" data-page="stats" id="statsTab" style="display:none"><div class="dtab-icon">📊</div> الإحصائيات</div>
-  <div class="dtab" data-page="recommend" id="recommendTab" style="display:none"><div class="dtab-icon">🤖</div> توصيات ذكية</div>
-  <div class="dtab" data-page="dna" id="dnaTab" style="display:none"><div class="dtab-icon">🧬</div> بصمتك الشخصية</div>
-  <div class="dtab" data-page="admin" id="adminTab" style="display:none"><div class="dtab-icon">👑</div> الإدارة</div>
-  <div class="dtab" data-page="users" id="usersTab" style="display:none"><div class="dtab-icon">👥</div> المستخدمون</div>
+  <div class="dtab on" data-page="home"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div> الرئيسية</div>
+  <div class="dtab" data-page="actresses"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a7 7 0 0 1 14 0v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div> الممثلات</div>
+  <div class="dtab" data-page="links"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div> الروابط</div>
+  <div class="dtab" data-page="favorites" id="favTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div> مفضلتي</div>
+  <div class="dtab" data-page="stats" id="statsTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div> الإحصائيات</div>
+  <div class="dtab" data-page="recommend" id="recommendTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg></div> توصيات ذكية</div>
+  <div class="dtab" data-page="dna" id="dnaTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 21h12"/><path d="M6 3c0 6 12 6 12 12"/><path d="M18 3c0 6-12 6-12 12"/></svg></div> بصمتك الشخصية</div>
+  <div class="dtab" data-page="admin" id="adminTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l4 5 6-8 6 8 4-5v12H2z"/></svg></div> الإدارة</div>
+  <div class="dtab" data-page="suggest" id="suggestTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div> اقتراحاتي</div>
+  <div class="dtab" data-page="suggestions-admin" id="suggestionsAdminTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div> الاقتراحات</div>
+  <div class="dtab" data-page="users" id="usersTab" style="display:none"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div> المستخدمون</div>
   <div class="dsep"></div>
   <div id="dUserInfo" style="display:none;" class="d-user">
     <div class="d-user-av">👤</div>
@@ -778,7 +852,7 @@ window.addEventListener('load',()=>{
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-text">
-      <div class="hero-eyebrow">✦ منصة بيانات آمنة ✦</div>
+      <div class="hero-eyebrow">◆ منصة بيانات آمنة ◆</div>
       <h1 class="hero-h1"><span class="g">Leo</span><span class="w"> 6v</span></h1>
       <p class="hero-desc">منصتك الشاملة لإدارة قاعدة بيانات الممثلات وحفظ الروابط بأسلوب احترافي وآمن</p>
       <div class="hero-actions">
@@ -793,11 +867,23 @@ window.addEventListener('load',()=>{
     </div>
     <div class="hero-visual">
       <div class="hero-ring"></div>
-      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 6v"/></div>
+      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9"/></div>
     </div>
   </div>
+  <div class="home-slider-sec">
+    <div class="home-slider-title">◆ ممثلات مميزة ◆</div>
+    <div class="hslider" id="hSlider">
+      <div class="hslider-track" id="hSliderTrack">
+        <div class="hslider-empty"><div class="spin"></div></div>
+      </div>
+      <button class="hslider-nav hslider-prev" id="hSliderPrev">‹</button>
+      <button class="hslider-nav hslider-next" id="hSliderNext">›</button>
+    </div>
+    <div class="hslider-dots" id="hSliderDots"></div>
+  </div>
+
   <div class="features">
-    <div class="features-label">✦ ما يقده Leo 6v ✦</div>
+    <div class="features-label">✦ ما يقدمه Leo v9 ✦</div>
     <div class="features-grid">
       <div class="feat"><div class="feat-icon">🎬</div><div class="feat-title">تصفح الممثلات</div><div class="feat-desc">قاعدة بيانات متقدمة مع فلاتر متعددة وتوصيات ذكية</div></div>
       <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">مدير الروابط</div><div class="feat-desc">نظّم روابطك في مجلدات ملونة وتتبع النقرات</div></div>
@@ -805,20 +891,23 @@ window.addEventListener('load',()=>{
       <div class="feat"><div class="feat-icon">🔑</div><div class="feat-title">نظام دعوة متقدم</div><div class="feat-desc">تسجيل يتطلب كود خاص واسم مستخدم فريد</div></div>
     </div>
   </div>
-  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo 6v</span> 2025 — </footer>
+  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo v9</span> 2025 — SECURE DATA. POWERFUL CONTROL.</footer>
 </div>
 
 <!-- ACTRESSES -->
 <div class="page" id="page-actresses">
   <div class="search-bar">
     <div class="search-inner">
-      <div class="search-field"><input type="text" id="aSearch" class="sinp" placeholder="ابحث عن ممثلة..."/></div>
-      <button class="filter-btn" id="fTogBtn">⚙️ فلاتر <span class="fbdg" id="fBdg">0</span></button>
+      <div class="search-field">
+        <input type="text" id="aSearch" class="sinp" placeholder="ابحث عن ممثلة..." autocomplete="off"/>
+        <div class="autocomplete-dd" id="acDropdown"></div>
+      </div>
+      <button class="filter-btn" id="fTogBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> فلاتر <span class="fbdg" id="fBdg">0</span></button>
       <select id="aSortBy" class="sort-sel">
         <option value="name-asc">🔤 أ-ي</option><option value="name-desc">🔤 ي-أ</option>
         <option value="country">🌍 البلد</option><option value="newest">🆕 الأحدث</option>
       </select>
-      <button class="add-btn" id="addABtn">➕ إضافة</button>
+      <button class="add-btn" id="addABtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> إضافة</button>
     </div>
     <div class="filters-panel" id="ctrlAdv">
       <div class="fgrp"><label class="fgrp-label">الأنواع</label>
@@ -853,7 +942,7 @@ window.addEventListener('load',()=>{
             <div class="ms-item" data-v="بني" onclick="toggleMsItem('hair','بني',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#8B4513;margin-left:5px;"></span>بني</div>
             <div class="ms-item" data-v="أشقر" onclick="toggleMsItem('hair','أشقر',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#F4C542;margin-left:5px;"></span>أشقر</div>
             <div class="ms-item" data-v="أحمر" onclick="toggleMsItem('hair','أحمر',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#CC2200;margin-left:5px;"></span>أحمر</div>
-            <div class="ms-item" data-v="ازرق" onclick="toggleMsItem('hair','ازرق',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#0400FF;margin-left:5px;"></span>ازرق</div>
+            <div class="ms-item" data-v="رمادي" onclick="toggleMsItem('hair','رمادي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#4A9EFF;margin-left:5px;"></span>رمادي</div>
             <div class="ms-item" data-v="أبيض" onclick="toggleMsItem('hair','أبيض',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#eee;border:1px solid #999;margin-left:5px;"></span>أبيض</div>
             <div class="ms-item" data-v="وردي" onclick="toggleMsItem('hair','وردي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#FF69B4;margin-left:5px;"></span>وردي</div>
             <div class="ms-item" data-v="بنفسجي" onclick="toggleMsItem('hair','بنفسجي',this)"><span class="ms-chk"></span><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#9B59B6;margin-left:5px;"></span>بنفسجي</div>
@@ -867,9 +956,14 @@ window.addEventListener('load',()=>{
           <option value="40">40</option><option value="100">الكل</option>
         </select>
       </div>
-      <button class="btn btn-ghost bsm" id="resetF" style="align-self:flex-end;">🔄 تعيين</button>
+      <button class="btn btn-ghost bsm" id="resetF" style="align-self:flex-end;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> تعيين</button>
     </div>
     <div class="chips-bar" id="aChips"></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;padding:6px 18px 0;">
+    <button onclick="goTo('suggest')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid rgba(241,183,109,.25);border-radius:100px;background:rgba(241,183,109,.06);color:var(--gold);font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;">
+      💡 اقترح ممثلة
+    </button>
   </div>
   <div class="results-bar"><span>النتائج: <span class="rc" id="aCnt">0</span></span><span id="aPInfo" style="font-size:12px;color:var(--dim);"></span></div>
   <div class="grid-wrap" id="aGWrap">
@@ -881,7 +975,7 @@ window.addEventListener('load',()=>{
       <img id="dImg" src="" alt=""/>
       <div class="det-overlay"></div>
       <div class="det-top-actions">
-        <button class="det-back" id="aBack">← رجوع</button>
+        <button class="det-back" id="aBack"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> رجوع</button>
         <div class="det-admin-btns" id="dAdminBtns" style="display:none">
           <button class="det-edit" id="dEditBtn">✏️ تعديل</button>
           <button class="det-del" id="dDelBtn">🗑️ حذف</button>
@@ -902,6 +996,7 @@ window.addEventListener('load',()=>{
         <div class="det-info-item"><div class="det-info-label">البلد</div><div class="det-info-value" id="dCI"></div></div>
         <div class="det-info-item"><div class="det-info-label">التصنيف</div><div class="det-info-value" id="dTI"></div></div>
         <div class="det-info-item"><div class="det-info-label">💇 لون الشعر</div><div class="det-info-value" id="dHI"></div></div>
+        <div class="det-info-item" id="dAgeWrap" style="display:none;"><div class="det-info-label">🎂 العمر</div><div class="det-info-value" id="dAge"></div></div>
       </div>
       <div class="det-section"><div class="det-section-title">🌐 التواصل</div><div class="det-socials" id="dSoc"></div></div>
     </div>
@@ -919,7 +1014,7 @@ window.addEventListener('load',()=>{
       <span class="sidebar-title">📁 المجلدات</span>
       <div class="folder-item on" id="fAll" data-folder="all"><span>🌐</span><span>كل الروابط</span><span class="folder-count" id="fAllCnt">0</span></div>
       <div id="fList"></div>
-      <button class="add-folder-btn" id="addFBtn" style="display:none">＋ مجلد جديد</button>
+      <button class="add-folder-btn" id="addFBtn" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> مجلد جديد</button>
     </aside>
     <main>
       <div class="links-toolbar">
@@ -929,7 +1024,7 @@ window.addEventListener('load',()=>{
           <option value="newest">🆕 الأحدث</option><option value="oldest">📅 الأقدم</option>
           <option value="alpha">🔤 أ-ي</option><option value="clicks">🔥 الأكثر نقراً</option>
         </select>
-        <button class="add-btn" id="addLBtn" style="display:none">➕ رابط</button>
+        <button class="add-btn" id="addLBtn" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> رابط</button>
       </div>
       <div class="links-grid" id="lGrid"><div class="loading"><div class="spin"></div><span>جاري التحميل...</span></div></div>
     </main>
@@ -975,7 +1070,7 @@ window.addEventListener('load',()=>{
 <div class="page" id="page-admin">
   <div class="admin-page">
     <div class="admin-header">
-      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo 6v"/></div>
+      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9"/></div>
       <div><div class="admin-title">لوحة التحكم</div><div class="admin-sub" id="adminEmail">مرحباً بك</div></div>
     </div>
     <div class="admin-tools">
@@ -984,7 +1079,7 @@ window.addEventListener('load',()=>{
         <button id="maintToggle" class="tog" onclick="toggleMaint()"></button>
       </div>
       <div class="tool-card">
-        <div class="tool-card-info"><h4>📤 تصدير CSV</h4><p>تصدير قائمة الممثلات</p></div>
+        <div class="tool-card-info"><h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> تصدير CSV</h4><p>تصدير قائمة الممثلات</p></div>
         <button class="export-btn" onclick="exportCSV()">تصدير</button>
       </div>
     </div>
@@ -1111,6 +1206,47 @@ window.addEventListener('load',()=>{
   </div>
 </div>
 
+
+<!-- SUGGEST PAGE - للمستخدم -->
+<div class="page" id="page-suggest">
+  <div style="padding:20px 18px;max-width:500px;margin:0 auto;">
+    <div class="page-header" style="margin-bottom:22px;">
+      <div class="page-title">💡 اقتراح ممثلة</div>
+    </div>
+    <div style="background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.15);border-radius:14px;padding:16px 18px;margin-bottom:20px;">
+      <p style="font-size:12px;color:var(--dim);line-height:1.8;">أرسل اسم الممثلة التي تريد إضافتها وسيراجعها المشرف وإذا وافق سيضيفها للموقع.</p>
+    </div>
+    <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:20px;">
+      <div class="mfg">
+        <label>اسم الممثلة *</label>
+        <input type="text" id="suggestName" placeholder="أدخل اسم الممثلة..." />
+      </div>
+      <div class="mfg">
+        <label>ملاحظة (اختياري)</label>
+        <textarea id="suggestNote" rows="3" placeholder="أي معلومات إضافية..."></textarea>
+      </div>
+      <div id="suggestMsg" style="font-size:12px;margin-bottom:12px;display:none;padding:10px;border-radius:9px;"></div>
+      <button onclick="submitSuggestion()" style="width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:14px;font-weight:700;cursor:pointer;">📤 إرسال الاقتراح</button>
+    </div>
+
+    <!-- اقتراحاتي السابقة -->
+    <div style="margin-top:22px;">
+      <div style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:12px;">📋 اقتراحاتي السابقة</div>
+      <div id="mySuggestions"><div style="color:var(--dim);font-size:12px;text-align:center;padding:20px;">لا توجد اقتراحات بعد</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUGGESTIONS ADMIN PAGE - للمشرف -->
+<div class="page" id="page-suggestions-admin">
+  <div style="padding:20px 18px;max-width:700px;margin:0 auto;">
+    <div class="page-header" style="margin-bottom:22px;">
+      <div class="page-title">📬 اقتراحات المستخدمين</div>
+      <button onclick="loadSuggestions()" style="padding:7px 14px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(255,255,255,.03);color:var(--dim);cursor:pointer;font-family:Cairo;font-size:12px;font-weight:700;">🔄 تحديث</button>
+    </div>
+    <div id="suggestionsList"><div class="loading" style="display:flex;"><div class="spin"></div><span>جاري التحميل...</span></div></div>
+  </div>
+</div>
 <!-- MODALS -->
 <div id="aModal" class="modal">
   <div class="mbox">
@@ -1134,13 +1270,16 @@ window.addEventListener('load',()=>{
       <div class="imgpanel" id="imgPanelUpload"><div class="imgprev" id="imgPrev" onclick="document.getElementById('mImgFile').click()"><span>اضغط لاختيار صورة</span></div><input type="file" id="mImgFile" accept="image/*" style="display:none"/></div>
     </div>
     <div class="mfg"><label>نبذة</label><textarea id="mBio" rows="2" placeholder="نبذة قصيرة..."></textarea></div>
+    <div class="mfg"><label>🎂 تاريخ الميلاد</label><input type="date" id="mBirth"/>
+      <div style="font-size:10px;color:var(--dim);margin-top:4px;">سيُحسب العمر تلقائياً ويتحدث عند كل عيد ميلاد</div>
+    </div>
     <div class="mfg"><label>💇 لون الشعر</label>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;">
         <label class="chki"><input type="radio" name="hairColor" value="أسود" class="aH"> أسود</label>
         <label class="chki"><input type="radio" name="hairColor" value="بني" class="aH"> بني</label>
         <label class="chki"><input type="radio" name="hairColor" value="أشقر" class="aH"> أشقر</label>
         <label class="chki"><input type="radio" name="hairColor" value="أحمر" class="aH"> أحمر</label>
-        <label class="chki"><input type="radio" name="hairColor" value="ازرق" class="aH"> ازرق</label>
+        <label class="chki"><input type="radio" name="hairColor" value="رمادي" class="aH"> رمادي</label>
         <label class="chki"><input type="radio" name="hairColor" value="أبيض" class="aH"> أبيض</label>
         <label class="chki"><input type="radio" name="hairColor" value="وردي" class="aH"> وردي</label>
         <label class="chki"><input type="radio" name="hairColor" value="بنفسجي" class="aH"> بنفسجي</label>
@@ -1223,6 +1362,10 @@ function delLink(id){if(window.delLink)window.delLink(id);}
 function togglePw(uid,h){if(window.togglePw)window.togglePw(uid,h);}
 function delInvite(c){if(window.delInvite)window.delInvite(c);}
 function updateUsername(){if(window.updateUsername)window.updateUsername();}
+function submitSuggestion(){if(window.submitSuggestion)window.submitSuggestion();}
+function approveSuggestion(id,name){if(window.approveSuggestion)window.approveSuggestion(id,name);}
+function rejectSuggestion(id){if(window.rejectSuggestion)window.rejectSuggestion(id);}
+function loadSuggestions(){if(window.loadSuggestions)window.loadSuggestions();}
 function toggleAllCountries(){if(window._toggleAllCtrs)window._toggleAllCtrs();}
 </script>
 
@@ -1245,6 +1388,24 @@ let aPage=1,aEId=null,lEId=null,fEId=null,afolder="all",detId=null,imgData=null,
 let selTypes=new Set(),selCountries=new Set(),selHair=new Set(),stTm=null;
 
 function ss(msg,type="success"){clearTimeout(stTm);const el=document.getElementById("sMsg");el.textContent=msg;el.className=type;el.classList.add("show");stTm=setTimeout(()=>el.classList.remove("show"),3000);}
+function calcAge(birthDate){
+  if(!birthDate)return null;
+  const b=new Date(birthDate);if(isNaN(b))return null;
+  const now=new Date();
+  let age=now.getFullYear()-b.getFullYear();
+  const mNow=now.getMonth(),dNow=now.getDate();
+  const mB=b.getMonth(),dB=b.getDate();
+  if(mNow<mB||(mNow===mB&&dNow<dB))age--;
+  return age;
+}
+function nextBirthday(birthDate){
+  if(!birthDate)return null;
+  const b=new Date(birthDate);if(isNaN(b))return null;
+  const now=new Date();
+  let next=new Date(now.getFullYear(),b.getMonth(),b.getDate());
+  if(next<now)next=new Date(now.getFullYear()+1,b.getMonth(),b.getDate());
+  return next;
+}
 function isAdmin(){return curUser&&curUser.email===ADMIN_EMAIL;}
 function openM(id){document.getElementById(id).classList.add("open");}
 function closeM(id){document.getElementById(id).classList.remove("open");}
@@ -1252,9 +1413,10 @@ function closeM(id){document.getElementById(id).classList.remove("open");}
 window.goTo=function(p){
   document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
   document.getElementById("page-"+p).classList.add("active");
+  if(p==="home")setTimeout(buildHomeSlider,50);
   document.querySelectorAll(".dtab").forEach(t=>t.classList.toggle("on",t.dataset.page===p));
   closeDrawer();window.scrollTo(0,0);
-  if(p==="favorites")renderFavs();if(p==="profile")loadProfileData();if(p==="links"){renderLinks();renderFolders();}
+  if(p==="favorites")renderFavs();if(p==="profile")loadProfileData();if(p==="suggest")loadMySuggestions();if(p==="suggestions-admin")setTimeout(loadSuggestions,100);if(p==="links"){renderLinks();renderFolders();}
   if(p==="users")setTimeout(loadUsers,100);
   if(p==="stats")setTimeout(()=>{renderStats();renderHairStats();renderWorldMap();},100);
   if(p==="recommend")setTimeout(buildRecommend,100);
@@ -1476,6 +1638,8 @@ onAuthStateChanged(auth,async u=>{
   if(u){document.getElementById("dUserName").textContent=u.displayName||u.email;document.getElementById("dUserRole").textContent=isAdmin()?"👑 مشرف":"👤 مستخدم";}
   document.getElementById("adminTab").style.display=isAdmin()?"flex":"none";
   document.getElementById("usersTab").style.display=isAdmin()?"flex":"none";
+  document.getElementById("suggestionsAdminTab").style.display=isAdmin()?"flex":"none";
+  document.getElementById("suggestTab").style.display=u?"flex":"none";
   document.getElementById("statsTab").style.display=isAdmin()?"flex":"none";
   document.getElementById("favTab").style.display=u?"flex":"none";
   document.getElementById("recommendTab").style.display=u?"flex":"none";
@@ -1490,11 +1654,158 @@ onAuthStateChanged(auth,async u=>{
     loadProfileData();
     if(isAdmin())document.getElementById("adminEmail").textContent=u.email;
   }
-  renderActresses();renderLinks();renderFolders();renderAdmin();
+  renderActresses();renderLinks();renderFolders();renderAdmin();renderNotifications();
 });
 
+// ══ NOTIFICATIONS ══
+let notifications=[];
+function readNotifIds(){
+  if(!curUser)return[];
+  try{return JSON.parse(localStorage.getItem("readNotifs_"+curUser.uid)||"[]");}catch{return[];}
+}
+function markNotifRead(id){
+  if(!curUser)return;
+  const ids=readNotifIds();
+  if(!ids.includes(id)){ids.push(id);localStorage.setItem("readNotifs_"+curUser.uid,JSON.stringify(ids));}
+}
+function markAllNotifsRead(){
+  if(!curUser)return;
+  const ids=notifications.map(n=>n.id);
+  localStorage.setItem("readNotifs_"+curUser.uid,JSON.stringify(ids));
+  renderNotifications();
+}
+function timeAgo(iso){
+  const diff=Date.now()-new Date(iso).getTime();
+  const mins=Math.floor(diff/60000),hrs=Math.floor(diff/3600000),days=Math.floor(diff/86400000);
+  if(mins<1)return"الآن";
+  if(mins<60)return`منذ ${mins} د`;
+  if(hrs<24)return`منذ ${hrs} س`;
+  if(days<30)return`منذ ${days} يوم`;
+  return new Date(iso).toLocaleDateString("ar-SA");
+}
+function renderNotifications(){
+  const bell=document.getElementById("bellBtn"),badge=document.getElementById("bellBadge"),list=document.getElementById("notifList");
+  if(!bell||!curUser){if(bell)bell.style.display="none";return;}
+  bell.style.display="flex";
+  const readIds=readNotifIds();
+  const unread=notifications.filter(n=>!readIds.includes(n.id));
+  if(unread.length>0){badge.textContent=unread.length>9?"9+":unread.length;badge.classList.add("show");}
+  else badge.classList.remove("show");
+  if(!notifications.length){list.innerHTML='<div class="notif-empty">لا توجد إشعارات</div>';return;}
+  list.innerHTML=notifications.slice(0,15).map(n=>{
+    const isUnread=!readIds.includes(n.id);
+    return `<div class="notif-item${isUnread?" unread":""}" data-id="${n.id}" data-aid="${n.actressId||""}">
+      <img src="${n.image||PH}" onerror="this.src='${PH}'"/>
+      <div class="notif-info">
+        <div class="notif-title">✨ تمت إضافة ${n.name}</div>
+        <div class="notif-sub">📍 ${n.country||"—"}</div>
+        <div class="notif-time">${timeAgo(n.createdAt)}</div>
+      </div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".notif-item").forEach(item=>{
+    item.addEventListener("click",()=>{
+      markNotifRead(item.dataset.id);
+      const aid=item.dataset.aid;
+      document.getElementById("notifDd").classList.remove("open");
+      if(aid){goTo("actresses");setTimeout(()=>showDet(aid),150);}
+      renderNotifications();
+    });
+  });
+}
+const bellBtnEl=document.getElementById("bellBtn");
+if(bellBtnEl){
+  bellBtnEl.addEventListener("click",e=>{
+    e.stopPropagation();
+    document.getElementById("notifDd").classList.toggle("open");
+  });
+}
+document.getElementById("notifClearAll")?.addEventListener("click",e=>{e.stopPropagation();markAllNotifsRead();});
+document.addEventListener("click",e=>{
+  if(!e.target.closest("#bellWrap")){
+    const dd=document.getElementById("notifDd");if(dd)dd.classList.remove("open");
+  }
+});
+
+// ══ HOME SLIDER ══
+let hSlideIdx=0,hSlideTimer=null,hSlideItems=[];
+function buildHomeSlider(){
+  const track=document.getElementById("hSliderTrack"),dots=document.getElementById("hSliderDots");
+  if(!track||!dots)return;
+  if(!actresses.length){
+    track.innerHTML='<div class="hslider-empty">لا توجد ممثلات بعد</div>';
+    dots.innerHTML="";
+    clearInterval(hSlideTimer);
+    return;
+  }
+  // اختيار حتى 6 ممثلات عشوائية
+  const shuffled=[...actresses].sort(()=>Math.random()-.5).slice(0,Math.min(6,actresses.length));
+  hSlideItems=shuffled;hSlideIdx=0;
+  track.innerHTML=shuffled.map(a=>{
+    const types=(a.types||[]).slice(0,2).map(t=>`<span class="hslide-tag" style="color:${TYPE_COLORS[t]||"var(--gold)"};background:${TYPE_COLORS[t]||"var(--gold)"}18;">${t}</span>`).join("");
+    return `<div class="hslide">
+      <img src="${a.image||PH}" alt="${(a.name||"").replace(/"/g,'')}" loading="lazy" onerror="this.src='${PH}'"/>
+      <div class="hslide-grad"></div>
+      <div class="hslide-info">
+        <div class="hslide-name">${a.name||""}</div>
+        <div class="hslide-meta">${types}<span class="hslide-tag" style="color:#fff;border-color:rgba(255,255,255,.3);">📍 ${a.country||"—"}</span></div>
+        <button class="hslide-btn" data-id="${a.id}">▶ عرض الملف</button>
+      </div>
+    </div>`;
+  }).join("");
+  dots.innerHTML=shuffled.map((_,i)=>`<div class="hsdot${i===0?" on":""}" data-i="${i}"></div>`).join("");
+  hGoToSlide(0);
+  hStartAuto();
+
+  track.querySelectorAll(".hslide-btn").forEach(b=>{
+    b.addEventListener("click",e=>{
+      e.stopPropagation();
+      const id=b.dataset.id;
+      goTo("actresses");
+      setTimeout(()=>showDet(id),150);
+    });
+  });
+  dots.querySelectorAll(".hsdot").forEach(d=>{
+    d.addEventListener("click",()=>hGoToSlide(parseInt(d.dataset.i)));
+  });
+}
+function hGoToSlide(i){
+  if(!hSlideItems.length)return;
+  hSlideIdx=((i%hSlideItems.length)+hSlideItems.length)%hSlideItems.length;
+  const track=document.getElementById("hSliderTrack");
+  if(track)track.style.transform=`translateX(${hSlideIdx*100}%)`;
+  document.querySelectorAll("#hSliderDots .hsdot").forEach((d,j)=>d.classList.toggle("on",j===hSlideIdx));
+}
+function hStartAuto(){
+  clearInterval(hSlideTimer);
+  if(hSlideItems.length<=1)return;
+  hSlideTimer=setInterval(()=>hGoToSlide(hSlideIdx+1),4500);
+}
+document.getElementById("hSliderPrev")?.addEventListener("click",()=>{clearInterval(hSlideTimer);hGoToSlide(hSlideIdx-1);hStartAuto();});
+document.getElementById("hSliderNext")?.addEventListener("click",()=>{clearInterval(hSlideTimer);hGoToSlide(hSlideIdx+1);hStartAuto();});
+// دعم السحب باللمس
+(function(){
+  const slider=document.getElementById("hSlider");
+  if(!slider)return;
+  let startX=0,isDown=false;
+  slider.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;isDown=true;clearInterval(hSlideTimer);},{passive:true});
+  slider.addEventListener("touchend",e=>{
+    if(!isDown)return;isDown=false;
+    const diff=startX-e.changedTouches[0].clientX;
+    if(Math.abs(diff)>40){
+      if(diff>0)hGoToSlide(hSlideIdx+1);
+      else hGoToSlide(hSlideIdx-1);
+    }
+    hStartAuto();
+  },{passive:true});
+})();
+
 // FIREBASE LISTENERS
-onSnapshot(query(collection(db,"actresses"),orderBy("name")),s=>{actresses=s.docs.map(d=>({id:d.id,...d.data()}));renderActresses();popCS();popCF();updStats();renderAdmin();const sp=document.getElementById("page-stats");if(sp&&sp.classList.contains("active"))renderStats();},()=>{});
+onSnapshot(query(collection(db,"actresses"),orderBy("name")),s=>{actresses=s.docs.map(d=>({id:d.id,...d.data()}));renderActresses();popCS();popCF();updStats();renderAdmin();const sp=document.getElementById("page-stats");if(sp&&sp.classList.contains("active"))renderStats();buildHomeSlider();},()=>{});
+onSnapshot(query(collection(db,"notifications"),orderBy("createdAt","desc")),s=>{
+  notifications=s.docs.map(d=>({id:d.id,...d.data()})).slice(0,30);
+  renderNotifications();
+},()=>{});
 onSnapshot(query(collection(db,"linkFolders"),orderBy("name")),s=>{folders=s.docs.map(d=>({id:d.id,...d.data()}));renderFolders();popFS();renderAdmin();},()=>{});
 onSnapshot(query(collection(db,"links"),orderBy("createdAt","desc")),s=>{links=s.docs.map(d=>({id:d.id,...d.data()}));renderLinks();renderFolders();updStats();renderAdmin();},()=>{});
 
@@ -1515,7 +1826,16 @@ document.getElementById("mCSrch").addEventListener("input",()=>{const t=document
 function getFA(){
   const term=document.getElementById("aSearch").value.trim().toLowerCase(),sort=document.getElementById("aSortBy").value;
   let f=actresses.filter(a=>{
-    if(!a.name.toLowerCase().includes(term))return false;
+    if(term){
+      const nameL=a.name.toLowerCase();
+      const directMatch=nameL.includes(term);
+      let fuzzyMatch=false;
+      if(!directMatch&&term.length>=2){
+        const words=nameL.split(/\s+/);
+        fuzzyMatch=words.some(w=>similarity(w,term)>=0.6)||similarity(nameL,term)>=0.6;
+      }
+      if(!directMatch&&!fuzzyMatch)return false;
+    }
     if(selTypes.size>0&&!(a.types||[]).some(t=>selTypes.has(t)))return false;
     if(selCountries.size>0&&!selCountries.has(a.country))return false;
     if(selHair.size>0&&!selHair.has(a.hairColor))return false;
@@ -1614,6 +1934,21 @@ function showDet(id){
   document.getElementById("dBio").textContent=a.bio||"لا توجد نبذة.";
   document.getElementById("dNI").textContent=a.name||"—";document.getElementById("dCI").textContent=a.country||"—";document.getElementById("dTI").textContent=(a.types||[]).join(" • ")||"—";
   document.getElementById("dHI").textContent=a.hairColor||"—";
+  const ageWrap=document.getElementById("dAgeWrap"),ageEl=document.getElementById("dAge");
+  const age=calcAge(a.birthDate);
+  if(age!==null){
+    ageWrap.style.display="block";
+    let extra="";
+    const nb=nextBirthday(a.birthDate);
+    if(nb){
+      const days=Math.ceil((nb-new Date())/86400000);
+      if(days===0)extra=' <span style="color:var(--gold);font-size:11px;">🎉 عيد ميلادها اليوم!</span>';
+      else if(days<=7)extra=` <span style="color:var(--gold);font-size:11px;">🎂 بعد ${days} يوم</span>`;
+    }
+    ageEl.innerHTML=age+" سنة"+extra;
+  }else{
+    ageWrap.style.display="none";
+  }
   const tiktokIcon=`<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>`;const instaIcon=`<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;const linkIcon=`<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
   const socs=[{l:"تيك توك",i:tiktokIcon,h:a.facebook,c:"#20d4c8"},{l:"إنستغرام",i:instaIcon,h:a.instagram,c:"#e1306c"},{l:"Short Links",i:linkIcon,h:a.twitter,c:"#F1B76D"}];
   document.getElementById("dSoc").innerHTML=socs.map(s=>{const d=!s.h||s.h==="#"?" dis":"";return`<a href="${d?"#":s.h}" class="det-social${d}" style="${s.c&&!d?`color:${s.c};border-color:${s.c}30;background:${s.c}10`:""}" target="_blank" rel="noopener">${s.i} ${s.l}</a>`;}).join("");
@@ -1642,11 +1977,11 @@ document.getElementById("mImgFile").addEventListener("change",e=>{const file=e.t
 function openAModal(id=null){
   if(!isAdmin())return ss("للمشرف فقط","error");aEId=id;imgData=null;
   document.getElementById("aMTitle").textContent=id?"تعديل الممثلة":"إضافة ممثلة";popCS();
-  ["mName","mImg","mBio","mTt","mIg","mX","mCSrch"].forEach(x=>document.getElementById(x).value="");
+  ["mName","mImg","mBio","mTt","mIg","mX","mCSrch","mBirth"].forEach(x=>document.getElementById(x).value="");
   document.querySelectorAll(".aT").forEach(c=>c.checked=false);document.getElementById("imgPrev").innerHTML='<span>اضغط لاختيار صورة</span>';
   document.querySelectorAll(".imgtab").forEach((t,i)=>t.classList.toggle("on",i===0));document.querySelectorAll(".imgpanel").forEach((p,i)=>p.classList.toggle("on",i===0));
   if(id){const a=actresses.find(x=>x.id===id);if(!a)return;document.getElementById("mName").value=a.name||"";document.getElementById("mImg").value=a.image||"";document.getElementById("mBio").value=a.bio||"";document.getElementById("mTt").value=a.facebook&&a.facebook!=="#"?a.facebook:"";document.getElementById("mIg").value=a.instagram&&a.instagram!=="#"?a.instagram:"";document.getElementById("mX").value=a.twitter&&a.twitter!=="#"?a.twitter:"";document.querySelectorAll(".aT").forEach(c=>c.checked=(a.types||[]).includes(c.value));document.getElementById("mCountry").value=a.country||COUNTRIES[0];
-    document.querySelectorAll(".aH").forEach(r=>r.checked=r.value===a.hairColor);}
+    document.querySelectorAll(".aH").forEach(r=>r.checked=r.value===a.hairColor);document.getElementById("mBirth").value=a.birthDate||"";}
   openM("aModal");
 }
 window.openAModal=openAModal;
@@ -1657,10 +1992,26 @@ document.getElementById("saveA").addEventListener("click",async()=>{
   const bio=document.getElementById("mBio").value.trim(),facebook=document.getElementById("mTt").value.trim()||"#";
   const instagram=document.getElementById("mIg").value.trim()||"#",twitter=document.getElementById("mX").value.trim()||"#";
   const hairEl=document.querySelector('.aH:checked');const hairColor=hairEl?hairEl.value:"";
+  const birthDate=document.getElementById("mBirth").value||"";
   if(!name)return alert("أدخل الاسم");if(!types.length)return alert("اختر نوعاً");if(!image)return alert("أدخل رابط الصورة أو ارفع صورة");
-  const data={name,types,country,image,bio,facebook,instagram,twitter,hairColor,updatedAt:new Date().toISOString()};
+  const data={name,types,country,image,bio,facebook,instagram,twitter,hairColor,birthDate,updatedAt:new Date().toISOString()};
   const btn=document.getElementById("saveA");btn.textContent="⏳...";btn.disabled=true;
-  try{if(aEId){await updateDoc(doc(db,"actresses",aEId),data);ss("تم التحديث ✅");}else{data.createdAt=new Date().toISOString();await addDoc(collection(db,"actresses"),data);ss("تمت الإضافة ✅");}closeM("aModal");}
+  try{if(aEId){await updateDoc(doc(db,"actresses",aEId),data);ss("تم التحديث ✅");}else{
+      data.createdAt=new Date().toISOString();
+      const ref=await addDoc(collection(db,"actresses"),data);
+      ss("تمت الإضافة ✅");
+      // إرسال إشعار للمستخدمين بإضافة ممثلة جديدة
+      try{
+        await addDoc(collection(db,"notifications"),{
+          type:"new_actress",
+          actressId:ref.id,
+          name:data.name,
+          image:data.image||"",
+          country:data.country||"",
+          createdAt:new Date().toISOString()
+        });
+      }catch{}
+    }closeM("aModal");}
   catch(err){ss("خطأ: "+err.message,"error");}finally{btn.textContent="💾 حفظ";btn.disabled=false;}
 });
 async function delA(id){try{await deleteDoc(doc(db,"actresses",id));ss("تم الحذف 🗑️");}catch(err){ss("خطأ: "+err.message,"error");}}
@@ -1994,6 +2345,279 @@ window.toggleAllCtrs=function(){window._showAllCtrs=!window._showAllCtrs;renderC
 
 popCS();popCF();popFS();
 
+// ══ FUZZY SEARCH (Levenshtein-based similarity) ══
+function levenshtein(a,b){
+  a=a.toLowerCase();b=b.toLowerCase();
+  const m=a.length,n=b.length;
+  if(m===0)return n;if(n===0)return m;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      if(a[i-1]===b[j-1])dp[i][j]=dp[i-1][j-1];
+      else dp[i][j]=1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function similarity(a,b){
+  const maxLen=Math.max(a.length,b.length);
+  if(maxLen===0)return 1;
+  return 1-(levenshtein(a,b)/maxLen);
+}
+
+function highlightMatch(name,term){
+  if(!term)return name;
+  const idx=name.toLowerCase().indexOf(term.toLowerCase());
+  if(idx===-1)return name;
+  return name.slice(0,idx)+"<mark>"+name.slice(idx,idx+term.length)+"</mark>"+name.slice(idx+term.length);
+}
+
+// ══ AUTOCOMPLETE ══
+let acHighlightIdx=-1,acResults=[];
+const PH_AC="https://via.placeholder.com/40x40/030303/F1B76D?text=?";
+
+function buildAutocomplete(term){
+  const dd=document.getElementById("acDropdown");
+  if(!dd)return;
+  if(!term||term.length<1){dd.classList.remove("open");dd.innerHTML="";acResults=[];return;}
+
+  const t=term.toLowerCase().trim();
+  // مطابقة مباشرة (تحتوي على النص)
+  const direct=actresses.filter(a=>a.name.toLowerCase().includes(t));
+  // مطابقة تقريبية (fuzzy) للأسماء غير المباشرة
+  let fuzzy=[];
+  if(t.length>=2){
+    fuzzy=actresses
+      .filter(a=>!direct.includes(a))
+      .map(a=>{
+        // قارن مع كل كلمة من اسم الممثلة
+        const words=a.name.toLowerCase().split(/\s+/);
+        const bestSim=Math.max(...words.map(w=>similarity(w,t)),similarity(a.name.toLowerCase(),t));
+        return{a,sim:bestSim};
+      })
+      .filter(x=>x.sim>=0.55)
+      .sort((x,y)=>y.sim-x.sim)
+      .slice(0,4)
+      .map(x=>x.a);
+  }
+
+  acResults=[...direct.slice(0,6).map(a=>({a,fuzzy:false})),...fuzzy.map(a=>({a,fuzzy:true}))].slice(0,8);
+
+  if(!acResults.length){
+    dd.innerHTML='<div class="ac-empty">🔍 لا توجد نتائج مطابقة</div>';
+    dd.classList.add("open");
+    acHighlightIdx=-1;
+    return;
+  }
+
+  dd.innerHTML=acResults.map((r,i)=>{
+    const a=r.a;
+    const nameHtml=r.fuzzy?a.name:highlightMatch(a.name,term);
+    return `<div class="ac-item" data-idx="${i}" data-id="${a.id}">
+      <div class="ac-info">
+        <div class="ac-name">${nameHtml}</div>
+      </div>
+      ${r.fuzzy?'<span class="ac-fuzzy-tag">قد تقصد</span>':""}
+    </div>`;
+  }).join("");
+
+  dd.classList.add("open");
+  acHighlightIdx=-1;
+
+  dd.querySelectorAll(".ac-item").forEach(item=>{
+    item.addEventListener("click",()=>{
+      const id=item.dataset.id;
+      const a=actresses.find(x=>x.id===id);
+      if(a){
+        document.getElementById("aSearch").value=a.name;
+        dd.classList.remove("open");
+        aPage=1;renderActresses();
+        goTo("actresses");
+        setTimeout(()=>showDet(a.id),150);
+      }
+    });
+  });
+}
+
+function updateAcHighlight(){
+  const dd=document.getElementById("acDropdown");
+  if(!dd)return;
+  dd.querySelectorAll(".ac-item").forEach((item,i)=>{
+    item.classList.toggle("hl",i===acHighlightIdx);
+    if(i===acHighlightIdx)item.scrollIntoView({block:"nearest"});
+  });
+}
+
+// ربط الـ input بالـ autocomplete
+(function(){
+  const inp=document.getElementById("aSearch");
+  if(!inp)return;
+  let acTimer=null;
+  inp.addEventListener("input",function(){
+    clearTimeout(acTimer);
+    const val=this.value;
+    acTimer=setTimeout(()=>buildAutocomplete(val),150);
+  });
+  inp.addEventListener("keydown",function(e){
+    const dd=document.getElementById("acDropdown");
+    if(!dd.classList.contains("open"))return;
+    if(e.key==="ArrowDown"){
+      e.preventDefault();
+      acHighlightIdx=Math.min(acHighlightIdx+1,acResults.length-1);
+      updateAcHighlight();
+    } else if(e.key==="ArrowUp"){
+      e.preventDefault();
+      acHighlightIdx=Math.max(acHighlightIdx-1,-1);
+      updateAcHighlight();
+    } else if(e.key==="Enter"){
+      if(acHighlightIdx>=0&&acResults[acHighlightIdx]){
+        e.preventDefault();
+        const a=acResults[acHighlightIdx].a;
+        inp.value=a.name;
+        dd.classList.remove("open");
+        aPage=1;renderActresses();
+        goTo("actresses");
+        setTimeout(()=>showDet(a.id),150);
+      } else {
+        dd.classList.remove("open");
+      }
+    } else if(e.key==="Escape"){
+      dd.classList.remove("open");
+    }
+  });
+  inp.addEventListener("focus",function(){
+    if(this.value)buildAutocomplete(this.value);
+  });
+  document.addEventListener("click",e=>{
+    if(!e.target.closest(".search-field")){
+      const dd=document.getElementById("acDropdown");
+      if(dd)dd.classList.remove("open");
+    }
+  });
+})();
+
+
+
+// ══ SUGGESTIONS ══
+window.submitSuggestion=async function(){
+  if(!curUser)return ss("سجّل دخولك أولاً","error");
+  const name=document.getElementById("suggestName").value.trim();
+  const note=document.getElementById("suggestNote").value.trim();
+  const msg=document.getElementById("suggestMsg");
+  if(!name){
+    msg.textContent="❌ أدخل اسم الممثلة";
+    msg.style.background="rgba(255,68,68,.1)";
+    msg.style.color="#ff8080";
+    msg.style.display="block";
+    return;
+  }
+  try{
+    await addDoc(collection(db,"suggestions"),{
+      name,
+      note,
+      uid:curUser.uid,
+      userEmail:curUser.email,
+      userName:curUser.displayName||curUser.email.split("@")[0],
+      status:"pending",
+      createdAt:new Date().toISOString()
+    });
+    msg.textContent="✅ تم إرسال اقتراحك بنجاح!";
+    msg.style.background="rgba(34,197,94,.1)";
+    msg.style.color="#4ade80";
+    msg.style.display="block";
+    document.getElementById("suggestName").value="";
+    document.getElementById("suggestNote").value="";
+    loadMySuggestions();
+    setTimeout(()=>msg.style.display="none",3000);
+  }catch(err){
+    msg.textContent="❌ خطأ: "+err.message;
+    msg.style.background="rgba(255,68,68,.1)";
+    msg.style.color="#ff8080";
+    msg.style.display="block";
+  }
+};
+
+async function loadMySuggestions(){
+  if(!curUser)return;
+  const el=document.getElementById("mySuggestions");
+  if(!el)return;
+  try{
+    const snap=await getDocs(query(collection(db,"suggestions"),where("uid","==",curUser.uid),orderBy("createdAt","desc")));
+    if(snap.empty){el.innerHTML='<div style="color:var(--dim);font-size:12px;text-align:center;padding:20px;">لا توجد اقتراحات بعد</div>';return;}
+    el.innerHTML=snap.docs.map(d=>{
+      const s=d.data();
+      const status=s.status==="done"?'<span style="color:#4ade80;font-size:11px;">✅ تمت الإضافة</span>':
+                   s.status==="rejected"?'<span style="color:#ff8080;font-size:11px;">❌ مرفوض</span>':
+                   '<span style="color:var(--gold);font-size:11px;">⏳ قيد المراجعة</span>';
+      return `<div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--tx);">${s.name}</div>
+          ${s.note?`<div style="font-size:11px;color:var(--dim);margin-top:3px;">${s.note}</div>`:""}
+          <div style="font-size:10px;color:var(--dim2);margin-top:4px;">${new Date(s.createdAt).toLocaleDateString("ar-SA")}</div>
+        </div>
+        ${status}
+      </div>`;
+    }).join("");
+  }catch(err){el.innerHTML='<div style="color:var(--dim);font-size:12px;padding:10px;">خطأ في التحميل</div>';}
+}
+
+window.loadSuggestions=async function(){
+  if(!isAdmin())return;
+  const el=document.getElementById("suggestionsList");
+  if(!el)return;
+  el.innerHTML='<div class="loading" style="display:flex;"><div class="spin"></div><span>جاري التحميل...</span></div>';
+  try{
+    const snap=await getDocs(query(collection(db,"suggestions"),orderBy("createdAt","desc")));
+    if(snap.empty){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--dim);">لا توجد اقتراحات بعد</div>';return;}
+    el.innerHTML=snap.docs.map(d=>{
+      const s=d.data();
+      const isPending=s.status==="pending";
+      return `<div style="background:rgba(255,255,255,.02);border:1px solid ${isPending?"rgba(241,183,109,.2)":"rgba(255,255,255,.04)"};border-radius:13px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:15px;font-weight:700;color:var(--tx);margin-bottom:3px;">${s.name}</div>
+            ${s.note?`<div style="font-size:12px;color:var(--dim);margin-bottom:5px;">${s.note}</div>`:""}
+            <div style="font-size:11px;color:var(--dim);">👤 ${s.userName||s.userEmail} • ${new Date(s.createdAt).toLocaleDateString("ar-SA")}</div>
+          </div>
+          <div style="display:flex;gap:7px;flex-shrink:0;">
+            ${isPending?`
+              <button onclick="approveSuggestion('${d.id}','${s.name}')" style="width:36px;height:36px;border:none;border-radius:10px;background:rgba(34,197,94,.15);color:#4ade80;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(34,197,94,.3);" title="تمت الإضافة">✓</button>
+              <button onclick="rejectSuggestion('${d.id}')" style="width:36px;height:36px;border:none;border-radius:10px;background:rgba(255,68,68,.1);color:#ff8080;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,68,68,.25);" title="رفض">✕</button>
+            `:`<span style="font-size:12px;font-weight:700;${s.status==="done"?"color:#4ade80":"color:#ff8080"};padding:5px 12px;border-radius:100px;background:${s.status==="done"?"rgba(34,197,94,.1)":"rgba(255,68,68,.1)"};">${s.status==="done"?"✅ تمت الإضافة":"❌ مرفوض"}</span>`}
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+  }catch(err){el.innerHTML=`<div style="color:var(--red);padding:20px;">${err.message}</div>`;}
+};
+
+window.approveSuggestion=async function(id,name){
+  try{
+    await updateDoc(doc(db,"suggestions",id),{status:"done",approvedAt:new Date().toISOString()});
+    ss("تم تأكيد إضافة: "+name+" ✅");
+    // فتح modal إضافة ممثلة مع الاسم
+    openAModal();
+    setTimeout(()=>{
+      const nameEl=document.getElementById("mName");
+      if(nameEl)nameEl.value=name;
+    },300);
+    loadSuggestions();
+  }catch(err){ss("خطأ: "+err.message,"error");}
+};
+
+window.rejectSuggestion=async function(id){
+  if(!confirm("رفض هذا الاقتراح؟"))return;
+  try{
+    await updateDoc(doc(db,"suggestions",id),{status:"rejected",rejectedAt:new Date().toISOString()});
+    ss("تم رفض الاقتراح");
+    loadSuggestions();
+  }catch(err){ss("خطأ: "+err.message,"error");}
+};
+
+
 // تعريف aliases للدوال في window لاستخدامها من HTML onclick
 window._toggleMs=toggleMs;
 window._toggleMsItem=toggleMsItem;
@@ -2027,7 +2651,7 @@ function renderHairStats(){
   actresses.forEach(a=>{if(a.hairColor)hm[a.hairColor]=(hm[a.hairColor]||0)+1;});
   const sorted=Object.entries(hm).sort((a,b)=>b[1]-a[1]);
   const maxH=sorted[0]?.[1]||1;
-  const hairColors={"أسود":"#1a1a1a","بني":"#8B4513","أشقر":"#F4C542","أحمر":"#CC2200","ازرق":"#0400FF","أبيض":"#e0e0e0","وردي":"#FF69B4","بنفسجي":"#9B59B6"};
+  const hairColors={"أسود":"#1a1a1a","بني":"#8B4513","أشقر":"#F4C542","أحمر":"#CC2200","رمادي":"#4A9EFF","أبيض":"#e0e0e0","وردي":"#FF69B4","بنفسجي":"#9B59B6"};
   const el=document.getElementById("st-hair-bars");
   if(!el)return;
   if(!sorted.length){el.innerHTML='<div style="color:var(--dim);font-size:12px;padding:12px 0;">لا توجد بيانات</div>';return;}
@@ -2035,7 +2659,7 @@ function renderHairStats(){
     <div style="margin-bottom:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;">
         <span style="color:var(--tx);font-weight:700;display:flex;align-items:center;gap:8px;">
-          <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${hairColors[h]||"#0400FF"};border:1px solid rgba(255,255,255,.2);flex-shrink:0;"></span>
+          <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${hairColors[h]||"#888"};border:1px solid rgba(255,255,255,.2);flex-shrink:0;"></span>
           ${h}
         </span>
         <span style="display:flex;align-items:center;gap:7px;">
@@ -2044,7 +2668,7 @@ function renderHairStats(){
         </span>
       </div>
       <div style="height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:${Math.round(n/maxH*100)}%;background:${hairColors[h]||"#0400FF"};border-radius:3px;transition:width .6s ease;opacity:.8;"></div>
+        <div style="height:100%;width:${Math.round(n/maxH*100)}%;background:${hairColors[h]||"#888"};border-radius:3px;transition:width .6s ease;opacity:.8;"></div>
       </div>
     </div>`).join("");
 }
