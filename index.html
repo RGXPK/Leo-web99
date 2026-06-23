@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#030303"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Leo v9.2"/>
+<meta name="apple-mobile-web-app-title" content="Leo v9.5"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-<meta name="description" content="Leo v9.2 - Secure Data. Powerful Control."/>
+<meta name="description" content="Leo v9.5 - Secure Data. Powerful Control."/>
 <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Leo%206v%22%2C%22short_name%22%3A%22Leo%206v%22%2C%22description%22%3A%22Secure%20Data.%20Powerful%20Control.%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030303%22%2C%22theme_color%22%3A%22%23F1B76D%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D"/>
 <link rel="apple-touch-icon" href="https://g.top4top.io/p_3787q4lgv0.png"/>
-<title>Leo v9.2</title>
+<title>Leo v9.5</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -222,7 +222,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .pgb:disabled{opacity:.2;cursor:not-allowed;}
 
 /* DETAIL */
-.detwrap{display:none;animation:fadeIn .4s ease;}
+.detwrap{display:none;animation:fadeIn .4s ease;position:relative;z-index:1;}
 .det-hero{position:relative;height:58vh;min-height:300px;max-height:520px;overflow:hidden;}
 .det-hero img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
 .det-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,3,3,1) 0%,rgba(3,3,3,.55) 40%,rgba(3,3,3,.1) 100%);}
@@ -695,6 +695,328 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .chat-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--dim);gap:12px;}
 .chat-loading{display:flex;align-items:center;justify-content:center;padding:30px;color:var(--dim);gap:10px;}
 .chat-typing{font-size:11px;color:var(--dim);padding:0 20px 6px;height:18px;}
+
+/* ══ 1. SKELETON LOADING ══ */
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
+.skel-card{background:var(--s1);border:1px solid rgba(255,255,255,.04);border-radius:18px;overflow:hidden;animation:fadeIn .3s ease both;}
+.skel-img{height:255px;width:100%;}
+.skel-info{padding:12px 13px;display:flex;flex-direction:column;gap:7px;}
+.skel-name{height:14px;width:70%;border-radius:6px;}
+.skel-sub{height:11px;width:45%;border-radius:6px;}
+
+/* ══ 2. RIPPLE EFFECT ══ */
+.ripple-btn{position:relative;overflow:hidden;}
+.ripple-btn::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.2);transform:scale(0);animation:rippleAnim .5s ease-out;pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
+
+/* ══ 3. CARD ANIMATIONS ══ */
+@keyframes cardFlip{from{opacity:0;transform:perspective(600px) rotateY(-8deg) translateY(16px)}to{opacity:1;transform:perspective(600px) rotateY(0) translateY(0)}}
+.acard{animation:cardFlip .4s ease both;}
+
+/* ══ 4. FULLSCREEN IMAGE VIEWER ══ */
+.img-viewer{position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px;}
+.img-viewer.open{display:flex;}
+.img-viewer img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.8);}
+.img-viewer-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .2s;}
+.img-viewer-close:hover{background:rgba(255,68,68,.2);}
+.img-viewer-name{color:rgba(255,255,255,.7);font-size:14px;font-weight:700;margin-top:14px;font-family:Tajawal;}
+
+/* ══ 5. TYPE COLOR BG on detail page ══ */
+.det-hero::after{content:"";position:absolute;inset:0;background:inherit;opacity:0;transition:opacity .5s;}
+
+/* ══ 6. BUTTON RIPPLE ══ */
+.btn-primary,.btn-secondary,.btn-gold,.wbtn,.slide-btn-primary{overflow:hidden;position:relative;}
+
+/* ══ 7. PAGE TRANSITION ══ */
+.page.active{animation:pageIn .3s ease both;}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ 8. CARD HOVER GLOW ══ */
+.acard::after{content:"";position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,rgba(241,183,109,.06),transparent);opacity:0;transition:opacity .3s;pointer-events:none;}
+.acard:hover::after{opacity:1;}
+
+/* ══ 9. IMPROVED SCROLL ══ */
+.chat-messages,.ms-dd,.mbox,.autocomplete-dd{scroll-behavior:smooth;}
+
+/* ══ SPACE LOGIN ══ */
+@keyframes twinkle{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes shootingStar{0%{transform:translateX(0) translateY(0) rotate(-45deg);opacity:1}100%{transform:translateX(-400px) translateY(400px) rotate(-45deg);opacity:0}}
+@keyframes orbitRing{from{transform:rotateX(70deg) rotateZ(0deg)}to{transform:rotateX(70deg) rotateZ(360deg)}}
+@keyframes logoFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.03)}}
+@keyframes glow2{0%,100%{filter:drop-shadow(0 0 20px rgba(241,183,109,.4))}50%{filter:drop-shadow(0 0 50px rgba(241,183,109,.9))}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse-ring{0%{transform:scale(.95);box-shadow:0 0 0 0 rgba(241,183,109,.4)}70%{transform:scale(1);box-shadow:0 0 0 20px rgba(241,183,109,0)}100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(241,183,109,0)}}
+
+.wall{background:radial-gradient(ellipse at center, #0a0514 0%, #030308 50%, #000 100%) !important;}
+.wall::before{display:none !important;}
+
+/* نجوم */
+.stars-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.star{position:absolute;border-radius:50%;background:#fff;}
+.shooting-star{position:absolute;width:80px;height:1.5px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.8),rgba(241,183,109,.9));border-radius:100px;animation:shootingStar 3s ease-in-out infinite;opacity:0;}
+
+/* حلقة الكوكب */
+.planet-wrap{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.planet-ring-wrap{position:absolute;width:200px;height:200px;perspective:500px;}
+.planet-ring{width:200px;height:200px;border-radius:50%;border:2px solid rgba(241,183,109,.15);position:absolute;animation:orbitRing 8s linear infinite;box-shadow:0 0 20px rgba(241,183,109,.05);}
+.planet-ring::before{content:"";position:absolute;top:-4px;left:90px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold),0 0 24px rgba(241,183,109,.5);}
+.planet-ring-2{animation-duration:12s;animation-direction:reverse;border-color:rgba(241,183,109,.08);}
+.planet-ring-2::before{background:#4A9EFF;box-shadow:0 0 12px #4A9EFF;}
+.planet-ring-3{animation-duration:16s;border-color:rgba(168,85,247,.1);}
+.planet-ring-3::before{background:#a855f7;box-shadow:0 0 12px #a855f7;}
+
+/* اللوغو */
+.space-logo{width:100px;height:100px;border-radius:24px;object-fit:cover;border:2px solid rgba(241,183,109,.5);animation:logoFloat 4s ease-in-out infinite,glow2 3s ease-in-out infinite;position:relative;z-index:2;box-shadow:0 0 40px rgba(241,183,109,.3);}
+.space-brand{font-size:36px;font-weight:900;letter-spacing:8px;background:linear-gradient(135deg,#fff 0%,var(--gold) 50%,var(--gl) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:"Tajawal";text-align:center;margin-bottom:4px;}
+.space-tagline{font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.3);text-align:center;text-transform:uppercase;margin-bottom:32px;}
+
+/* كارد الدخول */
+.space-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:28px;backdrop-filter:blur(30px);width:100%;max-width:380px;position:relative;z-index:2;box-shadow:0 30px 80px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05);}
+.space-tabs{display:flex;gap:3px;background:rgba(0,0,0,.5);border-radius:13px;padding:3px;margin-bottom:20px;border:1px solid rgba(255,255,255,.04);}
+.space-tab{flex:1;padding:10px;border:none;border-radius:10px;background:transparent;color:rgba(255,255,255,.3);font-family:"Cairo";font-size:13px;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:.3px;}
+.space-tab.on{background:linear-gradient(135deg,rgba(241,183,109,.15),rgba(241,183,109,.08));color:var(--gold);border:1px solid rgba(241,183,109,.2);text-shadow:0 0 20px rgba(241,183,109,.5);}
+.space-err{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);border-radius:11px;padding:10px 14px;font-size:12px;color:#ff8080;margin-bottom:14px;display:none;animation:fadeUp .3s ease;}
+.space-err.show{display:block;}
+.space-inp{width:100%;padding:13px 16px;margin-bottom:11px;display:block;border-radius:13px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#fff;font-family:"Cairo";font-size:13px;outline:none;transition:all .3s;box-sizing:border-box;}
+.space-inp:focus{border-color:rgba(241,183,109,.4);background:rgba(241,183,109,.04);box-shadow:0 0 0 4px rgba(241,183,109,.06),0 0 20px rgba(241,183,109,.08);}
+.space-inp::placeholder{color:rgba(255,255,255,.2);}
+.space-inp-special{border-color:rgba(241,183,109,.15);background:rgba(241,183,109,.03);text-transform:uppercase;letter-spacing:3px;text-align:center;font-weight:700;}
+.space-inp-hint{font-size:10px;color:rgba(255,255,255,.2);text-align:center;margin-bottom:11px;letter-spacing:.5px;}
+.space-btn{width:100%;padding:14px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:"Cairo";font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;margin-top:4px;letter-spacing:.5px;position:relative;overflow:hidden;}
+.space-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .3s;}
+.space-btn:hover::before{opacity:1;}
+.space-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(241,183,109,.4),0 0 60px rgba(241,183,109,.15);}
+.space-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+/* ══ GRID/LIST TOGGLE ══ */
+.view-toggle{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:3px;}
+.view-btn{width:32px;height:32px;border:none;border-radius:8px;background:transparent;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.view-btn.on{background:rgba(241,183,109,.12);color:var(--gold);}
+.view-btn svg{width:16px;height:16px;}
+
+/* LIST VIEW */
+.agrid.list-view{grid-template-columns:1fr !important;}
+.agrid.list-view .acard{display:flex;flex-direction:row;border-radius:14px;height:100px;}
+.agrid.list-view .aimg{width:80px;height:100px !important;flex-shrink:0;border-radius:12px 0 0 12px;}
+.agrid.list-view .aimg img{border-radius:12px 0 0 12px;}
+.agrid.list-view .agrad{border-radius:12px 0 0 12px;}
+.agrid.list-view .abadges{top:8px;right:8px;flex-direction:row;flex-wrap:wrap;gap:3px;}
+.agrid.list-view .abadge{font-size:8px;padding:2px 6px;}
+.agrid.list-view .abtns-admin{top:8px;left:8px;}
+.agrid.list-view .abtns-admin button{width:26px;height:26px;font-size:11px;}
+.agrid.list-view .afav-btn{bottom:auto;top:50%;transform:translateY(-50%);left:auto;right:8px;width:28px;height:28px;font-size:13px;}
+.agrid.list-view .acard-info{flex:1;padding:10px 14px 10px 10px;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+.agrid.list-view .acard-text{display:flex;flex-direction:column;gap:3px;}
+.agrid.list-view .acard-name{font-size:14px;white-space:normal;overflow:visible;}
+.agrid.list-view .acard-country{font-size:11px;}
+.agrid.list-view .acard-copy{display:none;}
+.agrid.list-view .acard:hover{transform:translateX(-3px);box-shadow:4px 0 20px rgba(241,183,109,.15);}
+.agrid.list-view .acard-checkbox{top:50%;transform:translateY(-50%);right:auto;left:8px;}
+
+/* ══ CINEMA CARD STYLE ══ */
+.agrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
+}
+@media(max-width:768px){
+  .agrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+}
+
+/* بطاقة Cinema */
+.acard{
+  background:transparent;
+  border:none;
+  border-radius:0;
+  overflow:visible;
+  box-shadow:none;
+  position:relative;
+  animation:cardFlip .4s ease both;
+  cursor:pointer;
+}
+.acard:hover{transform:none;box-shadow:none;border-color:transparent;}
+.acard::after{display:none;}
+
+/* صورة كبيرة بنسبة سينمائية */
+.aimg{
+  position:relative;
+  overflow:hidden;
+  height:0;
+  padding-bottom:140%;
+  border-radius:18px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);
+  transition:box-shadow .35s,transform .35s;
+}
+.acard:hover .aimg{
+  box-shadow:0 20px 60px rgba(0,0,0,.8),0 0 0 1.5px rgba(241,183,109,.35);
+  transform:translateY(-6px) scale(1.02);
+}
+.aimg img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;object-position:top;
+  display:block;
+  transition:transform .5s ease;
+  border-radius:18px;
+}
+.acard:hover .aimg img{transform:scale(1.06);}
+
+/* تدرج سينمائي */
+.agrad{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(3,3,3,.97) 0%,
+    rgba(3,3,3,.7) 28%,
+    rgba(3,3,3,.15) 55%,
+    transparent 100%
+  );
+  border-radius:18px;
+}
+
+/* معلومات داخل الصورة */
+.acard-info{
+  position:absolute;
+  bottom:0;right:0;left:0;
+  padding:14px 14px 16px;
+  display:flex;flex-direction:column;gap:5px;
+}
+.acard-text{display:flex;flex-direction:column;gap:3px;}
+.acard-name{
+  font-size:14px;font-weight:900;color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-family:Tajawal;letter-spacing:.3px;
+  text-shadow:0 1px 6px rgba(0,0,0,.8);
+}
+.acard-country{
+  font-size:11px;color:rgba(255,255,255,.6);
+  display:flex;align-items:center;gap:4px;
+}
+.acard-copy{
+  position:absolute;top:12px;left:12px;
+  width:28px;height:28px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:8px;background:rgba(0,0,0,.4);
+  cursor:pointer;font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);flex-shrink:0;
+  backdrop-filter:blur(6px);
+  transition:all .2s;
+  opacity:0;
+}
+.acard:hover .acard-copy{opacity:1;}
+.acard-copy:hover{background:rgba(241,183,109,.2);border-color:var(--gold);color:var(--gold);}
+
+/* badges */
+.abadges{
+  position:absolute;top:12px;right:12px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.abadge{
+  font-size:9px;font-weight:900;padding:3px 8px;
+  border-radius:100px;backdrop-filter:blur(8px);
+  letter-spacing:.5px;white-space:nowrap;
+  border:1px solid currentColor;
+  text-shadow:none;
+}
+
+/* admin btns */
+.abtns-admin{
+  position:absolute;top:12px;left:12px;
+  display:flex;gap:5px;
+  opacity:0;transition:opacity .2s;
+}
+.acard:hover .abtns-admin{opacity:1;}
+.abtns-admin button{
+  width:30px;height:30px;border:none;border-radius:8px;
+  cursor:pointer;font-size:12px;display:flex;align-items:center;
+  justify-content:center;backdrop-filter:blur(10px);transition:all .15s;
+}
+.abtns-admin button:hover{transform:scale(1.1);}
+.abtn-edit{background:rgba(241,183,109,.85);color:#0a0a0a;}
+.abtn-del{background:rgba(255,68,68,.88);color:#fff;}
+
+/* fav btn */
+.afav-btn{
+  position:absolute;bottom:52px;left:12px;
+  width:30px;height:30px;border:none;border-radius:50%;
+  background:rgba(0,0,0,.45);color:rgba(255,255,255,.5);
+  cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);z-index:2;
+  transition:all .25s;
+  border:1px solid rgba(255,255,255,.1);
+  opacity:0;
+}
+.acard:hover .afav-btn{opacity:1;}
+.afav-btn.on{
+  opacity:1;
+  background:rgba(241,183,109,.2);
+  color:var(--gold);
+  border-color:rgba(241,183,109,.4);
+}
+
+/* type row */
+.acard-types{
+  display:flex;gap:4px;flex-wrap:wrap;
+  margin-top:2px;
+}
+.acard-type-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+
+/* LIST VIEW overrides */
+.agrid.list-view{grid-template-columns:1fr !important;}
+.agrid.list-view .acard{display:flex;flex-direction:row;border-radius:14px;
+  height:88px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.05);overflow:hidden;}
+.agrid.list-view .acard:hover{
+  transform:translateX(-3px) !important;
+  background:rgba(255,255,255,.04);
+  border-color:rgba(241,183,109,.2);
+  box-shadow:4px 0 20px rgba(241,183,109,.1);
+}
+.agrid.list-view .aimg{
+  width:70px;height:88px !important;
+  padding-bottom:0;flex-shrink:0;
+  border-radius:12px 0 0 12px;
+}
+.agrid.list-view .aimg img{border-radius:12px 0 0 12px;}
+.agrid.list-view .agrad{border-radius:12px 0 0 12px;}
+.agrid.list-view .acard-info{
+  position:static;padding:10px 14px;
+  display:flex;flex-direction:row;
+  align-items:center;gap:10px;flex:1;
+}
+.agrid.list-view .acard-text{flex:1;min-width:0;}
+.agrid.list-view .acard-name{font-size:13px;white-space:normal;}
+.agrid.list-view .acard-country{font-size:11px;}
+.agrid.list-view .acard-copy{
+  position:static;opacity:1;
+  background:transparent;border-color:rgba(255,255,255,.08);
+}
+.agrid.list-view .acard:hover .aimg{transform:none;}
+.agrid.list-view .abadges,.agrid.list-view .abtns-admin,
+.agrid.list-view .afav-btn{display:none;}
+.agrid.list-view .acard-types{display:none;}
+
+/* checkbox in bulk */
+.agrid.bulk-active .acard-checkbox{display:flex;}
+.acard-checkbox{
+  position:absolute;top:11px;right:11px;
+  width:24px;height:24px;border-radius:7px;
+  background:rgba(0,0,0,.55);
+  border:2px solid rgba(255,255,255,.25);
+  display:none;align-items:center;justify-content:center;
+  font-size:13px;color:#fff;backdrop-filter:blur(6px);z-index:3;
+}
+.agrid.bulk-active .acard.selected .acard-checkbox{
+  background:var(--gold);border-color:var(--gold);color:#0a0a0a;
+}
+.agrid.bulk-active .acard.selected{
+  outline:2px solid var(--gold);outline-offset:2px;border-radius:20px;
+}
 </style>
 
 <script>
@@ -784,14 +1106,14 @@ window.addEventListener('load',()=>{
 <!-- iOS INSTALL HINT -->
 <div id="iosHint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
   <div style="flex:1;">
-    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v9.2</div>
+    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v9.5</div>
     <div style="font-size:11px;color:#888;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
   </div>
   <span onclick="document.getElementById('iosHint').style.display='none';" style="font-size:18px;color:#555;cursor:pointer;flex-shrink:0;">×</span>
 </div>
 
 <div id="maintScreen" class="maint">
-  <div style="font-size:62px;margin-bottom:18px;animation:float 3s ease-in-out infinite;">🔧</div>
+  <div style="font-size:62px;margin-bottom:18px;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(241,183,109,.5));">🔧</div>
   <div style="font-size:22px;font-weight:900;color:var(--gold);font-family:Tajawal;margin-bottom:8px;">الموقع تحت الصيانة</div>
   <div style="font-size:13px;color:var(--dim);max-width:360px;line-height:1.8;margin-bottom:22px;" id="maintCustomMsg">نعمل على تحسين الموقع وسيعود قريباً 🙏</div>
   <div class="maint-box">
@@ -803,44 +1125,58 @@ window.addEventListener('load',()=>{
   </div>
 </div>
 
-<!-- LOGIN WALL -->
+<!-- LOGIN WALL - SPACE DESIGN -->
 <div id="loginWall" class="wall" style="display:flex;">
-  <div class="wall-card">
-    <div class="wall-logo-wrap">
-      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.2" class="wall-logo-img"/>
-      <div class="wall-brand">Leo v9.2</div>
-      <div class="wall-tagline">SECURE DATA. POWERFUL CONTROL.</div>
-    </div>
-    <div class="wall-box">
-      <div class="wall-tabs">
-        <button class="wall-tab on" id="wTabL" onclick="wTab(1)">تسجيل الدخول</button>
-        <button class="wall-tab" id="wTabR" onclick="wTab(2)">إنشاء حساب</button>
+  <!-- نجوم الفضاء -->
+  <div class="stars-wrap" id="starsWrap"></div>
+
+  <!-- محتوى الدخول -->
+  <div style="position:relative;z-index:2;width:100%;max-width:420px;animation:fadeUp .7s ease both;display:flex;flex-direction:column;align-items:center;padding:20px;">
+
+    <!-- اللوغو مع الحلقات -->
+    <div class="planet-wrap">
+      <div class="planet-ring-wrap">
+        <div class="planet-ring"></div>
+        <div class="planet-ring planet-ring-2"></div>
+        <div class="planet-ring planet-ring-3"></div>
       </div>
-      <div id="wallErr" class="wall-err"></div>
+      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.5" class="space-logo"/>
+    </div>
+
+    <div class="space-brand">Leo v9.5</div>
+    <div class="space-tagline">✦ Secure Data · Powerful Control ✦</div>
+
+    <div class="space-card" style="width:100%;">
+      <div class="space-tabs">
+        <button class="space-tab on" id="wTabL" onclick="wTab(1)">تسجيل الدخول</button>
+        <button class="space-tab" id="wTabR" onclick="wTab(2)">إنشاء حساب</button>
+      </div>
+      <div id="wallErr" class="space-err"></div>
       <div id="wF1">
-        <input id="wEmail" type="text" placeholder="البريد أو اسم المستخدم" class="win" autocomplete="username"/>
-        <input id="wPass" type="password" placeholder="كلمة المرور" class="win"/>
-        <button id="wLoginBtn" class="wbtn">🔑 تسجيل الدخول</button>
+        <input id="wEmail" type="text" placeholder="✦ البريد أو اسم المستخدم" class="space-inp" autocomplete="username"/>
+        <input id="wPass" type="password" placeholder="✦ كلمة المرور" class="space-inp"/>
+        <button id="wLoginBtn" class="space-btn">🚀 دخول</button>
       </div>
       <div id="wF2" style="display:none;">
-        <input id="wName" type="text" placeholder="الاسم الكامل *" class="win"/>
-        <input id="wREmail" type="email" placeholder="البريد الإلكتروني *" class="win"/>
-        <input id="wRPass" type="password" placeholder="كلمة المرور (8 أحرف) *" class="win"/>
-        <input id="wRPass2" type="password" placeholder="تأكيد كلمة المرور *" class="win"/>
-        <input id="wUsername" type="text" placeholder="اسم المستخدم * (5 أحرف إنجليزية)" class="win" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_]/g,'')"/>
-        <input id="wInvite" type="text" placeholder="🔑 كود الدعوة *" class="win win-special"/>
-        <div class="win-hint">اسم "leo" محجوز للأول فقط • 5 أحرف على الأقل</div>
-        <button id="wRegBtn" class="wbtn">✨ إنشاء الحساب</button>
+        <input id="wName" type="text" placeholder="✦ الاسم الكامل *" class="space-inp"/>
+        <input id="wREmail" type="email" placeholder="✦ البريد الإلكتروني *" class="space-inp"/>
+        <input id="wRPass" type="password" placeholder="✦ كلمة المرور (8 أحرف) *" class="space-inp"/>
+        <input id="wRPass2" type="password" placeholder="✦ تأكيد كلمة المرور *" class="space-inp"/>
+        <input id="wUsername" type="text" placeholder="✦ اسم المستخدم (5 أحرف إنجليزية) *" class="space-inp" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_]/g,'')"/>
+        <input id="wInvite" type="text" placeholder="🔑 كود الدعوة *" class="space-inp space-inp-special"/>
+        <div class="space-inp-hint">اسم "leo" محجوز للأول فقط • 5 أحرف على الأقل</div>
+        <button id="wRegBtn" class="space-btn">✨ إنشاء الحساب</button>
       </div>
     </div>
+
   </div>
 </div>
 
 <!-- NAV -->
 <nav class="nav" id="mainNav" style="display:none;">
   <a class="brand" id="homeBrand" href="#">
-    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.2"/></div>
-    <span class="brand-name">Leo v9.2</span>
+    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.5"/></div>
+    <span class="brand-name">Leo v9.5</span>
   </a>
   <div class="nav-sp"></div>
   <div style="position:static;" id="bellWrap">
@@ -909,7 +1245,7 @@ window.addEventListener('load',()=>{
     </div>
     <div class="hero-visual">
       <div class="hero-ring"></div>
-      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.2"/></div>
+      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.5"/></div>
     </div>
   </div>
   <div class="home-slider-sec">
@@ -925,7 +1261,7 @@ window.addEventListener('load',()=>{
   </div>
 
   <div class="features">
-    <div class="features-label">✦ ما يقدمه Leo v9.2 ✦</div>
+    <div class="features-label">✦ ما يقدمه Leo v9.5 ✦</div>
     <div class="features-grid">
       <div class="feat"><div class="feat-icon">🎬</div><div class="feat-title">تصفح الممثلات</div><div class="feat-desc">قاعدة بيانات متقدمة مع فلاتر متعددة وتوصيات ذكية</div></div>
       <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">مدير الروابط</div><div class="feat-desc">نظّم روابطك في مجلدات ملونة وتتبع النقرات</div></div>
@@ -933,7 +1269,7 @@ window.addEventListener('load',()=>{
       <div class="feat"><div class="feat-icon">🔑</div><div class="feat-title">نظام دعوة متقدم</div><div class="feat-desc">تسجيل يتطلب كود خاص واسم مستخدم فريد</div></div>
     </div>
   </div>
-  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo v9.2</span> 2025 — SECURE DATA. POWERFUL CONTROL.</footer>
+  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo v9.5</span> 2025 — SECURE DATA. POWERFUL CONTROL.</footer>
 </div>
 
 <!-- ACTRESSES -->
@@ -1009,7 +1345,20 @@ window.addEventListener('load',()=>{
       💡 اقترح ممثلة
     </button>
   </div>
-  <div class="results-bar"><span>النتائج: <span class="rc" id="aCnt">0</span></span><span id="aPInfo" style="font-size:12px;color:var(--dim);"></span></div>
+  <div class="results-bar">
+    <span>النتائج: <span class="rc" id="aCnt">0</span></span>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span id="aPInfo" style="font-size:12px;color:var(--dim);"></span>
+      <div class="view-toggle">
+        <button class="view-btn on" id="gridViewBtn" title="عرض شبكي" onclick="setView('grid')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="view-btn" id="listViewBtn" title="عرض قائمة" onclick="setView('list')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
   <div id="bulkBar" style="display:none;max-width:1200px;margin:0 auto;padding:0 24px 10px;align-items:center;gap:10px;flex-wrap:wrap;">
     <span style="font-size:12px;color:var(--gold);font-weight:700;"><span id="bulkCount">0</span> محدد</span>
     <select id="bulkAddType" class="sinp" style="max-width:160px;padding:7px 12px;font-size:12px;">
@@ -1027,12 +1376,12 @@ window.addEventListener('load',()=>{
     <div class="agrid" id="aGrid"><div class="loading"><div class="spin"></div><span>جاري التحميل...</span></div></div>
     <div class="pag" id="aPag"></div>
   </div>
-  <div class="detwrap" id="aDet">
+  <div class="detwrap" id="aDet" style="display:none;">
     <div class="det-hero">
-      <img id="dImg" src="" alt=""/>
+      <img id="dImg" src="" alt="" onclick="openImgViewer(this.src,document.getElementById('dName').textContent)" style="cursor:zoom-in;"/>
       <div class="det-overlay"></div>
       <div class="det-top-actions">
-        <button class="det-back" id="aBack"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> رجوع</button>
+        <button class="det-back" id="aBack" onclick="backToGrid()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> رجوع</button>
         <div class="det-admin-btns" id="dAdminBtns" style="display:none">
           <button class="det-edit" id="dEditBtn">✏️ تعديل</button>
           <button class="det-del" id="dDelBtn">🗑️ حذف</button>
@@ -1127,7 +1476,7 @@ window.addEventListener('load',()=>{
 <div class="page" id="page-admin">
   <div class="admin-page">
     <div class="admin-header">
-      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.2"/></div>
+      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.5"/></div>
       <div><div class="admin-title">لوحة التحكم</div><div class="admin-sub" id="adminEmail">مرحباً بك</div></div>
     </div>
     <div class="admin-tools">
@@ -1349,6 +1698,13 @@ window.addEventListener('load',()=>{
     </div>
   </div>
 </div>
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+<div class="img-viewer" id="imgViewer" onclick="if(event.target===this)closeImgViewer()">
+  <button class="img-viewer-close" onclick="closeImgViewer()">✕</button>
+  <img id="imgViewerSrc" src="" alt=""/>
+  <div class="img-viewer-name" id="imgViewerName"></div>
+</div>
 <!-- MODALS -->
 <div id="aModal" class="modal">
   <div class="mbox">
@@ -1437,9 +1793,8 @@ function wTab(t){
   const tL=document.getElementById("wTabL"),tR=document.getElementById("wTabR");
   if(f1)f1.style.display=t===1?"block":"none";
   if(f2)f2.style.display=t===2?"block":"none";
-  const base="flex:1;padding:10px;border:none;border-radius:9px;font-family:Cairo;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;";
-  if(tL)tL.style.cssText=base+(t===1?"background:linear-gradient(135deg,#F1B76D,#c8883a);color:#0a0a0a;box-shadow:0 4px 16px rgba(241,183,109,.3);":"background:transparent;color:#666;");
-  if(tR)tR.style.cssText=base+(t===2?"background:linear-gradient(135deg,#F1B76D,#c8883a);color:#0a0a0a;box-shadow:0 4px 16px rgba(241,183,109,.3);":"background:transparent;color:#666;");
+  if(tL){tL.className="space-tab"+(t===1?" on":"");}
+  if(tR){tR.className="space-tab"+(t===2?" on":"");}
   const err=document.getElementById("wallErr");if(err)err.classList.remove("show");
 }
 function toggleMs(w){if(window._toggleMs)window._toggleMs(w);}
@@ -1482,6 +1837,70 @@ function clearChatHistory(){if(window.clearChatHistory)window.clearChatHistory()
 function chatKeyDown(e){if(window.chatKeyDown)window.chatKeyDown(e);}
 function autoResizeChat(el){if(window.autoResizeChat)window.autoResizeChat(el);}
 function chatTypingIndicator(){if(window.chatTypingIndicator)window.chatTypingIndicator();}
+function openImgViewer(src,name){if(window.openImgViewer)window.openImgViewer(src,name);}
+var currentView=localStorage.getItem("aView")||"grid";
+function backToGrid(){
+  var det=document.getElementById("aDet");
+  var gw=document.getElementById("aGWrap");
+  var sb=document.querySelector(".search-bar");
+  var rb=document.querySelector(".results-bar");
+  if(det){det.style.display="none";det.style.visibility="";}
+  if(gw){gw.style.display="block";}
+  if(sb){sb.style.display="block";}
+  if(rb){rb.style.display="flex";}
+  window.scrollTo(0,0);
+}
+function setView(v){
+  currentView=v;
+  localStorage.setItem("aView",v);
+  var grid=document.getElementById("aGrid");
+  var gb=document.getElementById("gridViewBtn");
+  var lb=document.getElementById("listViewBtn");
+  if(gb)gb.classList.toggle("on",v==="grid");
+  if(lb)lb.classList.toggle("on",v==="list");
+  if(!grid)return;
+  if(v==="list")grid.classList.add("list-view");
+  else grid.classList.remove("list-view");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  setTimeout(function(){setView(currentView);},600);
+});
+function closeImgViewer(){if(window.closeImgViewer)window.closeImgViewer();}
+
+
+// ══ SPACE STARS ══
+function createStars(){
+  const wrap=document.getElementById("starsWrap");
+  if(!wrap)return;
+  // نجوم ثابتة
+  const count=120;
+  for(let i=0;i<count;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    const size=Math.random()*2.5+0.5;
+    s.style.cssText=`
+      width:${size}px;height:${size}px;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      opacity:${Math.random()*.7+.1};
+      animation:twinkle ${Math.random()*3+2}s ease-in-out infinite;
+      animation-delay:${Math.random()*4}s;
+    `;
+    wrap.appendChild(s);
+  }
+  // نجوم متحركة
+  for(let i=0;i<4;i++){
+    const ss=document.createElement("div");
+    ss.className="shooting-star";
+    ss.style.cssText=`
+      top:${Math.random()*50}%;left:${Math.random()*80+20}%;
+      animation-delay:${i*2.5}s;
+      animation-duration:${Math.random()*2+2.5}s;
+    `;
+    wrap.appendChild(ss);
+  }
+}
+createStars();
+
 </script>
 
 <script type="module">
@@ -2240,6 +2659,65 @@ onSnapshot(collection(db,"adminChat"),snap=>{
   } else {el.innerHTML="";}
 },()=>{});
 
+// ══ SKELETON LOADING ══
+function showSkeletons(gridId, count=8){
+  const grid=document.getElementById(gridId);
+  if(!grid)return;
+  grid.innerHTML=Array.from({length:count},()=>`
+    <div class="skel-card">
+      <div class="skel-img skeleton"></div>
+      <div class="skel-info">
+        <div class="skel-name skeleton"></div>
+        <div class="skel-sub skeleton"></div>
+      </div>
+    </div>`).join("");
+}
+
+// ══ RIPPLE EFFECT ══
+function addRipple(el,e){
+  const rect=el.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height)*2;
+  const x=e.clientX-rect.left-size/2;
+  const y=e.clientY-rect.top-size/2;
+  el.style.setProperty("--ripple-x",x+"px");
+  el.style.setProperty("--ripple-y",y+"px");
+  el.style.setProperty("--ripple-size",size+"px");
+  const ripple=document.createElement("span");
+  ripple.style.cssText=`position:absolute;border-radius:50%;background:rgba(255,255,255,.18);width:${size}px;height:${size}px;left:${x}px;top:${y}px;transform:scale(0);animation:rippleAnim .55s ease-out;pointer-events:none;`;
+  el.appendChild(ripple);
+  ripple.addEventListener("animationend",()=>ripple.remove());
+}
+document.addEventListener("click",e=>{
+  const btn=e.target.closest(".btn-primary,.btn-secondary,.btn-gold,.wbtn,.slide-btn-primary,.hslide-btn,.filter-btn,.add-btn");
+  if(btn&&!btn.disabled)addRipple(btn,e);
+},{passive:true});
+
+// ══ FULLSCREEN IMAGE VIEWER ══
+window.openImgViewer=function(src,name){
+  const v=document.getElementById("imgViewer");
+  const img=document.getElementById("imgViewerSrc");
+  const nm=document.getElementById("imgViewerName");
+  if(!v||!img)return;
+  img.src=src;
+  if(nm)nm.textContent=name||"";
+  v.classList.add("open");
+  document.body.style.overflow="hidden";
+};
+window.closeImgViewer=function(){
+  const v=document.getElementById("imgViewer");
+  if(v)v.classList.remove("open");
+  document.body.style.overflow="";
+};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeImgViewer();});
+
+// ══ CARD ANIMATIONS STAGGER ══
+function staggerCards(gridEl){
+  if(!gridEl)return;
+  gridEl.querySelectorAll(".acard").forEach((c,i)=>{
+    c.style.animationDelay=i*0.04+"s";
+  });
+}
+
 // FIREBASE LISTENERS
 onSnapshot(query(collection(db,"actresses"),orderBy("name")),s=>{actresses=s.docs.map(d=>({id:d.id,...d.data()}));renderActresses();popCS();popCF();updStats();renderAdmin();const sp=document.getElementById("page-stats");if(sp&&sp.classList.contains("active"))renderStats();buildHomeSlider();},()=>{});
 onSnapshot(query(collection(db,"notifications"),orderBy("createdAt","desc")),s=>{
@@ -2321,6 +2799,8 @@ document.getElementById("resetF").addEventListener("click",()=>{
 // RENDER ACTRESSES
 function renderActresses(){
   const grid=document.getElementById("aGrid"),pag=document.getElementById("aPag");
+  // Skeleton أثناء التحميل الأول
+  if(!actresses.length){showSkeletons("aGrid");return;}
   const pp=parseInt(document.getElementById("aPP")?.value||20);
   const f=getFA(),total=f.length,pages=Math.max(1,Math.ceil(total/pp));
   if(aPage>pages)aPage=1;
@@ -2336,21 +2816,23 @@ function renderActresses(){
     const firstType=(a.types||[])[0]||"";
     const typeColor=TYPE_COLORS[firstType]||"var(--gold)";
     card.dataset.id=a.id;
+    const typeDotsHtml=(a.types||[]).slice(0,4).map(t=>`<span class="acard-type-dot" style="background:${TYPE_COLORS[t]||"var(--gold)"};" title="${t}"></span>`).join("");
     card.innerHTML=`
     <div class="aimg">
-      <img src="${a.image||PH}" alt="${a.name}" loading="lazy" onerror="this.src='${PH}'"/>
+      <img src="${a.image||PH}" alt="${a.name}" loading="lazy" onerror="this.src='${PH}'" ondblclick="openImgViewer('${a.image||PH}','${a.name}')"/>
       <div class="agrad"></div>
       <div class="acard-checkbox">✓</div>
-      <div class="abadges">${(a.types||[]).map(t=>`<span class="abadge" style="border-color:${TYPE_COLORS[t]||"var(--gold)"};color:${TYPE_COLORS[t]||"var(--gold)"};background:${TYPE_COLORS[t]||"var(--gold)"}18;">${t}</span>`).join("")}</div>
+      <div class="abadges">${(a.types||[]).slice(0,2).map(t=>`<span class="abadge" style="border-color:${TYPE_COLORS[t]||"var(--gold)"};color:${TYPE_COLORS[t]||"var(--gold)"};background:${TYPE_COLORS[t]||"var(--gold)"}18;">${t}</span>`).join("")}</div>
       ${isAdmin()?`<div class="abtns-admin"><button class="abtn-edit" data-id="${a.id}">✏️</button><button class="abtn-del" data-id="${a.id}">🗑️</button></div>`:""}
-      <button class="afav-btn${isFav?" on":""}">${isFav?"⭐":"☆"}</button>
-    </div>
-    <div class="acard-info">
-      <div class="acard-text">
-        <div class="acard-name">${a.name}</div>
-        <div class="acard-country">📍 ${a.country||"—"}${a.hairColor?` • 💇 ${a.hairColor}`:""}</div>
+      <button class="afav-btn${isFav?" on":""}">${isFav?"❤️":"🤍"}</button>
+      <div class="acard-info">
+        <div class="acard-text">
+          <div class="acard-name">${a.name}</div>
+          <div class="acard-country">📍 ${a.country||"—"}${a.hairColor?` · 💇 ${a.hairColor}`:""}</div>
+          ${typeDotsHtml?`<div class="acard-types">${typeDotsHtml}</div>`:""}
+        </div>
+        <button class="acard-copy" title="نسخ الاسم">📋</button>
       </div>
-      <button class="acard-copy" title="نسخ الاسم">📋</button>
     </div>`;
     card.addEventListener("click",e=>{
       if(bulkModeActive){
@@ -2366,6 +2848,8 @@ function renderActresses(){
     if(isAdmin()){card.querySelector(".abtn-edit")?.addEventListener("click",e=>{e.stopPropagation();openAModal(a.id);});card.querySelector(".abtn-del")?.addEventListener("click",e=>{e.stopPropagation();if(confirm(`حذف "${a.name}"؟`))delA(a.id);});}
     grid.appendChild(card);
   });
+  staggerCards(grid);
+  if(typeof window.setView==="function")window.setView(window.currentView||"grid");
   renderPag(pages);
 }
 function renderPag(pages){
@@ -2405,7 +2889,17 @@ function showDet(id){
   document.getElementById("dSoc").innerHTML=socs.map(s=>{const d=!s.h||s.h==="#"?" dis":"";return`<a href="${d?"#":s.h}" class="det-social${d}" style="${s.c&&!d?`color:${s.c};border-color:${s.c}30;background:${s.c}10`:""}" target="_blank" rel="noopener">${s.i} ${s.l}</a>`;}).join("");
   document.getElementById("dAdminBtns").style.display=isAdmin()?"flex":"none";
   const cpd=document.getElementById("cpDetBtn");if(cpd)cpd.onclick=()=>{navigator.clipboard.writeText(a.name).then(()=>{cpd.textContent="✅";setTimeout(()=>cpd.textContent="📋",1800);ss("تم نسخ: "+a.name);});};
-  document.getElementById("aDet").style.display="block";document.getElementById("aGWrap").style.display="none";document.querySelector(".search-bar").style.display="none";document.querySelector(".results-bar").style.display="none";window.scrollTo(0,0);
+  const _det=document.getElementById("aDet");
+  const _gw=document.getElementById("aGWrap");
+  const _sb=document.querySelector(".search-bar");
+  const _rb=document.querySelector(".results-bar");
+  const _bb=document.getElementById("suggestBtnBar");
+  if(_det){_det.style.display="block";_det.style.visibility="visible";_det.style.opacity="1";}
+  if(_gw)_gw.style.display="none";
+  if(_sb)_sb.style.display="none";
+  if(_rb)_rb.style.display="none";
+  if(_bb)_bb.style.display="none";
+  window.scrollTo(0,0);
   setTimeout(()=>{
     const others=actresses.filter(x=>x.id!==a.id);
     const scored=others.map(x=>{let sc=0;if(x.country===a.country)sc+=3;(a.types||[]).forEach(t=>{if((x.types||[]).includes(t))sc+=2;});sc+=Math.random()*.5;return{...x,sc};}).sort((a,b)=>b.sc-a.sc).slice(0,6);
