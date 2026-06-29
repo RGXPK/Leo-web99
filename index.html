@@ -696,73 +696,65 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .chat-loading{display:flex;align-items:center;justify-content:center;padding:30px;color:var(--dim);gap:10px;}
 .chat-typing{font-size:11px;color:var(--dim);padding:0 20px 6px;height:18px;}
 
-/* ══ CHANNELS PAGE ══ */
-.channels-page{padding:20px 18px;max-width:700px;margin:0 auto;}
-.channel-card{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 16px;
-  background:rgba(255,255,255,.02);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:14px;
-  margin-bottom:10px;
-  transition:all .2s;
-  animation:fadeIn .3s ease both;
-}
-.channel-card:hover{
-  border-color:rgba(241,183,109,.2);
-  background:rgba(241,183,109,.03);
-  transform:translateX(-3px);
-}
-.channel-icon{
-  width:44px;height:44px;border-radius:12px;
-  background:linear-gradient(135deg,rgba(241,183,109,.15),rgba(241,183,109,.05));
-  border:1px solid rgba(241,183,109,.2);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.channel-name{
-  flex:1;min-width:0;
-  font-size:14px;font-weight:700;color:var(--tx);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.channel-actions{display:flex;gap:7px;flex-shrink:0;}
-.ch-copy-btn{
-  display:flex;align-items:center;gap:5px;
-  padding:7px 13px;border:1px solid rgba(241,183,109,.2);
-  border-radius:100px;background:rgba(241,183,109,.06);
-  color:var(--gold);cursor:pointer;font-family:Cairo;
-  font-size:12px;font-weight:700;transition:all .2s;
-}
-.ch-copy-btn:hover{background:rgba(241,183,109,.14);transform:scale(1.05);}
+/* ══ VIP & CHANNELS ══ */
+.vip-page,.channels-page{padding:20px 18px;max-width:800px;margin:0 auto;}
+.vip-header{background:linear-gradient(135deg,rgba(241,183,109,.08),rgba(168,85,247,.05));border:1px solid rgba(241,183,109,.2);border-radius:18px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.vip-crown{font-size:38px;filter:drop-shadow(0 0 10px rgba(241,183,109,.5));}
+.vip-htitle{font-size:17px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:Tajawal;margin-bottom:3px;}
+.vip-hsub{font-size:12px;color:var(--dim);line-height:1.6;}
+.vip-section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+.vip-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.vip-section-title{font-size:14px;font-weight:700;color:var(--tx);}
+.vip-btn{padding:8px 16px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;}
+.vip-btn-sm{padding:6px 13px;border:1px solid rgba(255,255,255,.06);border-radius:100px;background:transparent;color:var(--dim);cursor:pointer;font-family:Cairo;font-size:11px;}
+.vip-content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+@media(max-width:480px){.vip-content-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}}
+.vip-card{background:var(--s1);border:1px solid rgba(241,183,109,.12);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;position:relative;animation:fadeIn .4s ease both;}
+.vip-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.6),0 0 0 1px rgba(241,183,109,.2);}
+.vip-card-media{position:relative;height:190px;overflow:hidden;background:#111;}
+.vip-card-media img,.vip-card-media video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
+.vip-card:hover .vip-card-media img{transform:scale(1.07);}
+.vip-card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,3,3,.95) 0%,transparent 55%);}
+.vip-card-type{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:var(--gold);font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;backdrop-filter:blur(6px);}
+.vip-card-info{position:absolute;bottom:0;right:0;left:0;padding:10px 11px;}
+.vip-card-name{font-size:12px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vip-card-del{position:absolute;top:8px;left:8px;width:26px;height:26px;border:none;border-radius:50%;background:rgba(255,68,68,.7);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:0;transition:opacity .2s;}
+.vip-card:hover .vip-card-del{opacity:1;}
+.vip-lock-box{text-align:center;padding:40px 20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:14px;margin-bottom:14px;}
+.vip-code-input{width:100%;padding:14px 16px;border-radius:13px;border:1px solid rgba(241,183,109,.3);background:rgba(241,183,109,.04);color:var(--gold);font-family:monospace;font-size:15px;font-weight:700;letter-spacing:3px;text-align:center;outline:none;text-transform:uppercase;box-sizing:border-box;margin-bottom:10px;}
+.vip-code-input:focus{border-color:rgba(241,183,109,.6);box-shadow:0 0 0 3px rgba(241,183,109,.1);}
+.vip-steps{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:16px 18px;margin-top:14px;}
+.vip-step{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;color:var(--dim);align-items:flex-start;}
+.vip-step:last-child{border-bottom:none;}
+.vip-step-n{width:24px;height:24px;border-radius:50%;background:rgba(241,183,109,.1);border:1px solid rgba(241,183,109,.25);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.req-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:13px 15px;margin-bottom:10px;animation:fadeIn .3s ease;}
+.req-status-pending{color:var(--gold);}
+.req-status-approved{color:#4ade80;}
+.req-status-rejected{color:#ff8080;}
+.proof-preview-wrap{width:100%;height:140px;border-radius:12px;border:2px dashed rgba(241,183,109,.2);background:rgba(255,255,255,.02);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:8px;transition:all .2s;overflow:hidden;margin-bottom:10px;}
+.proof-preview-wrap:hover{border-color:rgba(241,183,109,.4);background:rgba(241,183,109,.03);}
+.proof-preview-wrap img{width:100%;height:100%;object-fit:cover;}
+.ch-code-card{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;}
+.ch-code-val{flex:1;font-family:monospace;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ch-code-status-used{color:#ff8080;font-size:11px;}
+.ch-code-status-free{color:#4ade80;font-size:11px;}
+/* ══ TIKTOK VIP VIEWER ══ */
+#vipMediaViewer{-webkit-overflow-scrolling:touch;}
+#vipScrollInner{display:flex;flex-direction:column;}
+#vipMediaViewer video{display:block;}
+#vipNavUp,#vipNavDown{transition:opacity .2s;}
+#vipMediaViewer:hover #vipNavUp,#vipMediaViewer:hover #vipNavDown{opacity:var(--nav-op,0)!important;}
+
+/* CHANNELS */
+.channel-card{display:flex;align-items:center;gap:14px;padding:13px 15px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:13px;margin-bottom:9px;transition:all .2s;animation:fadeIn .3s ease both;}
+.channel-card:hover{border-color:rgba(241,183,109,.2);background:rgba(241,183,109,.03);transform:translateX(-2px);}
+.channel-icon{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,rgba(241,183,109,.12),rgba(241,183,109,.04));border:1px solid rgba(241,183,109,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;}
+.channel-name{flex:1;font-size:14px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ch-copy-btn{display:flex;align-items:center;gap:5px;padding:7px 13px;border:1px solid rgba(241,183,109,.2);border-radius:100px;background:rgba(241,183,109,.06);color:var(--gold);cursor:pointer;font-family:Cairo;font-size:12px;font-weight:700;transition:all .2s;white-space:nowrap;}
+.ch-copy-btn:hover{background:rgba(241,183,109,.14);}
 .ch-copy-btn.ok{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#4ade80;}
-.ch-del-btn{
-  width:32px;height:32px;border:1px solid rgba(255,68,68,.2);
-  border-radius:100px;background:rgba(255,68,68,.05);
-  color:#ff8080;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;
-  transition:all .2s;font-size:14px;
-}
-.ch-del-btn:hover{background:rgba(255,68,68,.15);}
-.channels-empty{
-  text-align:center;padding:50px 20px;color:var(--dim);
-}
-.channels-search{
-  position:relative;margin-bottom:16px;
-}
-.channels-search input{
-  width:100%;padding:11px 40px 11px 16px;
-  border:1px solid rgba(255,255,255,.06);border-radius:12px;
-  background:rgba(255,255,255,.03);color:var(--tx);
-  font-family:Cairo;font-size:13px;outline:none;
-  transition:border-color .2s;box-sizing:border-box;
-}
-.channels-search input:focus{border-color:rgba(241,183,109,.3);}
-.channels-search::before{
-  content:"";position:absolute;right:13px;top:50%;
-  transform:translateY(-50%);width:16px;height:16px;
-  background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23666%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cline x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/%3E%3C/svg%3E');
-  background-size:contain;background-repeat:no-repeat;pointer-events:none;
-}
+.ch-del-btn{width:30px;height:30px;border:1px solid rgba(255,68,68,.2);border-radius:50%;background:rgba(255,68,68,.05);color:#ff8080;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.channels-empty,.vip-empty{text-align:center;padding:40px 20px;color:var(--dim);}
 </style>
 
 <script>
@@ -933,6 +925,10 @@ window.addEventListener('load',()=>{
   <div class="dtab on" data-page="home"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div> الرئيسية</div>
   <div class="dtab" data-page="actresses"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a7 7 0 0 1 14 0v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></div> الممثلات</div>
   <div class="dtab" data-page="links"><div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div> الروابط</div>
+  <div class="dtab" data-page="vip" id="vipTab" style="display:none">
+    <div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <span>حصري</span><span style="font-size:9px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;padding:2px 7px;border-radius:100px;font-weight:900;margin-right:auto;">VIP</span>
+  </div>
   <div class="dtab" data-page="channels" id="channelsTab" style="display:none">
     <div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.35 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 6.1 6.1l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div> القنوات
   </div>
@@ -1127,6 +1123,13 @@ window.addEventListener('load',()=>{
         <div class="det-info-item" id="dAgeWrap" style="display:none;"><div class="det-info-label">🎂 العمر</div><div class="det-info-value" id="dAge"></div></div>
       </div>
       <div class="det-section"><div class="det-section-title">🌐 التواصل</div><div class="det-socials" id="dSoc"></div></div>
+      <div class="det-section det-section-full" id="vipDetSection" style="display:none;">
+        <div class="det-section-title" style="display:flex;align-items:center;justify-content:space-between;">
+          <span>🔐 محتوى VIP حصري</span>
+          <button id="addVipFromDetBtn" style="display:none;padding:5px 12px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:11px;font-weight:700;cursor:pointer;" onclick="addVipForCurrentActress()">➕ إضافة</button>
+        </div>
+        <div id="vipDetGrid" class="vip-content-grid" style="margin-top:10px;"></div>
+      </div>
     </div>
     <div class="recs-section" id="recsSec" style="display:none">
       <div class="recs-title">✨ قد يعجبك أيضاً</div>
@@ -1420,47 +1423,176 @@ window.addEventListener('load',()=>{
     </div>
   </div>
 </div>
+<!-- MODALS -->
+
+<!-- VIP PAGE -->
+<div class="page" id="page-vip">
+  <div class="vip-page">
+    <div class="vip-header">
+      <div class="vip-crown">🔐</div>
+      <div><div class="vip-htitle">المحتوى الحصري VIP</div><div class="vip-hsub">محتوى خاص يُفتح بكود — صور، فيديوهات، وألبومات</div></div>
+    </div>
+    <!-- أدمن -->
+    <div id="vipAdminPanel" style="display:none;">
+      <div class="vip-section">
+        <div class="vip-section-head"><span class="vip-section-title">🎬 المحتوى الحصري</span><button class="vip-btn" onclick="openVipContentModal()">➕ إضافة</button></div>
+        <div class="vip-content-grid" id="vipAdminGrid"><div class="vip-empty">لا يوجد محتوى بعد</div></div>
+      </div>
+      <div class="vip-section">
+        <div class="vip-section-head"><span class="vip-section-title">🔑 أكواد الوصول</span><button class="vip-btn" onclick="generateVipCode()" style="background:linear-gradient(135deg,#22C55E,#16a34a);color:#fff;">⚡ توليد كود</button></div>
+        <div id="vipCodesList"><div class="vip-empty">لا توجد أكواد</div></div>
+      </div>
+      <div class="vip-section">
+        <div class="vip-section-head"><span class="vip-section-title">📩 طلبات الكود</span><button class="vip-btn-sm" onclick="loadVipRequests()">🔄 تحديث</button></div>
+        <div id="vipRequestsList"><div class="vip-empty">اضغط تحديث</div></div>
+      </div>
+    </div>
+    <!-- مستخدم -->
+    <div id="vipUserPanel" style="display:none;">
+      <div id="vipCodeEntry" class="vip-section" style="text-align:center;">
+        <div style="font-size:42px;margin-bottom:10px;">🔑</div>
+        <div style="font-size:16px;font-weight:700;color:var(--tx);margin-bottom:6px;">أدخل كودك الحصري</div>
+        <div style="font-size:12px;color:var(--dim);margin-bottom:16px;">15 خانة من أحرف وأرقام ورموز</div>
+        <input type="text" id="vipCodeInput" maxlength="15" placeholder="•••••••••••••••" class="vip-code-input" oninput="this.value=this.value.toUpperCase()"/>
+        <div id="vipCodeErr" style="font-size:12px;color:#ff8080;margin-bottom:8px;display:none;"></div>
+        <button onclick="unlockVipCode()" style="width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:14px;font-weight:700;cursor:pointer;">🚀 فتح المحتوى</button>
+      </div>
+      <div id="vipUnlockedContent" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gold);background:rgba(241,183,109,.08);border:1px solid rgba(241,183,109,.2);padding:5px 13px;border-radius:100px;">✦ محتوى مفتوح ✦</div>
+          <button onclick="lockVipContent()" style="font-size:11px;color:var(--dim);background:transparent;border:none;cursor:pointer;font-family:Cairo;">🔒 إغلاق</button>
+        </div>
+        <div class="vip-content-grid" id="vipContentGrid"></div>
+      </div>
+      <div class="vip-steps">
+        <div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:10px;">💳 كيف تحصل على كود؟</div>
+        <div class="vip-step"><div class="vip-step-n">1</div><span>اضغط "طلب كود" واختر المحتوى</span></div>
+        <div class="vip-step"><div class="vip-step-n">2</div><span>أرسل الدفع عبر الطريقة المتاحة</span></div>
+        <div class="vip-step"><div class="vip-step-n">3</div><span>أرفق صورة إثبات الدفع في طلبك</span></div>
+        <div class="vip-step"><div class="vip-step-n">4</div><span>انتظر كودك من المشرف وأدخله أعلاه</span></div>
+        <button onclick="goTo('vip-request')" style="width:100%;padding:12px;border:none;border-radius:11px;background:rgba(241,183,109,.07);border:1px solid rgba(241,183,109,.2);color:var(--gold);font-family:Cairo;font-size:13px;font-weight:700;cursor:pointer;margin-top:12px;">📩 طلب كود حصري</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIP REQUEST PAGE -->
+<div class="page" id="page-vip-request">
+  <div class="vip-page">
+    <div class="page-header" style="margin-bottom:18px;">
+      <div class="page-title">📩 طلب كود VIP</div>
+      <button onclick="goTo('vip')" style="padding:8px 14px;border:1px solid rgba(255,255,255,.06);border-radius:100px;background:transparent;color:var(--dim);cursor:pointer;font-family:Cairo;font-size:12px;">← رجوع</button>
+    </div>
+    <div class="vip-section">
+      <div class="mfg"><label>اختر المحتوى المطلوب</label>
+        <select id="vipReqContent" style="width:100%;padding:10px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;"><option value="">-- اختر --</option></select>
+      </div>
+      <div class="mfg"><label>طريقة الدفع</label>
+        <select id="vipReqMethod" style="width:100%;padding:10px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
+          <option value="">-- اختر طريقة الدفع --</option>
+          <option value="رصيد هاتف">💳 رصيد هاتف</option>
+          <option value="تحويل بنكي">🏦 تحويل بنكي</option>
+          <option value="USDT">💰 USDT</option>
+          <option value="PayPal">🔵 PayPal</option>
+          <option value="أخرى">📋 أخرى</option>
+        </select>
+      </div>
+      <div class="mfg"><label>صورة إثبات الدفع *</label>
+        <div id="proofPreviewWrap" class="proof-preview-wrap" onclick="document.getElementById('proofFile').click()">
+          <div style="font-size:28px;opacity:.4;">📷</div>
+          <div style="font-size:12px;color:var(--dim);">اضغط لرفع صورة الإثبات</div>
+        </div>
+        <input type="file" id="proofFile" accept="image/*" style="display:none;" onchange="previewProof(this)"/>
+      </div>
+      <div class="mfg"><label>ملاحظة</label>
+        <textarea id="vipReqNote" rows="2" placeholder="أي تفاصيل إضافية..." style="width:100%;padding:10px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;resize:vertical;box-sizing:border-box;"></textarea>
+      </div>
+      <div id="vipReqErr" style="font-size:12px;color:#ff8080;margin-bottom:10px;display:none;"></div>
+      <div id="vipReqMsg" style="font-size:12px;color:#4ade80;padding:10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:9px;margin-bottom:10px;display:none;"></div>
+      <button onclick="submitVipRequest()" style="width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:14px;font-weight:700;cursor:pointer;">📤 إرسال الطلب</button>
+      <div style="margin-top:12px;" id="myVipRequests"></div>
+    </div>
+  </div>
+</div>
 
 <!-- CHANNELS PAGE -->
 <div class="page" id="page-channels">
   <div class="channels-page">
-    <div class="page-header" style="margin-bottom:18px;">
+    <div class="page-header" style="margin-bottom:16px;">
       <div class="page-title">📡 القنوات</div>
-      <button id="addChannelBtn" style="display:none;padding:9px 18px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:13px;font-weight:700;cursor:pointer;display:none;align-items:center;gap:6px;" onclick="openChannelModal()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        إضافة قناة
-      </button>
+      <button id="addChannelBtn" style="display:none;padding:9px 18px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;align-items:center;gap:6px;" onclick="openChannelModal()">➕ إضافة</button>
     </div>
-    <div class="channels-search">
-      <input type="text" id="channelSearch" placeholder="ابحث عن قناة..." oninput="filterChannels(this.value)"/>
+    <div style="position:relative;margin-bottom:14px;">
+      <input type="text" id="channelSearch" placeholder="ابحث عن قناة..." oninput="filterChannels(this.value)" style="width:100%;padding:11px 40px 11px 16px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;box-sizing:border-box;"/>
     </div>
-    <div style="font-size:11px;color:var(--dim);margin-bottom:14px;" id="channelCount"></div>
-    <div id="channelsList">
-      <div class="loading" style="display:flex;"><div class="spin"></div><span>جاري التحميل...</span></div>
-    </div>
+    <div id="channelCount" style="font-size:11px;color:var(--dim);margin-bottom:12px;"></div>
+    <div id="channelsList"><div class="loading" style="display:flex;"><div class="spin"></div><span>جاري التحميل...</span></div></div>
   </div>
 </div>
 
-<!-- MODAL: CHANNEL -->
-<div id="channelModal" class="modal">
-  <div class="mbox" style="max-width:360px;">
-    <h3 id="channelModalTitle">📡 إضافة قناة</h3>
-    <div class="mfg">
-      <label>اسم القناة *</label>
-      <input type="text" id="channelNameInp" placeholder="أدخل اسم القناة..."/>
+<!-- VIP CONTENT MODAL -->
+<div id="vipContentModal" class="modal">
+  <div class="mbox" style="max-width:440px;">
+    <h3>🎬 إضافة محتوى VIP</h3>
+    <div class="mfg"><label>الاسم *</label><input type="text" id="vipCName" placeholder="اسم المحتوى"/></div>
+    <div class="mfg"><label>🎭 ربط بممثلة (اختياري)</label>
+      <select id="vipCActress" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
+        <option value="">-- بدون ربط --</option>
+      </select>
     </div>
-    <div class="mfg">
-      <label>الأيقونة (اختياري)</label>
-      <input type="text" id="channelIconInp" placeholder="📺" maxlength="4"/>
+    <div class="mfg"><label>النوع</label>
+      <select id="vipCType" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
+        <option value="image">🖼️ صورة</option>
+        <option value="video">🎬 فيديو</option>
+        <option value="album">📸 ألبوم صور</option>
+      </select>
     </div>
-    <div id="channelModalErr" style="font-size:12px;color:#ff8080;margin-bottom:8px;display:none;"></div>
-    <div class="mfooter">
-      <button class="btn btn-ghost" onclick="closeM('channelModal')">إلغاء</button>
-      <button class="btn btn-gold" onclick="saveChannel()">💾 حفظ</button>
-    </div>
+    <div class="mfg"><label>رابط الصورة/الفيديو *</label><input type="text" id="vipCUrl" placeholder="https://..."/></div>
+    <div class="mfg" id="vipAlbumWrap" style="display:none;"><label>روابط إضافية (ألبوم) — كل رابط في سطر</label><textarea id="vipCAlbum" rows="3" placeholder="https://img1.com&#10;https://img2.com&#10;..."></textarea></div>
+    <div class="mfg"><label>وصف</label><textarea id="vipCDesc" rows="2" placeholder="وصف اختياري..."></textarea></div>
+    <div class="mfg"><label>السعر (للعرض)</label><input type="text" id="vipCPrice" placeholder="مثال: 5$"/></div>
+    <div class="mfooter"><button class="btn btn-ghost" onclick="closeM('vipContentModal')">إلغاء</button><button class="btn btn-gold" onclick="saveVipContent()">💾 حفظ</button></div>
   </div>
 </div>
-<!-- MODALS -->
+
+<!-- VIP APPROVE MODAL -->
+<div id="vipApproveModal" class="modal">
+  <div class="mbox" style="max-width:360px;">
+    <h3>✅ الموافقة على الطلب</h3>
+    <input type="hidden" id="vipApproveReqId"/>
+    <div class="mfg"><label>الكود الممنوح (15 خانة)</label>
+      <input type="text" id="vipApproveCode" maxlength="15" placeholder="سيُولَّد تلقائياً أو أدخله" style="font-family:monospace;letter-spacing:2px;text-transform:uppercase;"/>
+      <button onclick="autoFillCode()" style="margin-top:6px;padding:5px 12px;border:1px solid rgba(255,255,255,.06);border-radius:8px;background:transparent;color:var(--dim);cursor:pointer;font-family:Cairo;font-size:11px;">⚡ توليد تلقائي</button>
+    </div>
+    <div class="mfooter"><button class="btn btn-ghost" onclick="closeM('vipApproveModal')">إلغاء</button><button class="btn btn-gold" onclick="approveVipRequest()">✅ موافقة وإرسال الكود</button></div>
+  </div>
+</div>
+
+<!-- CHANNEL MODAL -->
+<div id="channelModal" class="modal">
+  <div class="mbox" style="max-width:340px;">
+    <h3 id="channelModalTitle">📡 إضافة قناة</h3>
+    <div class="mfg"><label>اسم القناة *</label><input type="text" id="channelNameInp" placeholder="اسم القناة..."/></div>
+    <div class="mfg"><label>الأيقونة</label><input type="text" id="channelIconInp" placeholder="📺" maxlength="4"/></div>
+    <div id="channelModalErr" style="font-size:12px;color:#ff8080;margin-bottom:8px;display:none;"></div>
+    <div class="mfooter"><button class="btn btn-ghost" onclick="closeM('channelModal')">إلغاء</button><button class="btn btn-gold" onclick="saveChannel()">💾 حفظ</button></div>
+  </div>
+</div>
+
+<!-- VIP TIKTOK SCROLL VIEWER -->
+<div id="vipMediaViewer" style="display:none;position:fixed;inset:0;background:#000;z-index:9999;overflow:hidden;touch-action:none;">
+  <!-- زر الإغلاق -->
+  <button onclick="closeVipViewer()" style="position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10002;backdrop-filter:blur(10px);">✕</button>
+  <!-- عداد -->
+  <div id="vipViewerCounter" style="position:absolute;top:18px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;font-family:Cairo;font-weight:700;z-index:10002;background:rgba(0,0,0,.4);padding:4px 14px;border-radius:100px;backdrop-filter:blur(8px);"></div>
+  <!-- شريط التمرير -->
+  <div id="vipScrollTrack" style="width:100%;height:100%;overflow:hidden;position:relative;">
+    <div id="vipScrollInner" style="width:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;"></div>
+  </div>
+  <!-- أسهم التنقل (للديسكتوب) -->
+  <button id="vipNavUp" onclick="vipScrollTo(window._vipIdx-1)" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-70px);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10002;backdrop-filter:blur(8px);transition:all .2s;opacity:0;">▲</button>
+  <button id="vipNavDown" onclick="vipScrollTo(window._vipIdx+1)" style="position:absolute;top:50%;left:50%;transform:translate(-50%,26px);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10002;backdrop-filter:blur(8px);transition:all .2s;opacity:0;">▼</button>
+</div>
 <div id="aModal" class="modal">
   <div class="mbox">
     <h3 id="aMTitle">إضافة ممثلة</h3>
@@ -1580,11 +1712,27 @@ function submitSuggestion(){if(window.submitSuggestion)window.submitSuggestion()
 function approveSuggestion(id,name){if(window.approveSuggestion)window.approveSuggestion(id,name);}
 function rejectSuggestion(id){if(window.rejectSuggestion)window.rejectSuggestion(id);}
 function loadSuggestions(){if(window.loadSuggestions)window.loadSuggestions();}
+function openVipContentModal(){if(window.openVipContentModal)window.openVipContentModal();}
+function saveVipContent(){if(window.saveVipContent)window.saveVipContent();}
+function deleteVipContent(id){if(window.deleteVipContent)window.deleteVipContent(id);}
+function generateVipCode(){if(window.generateVipCode)window.generateVipCode();}
+function loadVipRequests(){if(window.loadVipRequests)window.loadVipRequests();}
+function openApproveModal(id){if(window.openApproveModal)window.openApproveModal(id);}
+function approveVipRequest(){if(window.approveVipRequest)window.approveVipRequest();}
+function rejectVipRequest(id){if(window.rejectVipRequest)window.rejectVipRequest(id);}
+function autoFillCode(){if(window.autoFillCode)window.autoFillCode();}
+function unlockVipCode(){if(window.unlockVipCode)window.unlockVipCode();}
+function lockVipContent(){if(window.lockVipContent)window.lockVipContent();}
+function submitVipRequest(){if(window.submitVipRequest)window.submitVipRequest();}
+function previewProof(el){if(window.previewProof)window.previewProof(el);}
+function openVipViewer(id){if(window.openVipViewer)window.openVipViewer(id);}
+function closeVipViewer(){if(window.closeVipViewer)window.closeVipViewer();}
 function openChannelModal(){if(window.openChannelModal)window.openChannelModal();}
 function saveChannel(){if(window.saveChannel)window.saveChannel();}
 function deleteChannel(id,n){if(window.deleteChannel)window.deleteChannel(id,n);}
-function editChannel(id,n,i){if(window.editChannel)window.editChannel(id,n,i);}
 function filterChannels(v){if(window.filterChannels)window.filterChannels(v);}
+function copyCode(c){if(window.copyCode)window.copyCode(c);}
+function deleteVipCode(id){if(window.deleteVipCode)window.deleteVipCode(id);}
 function toggleAllCountries(){if(window._toggleAllCtrs)window._toggleAllCtrs();}
 function saveMaintMsg(){if(window.saveMaintMsg)window.saveMaintMsg();}
 function exportBackup(){if(window.exportBackup)window.exportBackup();}
@@ -1647,7 +1795,10 @@ window.goTo=function(p){
   if(p==="home")setTimeout(buildHomeSlider,50);
   document.querySelectorAll(".dtab").forEach(t=>t.classList.toggle("on",t.dataset.page===p));
   closeDrawer();window.scrollTo(0,0);
-  if(p==="favorites")renderFavs();if(p==="profile")loadProfileData();if(p==="suggest")loadMySuggestions();if(p==="channels"){renderChannels();}if(p==="suggestions-admin")setTimeout(loadSuggestions,100);if(p==="links"){renderLinks();renderFolders();}
+  if(p==="favorites")renderFavs();if(p==="profile")loadProfileData();if(p==="suggest")loadMySuggestions();
+  if(p==="channels"){renderChannels();}
+  if(p==="vip"){renderVipAdmin&&isAdmin()&&renderVipAdmin();populateVipContentSelect&&populateVipContentSelect();}
+  if(p==="vip-request"){populateVipContentSelect&&populateVipContentSelect();}if(p==="suggestions-admin")setTimeout(loadSuggestions,100);if(p==="links"){renderLinks();renderFolders();}
   if(p==="users")setTimeout(loadUsers,100);
   if(p==="stats")setTimeout(()=>{renderStats();renderHairStats();renderWorldMap();},100);
   if(p==="admin"){setTimeout(()=>{renderNewUsersChart();loadActivityLog();},200);}
@@ -1884,9 +2035,42 @@ onAuthStateChanged(auth,async u=>{
   document.getElementById("suggestTab").style.display=u?"flex":"none";
   document.getElementById("statsTab").style.display=isAdmin()?"flex":"none";
   document.getElementById("favTab").style.display=u?"flex":"none";
+  document.getElementById("vipTab").style.display=u?"flex":"none";
   document.getElementById("channelsTab").style.display=u?"flex":"none";
-  const addChBtn=document.getElementById("addChannelBtn");
-  if(addChBtn)addChBtn.style.display=isAdmin()?"flex":"none";
+  const addChBtn=document.getElementById("addChannelBtn");if(addChBtn)addChBtn.style.display=isAdmin()?"flex":"none";
+  // عرض لوحة VIP
+  if(u){
+    const vipAdmin=document.getElementById("vipAdminPanel");
+    const vipUser=document.getElementById("vipUserPanel");
+    if(isAdmin()){if(vipAdmin)vipAdmin.style.display="block";if(vipUser)vipUser.style.display="none";}
+    else{if(vipAdmin)vipAdmin.style.display="none";if(vipUser)vipUser.style.display="block";}
+    // تحقق من كود مسبق
+    const savedCode=localStorage.getItem("vip_code_"+u.uid);
+    if(savedCode&&!isAdmin()){
+      // تحقق من أن الكود لم يُلغَ
+      getDoc(doc(db,"vipCodes","_revoked_"+u.uid)).then(rev=>{
+        if(rev.exists()){
+          localStorage.removeItem("vip_code_"+u.uid);
+          return;// الكود ملغى
+        }
+        getDoc(doc(db,"vipCodes",savedCode)).then(cSnap=>{
+          if(!cSnap.exists()){localStorage.removeItem("vip_code_"+u.uid);return;}
+          const vce=document.getElementById("vipCodeEntry");
+          const vuc=document.getElementById("vipUnlockedContent");
+          if(vce)vce.style.display="none";
+          if(vuc)vuc.style.display="block";
+          renderVipMember();
+        }).catch(()=>{});
+      }).catch(()=>{
+        // تعذر التحقق - افتح المحتوى من الكاش
+        const vce=document.getElementById("vipCodeEntry");
+        const vuc=document.getElementById("vipUnlockedContent");
+        if(vce)vce.style.display="none";
+        if(vuc)vuc.style.display="block";
+        renderVipMember();
+      });
+    }
+  }
   document.getElementById("recommendTab").style.display=u?"flex":"none";
   document.getElementById("dnaTab").style.display=u?"flex":"none";
   ["addABtn","addLBtn","addFBtn"].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isAdmin()?"inline-flex":"none";});
@@ -2359,108 +2543,586 @@ onSnapshot(collection(db,"adminChat"),snap=>{
   } else {el.innerHTML="";}
 },()=>{});
 
-// ══ CHANNELS ══
-let channels=[],channelEditId=null;
+// ══ VIP SYSTEM ══
+let vipContent=[],vipCodes=[],vipRequests=[],channels=[],channelEditId=null,curVipReqId=null;
 
-// مراقبة البيانات
-onSnapshot(query(collection(db,"channels"),orderBy("createdAt","asc")),s=>{
-  channels=s.docs.map(d=>({id:d.id,...d.data()}));
-  const pg=document.getElementById("page-channels");
-  if(pg&&pg.classList.contains("active"))renderChannels();
+// دالة توليد كود عشوائي 15 خانة
+function genCode(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789&$#';
+  let code='';
+  for(let i=0;i<15;i++)code+=chars[Math.floor(Math.random()*chars.length)];
+  return code;
+}
+
+// ══ VIP CONTENT ══
+onSnapshot(query(collection(db,'vipContent'),orderBy('createdAt','desc')),s=>{
+  vipContent=s.docs.map(d=>({id:d.id,...d.data()}));
+  if(document.getElementById('page-vip')?.classList.contains('active'))renderVipAdmin();
+  // تحديث قائمة المحتوى في صفحة الطلب
+  populateVipContentSelect();
 },()=>{});
 
-function renderChannels(filter=""){
-  const el=document.getElementById("channelsList");
-  const cnt=document.getElementById("channelCount");
-  if(!el)return;
-  const list=filter?channels.filter(c=>(c.name||"").toLowerCase().includes(filter.toLowerCase())):channels;
-  if(cnt)cnt.textContent=`${list.length} قناة`;
-  if(!list.length){
-    el.innerHTML=`<div class="channels-empty">
-      <div style="font-size:48px;margin-bottom:14px;opacity:.3;">📡</div>
-      <p>${filter?"لا توجد نتائج":"لا توجد قنوات بعد"}</p>
-    </div>`;
-    return;
+onSnapshot(query(collection(db,'vipCodes'),orderBy('createdAt','desc')),s=>{
+  vipCodes=s.docs.map(d=>({id:d.id,...d.data()}));
+  renderVipCodes();
+},()=>{});
+
+function renderVipAdmin(){
+  var grid=document.getElementById('vipAdminGrid');
+  if(!grid)return;
+  if(!vipContent.length){grid.innerHTML='<div class="vip-empty">لا يوجد محتوى بعد</div>';return;}
+  grid.innerHTML='';
+  vipContent.forEach(function(c,i){
+    var card=document.createElement('div');
+    card.className='vip-card';
+    card.style.animationDelay=i*.05+'s';
+    var thumb=c.url||'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP';
+    var typeLabel=c.type==='video'?'🎬 فيديو':c.type==='album'?'📸 ألبوم':'🖼️ صورة';
+    card.innerHTML='<div class="vip-card-media">'
+      +'<img src="'+thumb+'" onerror="this.src=\'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP\'" loading="lazy"/>'
+      +'<div class="vip-card-grad"></div>'
+      +'<div class="vip-card-type">'+typeLabel+'</div>'
+      +'<button class="vip-card-del" onclick="deleteVipContent(\''+c.id+'\')">🗑️</button>'
+      +'<div class="vip-card-info"><div class="vip-card-name">'+c.name+'</div>'
+      +(c.price?'<div style="font-size:10px;color:var(--gold);">'+c.price+'</div>':'')
+      +'</div></div>';
+    grid.appendChild(card);
+  });
+}
+
+function renderVipMember(){
+  var grid=document.getElementById('vipContentGrid');
+  if(!grid)return;
+  if(!vipContent.length){grid.innerHTML='<div class="vip-empty">لا يوجد محتوى حصري بعد</div>';return;}
+  grid.innerHTML='';
+  // تجميع حسب الممثلة
+  var withActress=vipContent.filter(function(c){return c.actressId;});
+  var withoutActress=vipContent.filter(function(c){return !c.actressId;});
+  var actressGroups={};
+  withActress.forEach(function(c){
+    if(!actressGroups[c.actressId])actressGroups[c.actressId]={name:c.actressName,img:c.actressImg,items:[]};
+    actressGroups[c.actressId].items.push(c);
+  });
+  // عرض مجموعات الممثلات
+  Object.entries(actressGroups).forEach(function(entry){
+    var aid=entry[0],group=entry[1];
+    var section=document.createElement('div');
+    section.style.cssText='margin-bottom:20px;';
+    section.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 13px;background:rgba(241,183,109,.05);border:1px solid rgba(241,183,109,.12);border-radius:12px;">'
+      +'<img src="'+(group.img||'https://via.placeholder.com/40x40/030303/F1B76D?text=?')+'" onerror="this.src=\'https://via.placeholder.com/40/030303/F1B76D?text=?\'" style="width:40px;height:40px;border-radius:10px;object-fit:cover;object-position:top;border:1px solid rgba(241,183,109,.2);"/>'
+      +'<div><div style="font-size:14px;font-weight:700;color:var(--gold);font-family:Tajawal;">🎭 '+group.name+'</div>'
+      +'<div style="font-size:11px;color:var(--dim);">'+group.items.length+' محتوى حصري</div></div>'
+      +'</div>'
+      +'<div class="vip-content-grid" id="vipGroup_'+aid+'"></div>';
+    grid.appendChild(section);
+    var groupGrid=section.querySelector('#vipGroup_'+aid);
+    group.items.forEach(function(c,i){
+      var card=createVipCard(c,i,group.items);
+      groupGrid.appendChild(card);
+    });
+  });
+  // عرض المحتوى بدون ممثلة
+  if(withoutActress.length){
+    if(Object.keys(actressGroups).length){
+      var divider=document.createElement('div');
+      divider.innerHTML='<div style="font-size:12px;font-weight:700;color:var(--dim);margin:16px 0 12px;text-transform:uppercase;letter-spacing:2px;">📦 محتوى عام</div>';
+      grid.appendChild(divider);
+    }
+    var genGrid=document.createElement('div');
+    genGrid.className='vip-content-grid';
+    grid.appendChild(genGrid);
+    withoutActress.forEach(function(c,i){
+      genGrid.appendChild(createVipCard(c,i,withoutActress));
+    });
   }
-  el.innerHTML="";
-  list.forEach((ch,i)=>{
-    const card=document.createElement("div");
-    card.className="channel-card";
-    card.style.animationDelay=i*.04+"s";
-    card.innerHTML=`
-      <div class="channel-icon">
-        <span style="font-size:22px;">${ch.icon||"📺"}</span>
+}
+function createVipCard(c,i,allItems){
+  var card=document.createElement('div');
+  card.className='vip-card';
+  card.style.animationDelay=i*.05+'s';
+  var thumb=c.url||'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP';
+  var typeLabel=c.type==='video'?'🎬':c.type==='album'?'📸':'🖼️';
+  var playIcon=c.type==='video'?'<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;font-size:18px;pointer-events:none;">▶</div>':'';
+  card.innerHTML='<div class="vip-card-media" style="cursor:pointer;">'
+    +'<img src="'+thumb+'" onerror="this.src=\'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP\'" loading="lazy"/>'
+    +'<div class="vip-card-grad"></div>'
+    +playIcon
+    +'<div class="vip-card-type">'+typeLabel+'</div>'
+    +'<div class="vip-card-info"><div class="vip-card-name">'+c.name+'</div></div>'
+    +'</div>';
+  card.querySelector('.vip-card-media').addEventListener('click',function(){
+    if(allItems&&allItems.length)window._vipItems=allItems;
+    else window._vipItems=vipContent.length?vipContent:[c];
+    openVipViewer(c.id);
+  });
+  return card;
+}
+
+function populateVipContentSelect(){
+  const sel=document.getElementById('vipReqContent');
+  if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">-- اختر المحتوى --</option>'+
+    vipContent.map(c=>`<option value="${c.id}">${c.name}${c.price?' ('+c.price+')':''}</option>`).join('');
+  if(cur)sel.value=cur;
+}
+
+window.openVipContentModal=function(preActressId=''){
+  ['vipCName','vipCUrl','vipCDesc','vipCPrice'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('vipCType').value='image';
+  document.getElementById('vipAlbumWrap').style.display='none';
+  // تعبئة قائمة الممثلات
+  const sel=document.getElementById('vipCActress');
+  if(sel){
+    sel.innerHTML='<option value="">-- بدون ربط --</option>'+
+      [...actresses].sort((a,b)=>a.name.localeCompare(b.name))
+      .map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+    if(preActressId)sel.value=preActressId;
+  }
+  openM('vipContentModal');
+};
+document.getElementById('vipCType')?.addEventListener('change',function(){
+  document.getElementById('vipAlbumWrap').style.display=this.value==='album'?'block':'none';
+});
+
+window.saveVipContent=async function(){
+  const name=document.getElementById('vipCName').value.trim();
+  const type=document.getElementById('vipCType').value;
+  const url=document.getElementById('vipCUrl').value.trim();
+  const desc=document.getElementById('vipCDesc').value.trim();
+  const price=document.getElementById('vipCPrice').value.trim();
+  const actressId=document.getElementById('vipCActress')?.value||'';
+  const albumRaw=document.getElementById('vipCAlbum')?.value||'';
+  const album=albumRaw.split('\n').map(u=>u.trim()).filter(Boolean);
+  if(!name||!url)return ss('أدخل الاسم والرابط','error');
+  // إذا اخترت ممثلة، خذ اسمها
+  const actress=actressId?actresses.find(a=>a.id===actressId):null;
+  try{
+    await addDoc(collection(db,'vipContent'),{
+      name,type,url,desc,price,album,
+      actressId:actressId||'',
+      actressName:actress?.name||'',
+      actressImg:actress?.image||'',
+      createdAt:new Date().toISOString()
+    });
+    ss('تمت الإضافة ✅');closeM('vipContentModal');
+  }catch(e){ss('خطأ: '+e.message,'error');}
+};
+
+window.deleteVipContent=async function(id){
+  if(!confirm('حذف هذا المحتوى؟'))return;
+  try{await deleteDoc(doc(db,'vipContent',id));ss('تم الحذف');}catch(e){ss('خطأ: '+e.message,'error');}
+};
+
+// ══ VIP TIKTOK VIEWER ══
+window._vipItems=[];
+window._vipIdx=0;
+var _vipTouchStartY=0,_vipTouchStartX=0,_vipDragging=false,_vipDragDelta=0;
+
+function buildVipSlide(c,idx){
+  var wrap=document.createElement('div');
+  wrap.style.cssText='width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;background:#000;';
+  var inner='';
+  if(c.type==='video'){
+    inner='<video id="vipVid_'+idx+'" controls playsinline style="max-width:100vw;max-height:100vh;width:100%;height:100%;object-fit:contain;" preload="metadata"><source src="'+c.url+'"/></video>';
+  } else if(c.type==='album'){
+    var imgs=[c.url].concat(c.album||[]).filter(Boolean);
+    inner='<div style="display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;">'+imgs.map(function(u){return'<div style="min-width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;scroll-snap-align:start;"><img src="'+u+'" style="max-width:100vw;max-height:100vh;object-fit:contain;" loading="lazy"/></div>';}).join('')+'</div>';
+  } else {
+    inner='<img src="'+c.url+'" style="max-width:100vw;max-height:100vh;object-fit:contain;" loading="lazy"/>';
+  }
+  // معلومات المحتوى
+  var info='<div style="position:absolute;bottom:0;right:0;left:0;padding:18px 20px 28px;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%);pointer-events:none;">'
+    +'<div style="font-size:14px;font-weight:700;color:#fff;font-family:Tajawal;margin-bottom:4px;">'+c.name+'</div>'
+    +(c.desc?'<div style="font-size:12px;color:rgba(255,255,255,.7);">'+c.desc+'</div>':'')
+    +(c.actressName?'<div style="font-size:11px;color:var(--gold);margin-top:4px;">🎭 '+c.actressName+'</div>':'')
+    +'<div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:4px;">'+(c.type==='video'?'🎬 فيديو':c.type==='album'?'📸 ألبوم':'🖼️ صورة')+'</div>'
+    +'</div>';
+  // نوع badge يمين
+  wrap.innerHTML=inner+info;
+  return wrap;
+}
+
+function vipScrollTo(idx){
+  var items=window._vipItems;
+  if(idx<0||idx>=items.length)return;
+  // إيقاف الفيديو الحالي
+  var oldVid=document.getElementById('vipVid_'+window._vipIdx);
+  if(oldVid){oldVid.pause();}
+  window._vipIdx=idx;
+  var inner=document.getElementById('vipScrollInner');
+  inner.style.transform='translateY(-'+idx*100+'vh)';
+  // تشغيل الفيديو الجديد
+  setTimeout(function(){
+    var newVid=document.getElementById('vipVid_'+idx);
+    if(newVid){newVid.play().catch(function(){});}
+  },350);
+  // تحديث العداد
+  var counter=document.getElementById('vipViewerCounter');
+  if(counter)counter.textContent=(idx+1)+' / '+items.length;
+  // أسهم
+  var up=document.getElementById('vipNavUp'),down=document.getElementById('vipNavDown');
+  if(up)up.style.opacity=idx>0?'1':'0';
+  if(down)down.style.opacity=idx<items.length-1?'1':'0';
+}
+window.vipScrollTo=vipScrollTo;
+
+window.openVipViewer=function(id){
+  var items=window._vipItems;
+  var idx=items.findIndex(function(x){return x.id===id;});
+  if(idx===-1){
+    // fallback: ابحث في vipContent
+    var c=vipContent.find(function(x){return x.id===id;});
+    if(!c)return;
+    items=[c];idx=0;
+  }
+  var viewer=document.getElementById('vipMediaViewer');
+  var inner=document.getElementById('vipScrollInner');
+  if(!viewer||!inner)return;
+  inner.innerHTML='';
+  inner.style.cssText='display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;';
+  items.forEach(function(c,i){inner.appendChild(buildVipSlide(c,i));});
+  viewer.style.display='block';
+  document.body.style.overflow='hidden';
+  window._vipIdx=-1;
+  vipScrollTo(idx);
+  // تسجيل touch
+  viewer.addEventListener('touchstart',_vipTouchStart,{passive:true});
+  viewer.addEventListener('touchend',_vipTouchEnd,{passive:true});
+  viewer.addEventListener('touchmove',_vipTouchMove,{passive:false});
+  // كيبورد
+  document.addEventListener('keydown',_vipKey);
+  // ماوس (ديسكتوب)
+  viewer.addEventListener('mouseenter',function(){
+    var up=document.getElementById('vipNavUp'),down=document.getElementById('vipNavDown');
+    if(up)up.style.opacity=window._vipIdx>0?'1':'0';
+    if(down)down.style.opacity=window._vipIdx<window._vipItems.length-1?'1':'0';
+  });
+  viewer.addEventListener('wheel',_vipWheel,{passive:false});
+};
+
+function _vipTouchStart(e){
+  _vipTouchStartY=e.touches[0].clientY;
+  _vipTouchStartX=e.touches[0].clientX;
+  _vipDragging=true;_vipDragDelta=0;
+}
+function _vipTouchMove(e){
+  if(!_vipDragging)return;
+  var dy=e.touches[0].clientY-_vipTouchStartY;
+  var dx=e.touches[0].clientX-_vipTouchStartX;
+  // إذا كان السحب أفقياً (ألبوم) لا نمنعه
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10)return;
+  e.preventDefault();
+  _vipDragDelta=dy;
+  var inner=document.getElementById('vipScrollInner');
+  if(inner){inner.style.transition='none';inner.style.transform='translateY(calc(-'+window._vipIdx*100+'vh + '+dy+'px))';}
+}
+function _vipTouchEnd(e){
+  if(!_vipDragging)return;
+  _vipDragging=false;
+  var inner=document.getElementById('vipScrollInner');
+  if(inner)inner.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
+  if(_vipDragDelta<-60)vipScrollTo(window._vipIdx+1);
+  else if(_vipDragDelta>60)vipScrollTo(window._vipIdx-1);
+  else vipScrollTo(window._vipIdx);
+}
+var _vipWheelTimer=null;
+function _vipWheel(e){
+  e.preventDefault();
+  clearTimeout(_vipWheelTimer);
+  _vipWheelTimer=setTimeout(function(){
+    if(e.deltaY>30)vipScrollTo(window._vipIdx+1);
+    else if(e.deltaY<-30)vipScrollTo(window._vipIdx-1);
+  },50);
+}
+function _vipKey(e){
+  if(e.key==='ArrowDown'||e.key==='ArrowRight')vipScrollTo(window._vipIdx+1);
+  else if(e.key==='ArrowUp'||e.key==='ArrowLeft')vipScrollTo(window._vipIdx-1);
+  else if(e.key==='Escape')closeVipViewer();
+}
+window.closeVipViewer=function(){
+  var viewer=document.getElementById('vipMediaViewer');
+  var inner=document.getElementById('vipScrollInner');
+  // إيقاف كل الفيديوهات
+  if(inner)inner.querySelectorAll('video').forEach(function(v){v.pause();});
+  if(viewer){viewer.style.display='none';viewer.removeEventListener('touchstart',_vipTouchStart);viewer.removeEventListener('touchend',_vipTouchEnd);viewer.removeEventListener('touchmove',_vipTouchMove);viewer.removeEventListener('wheel',_vipWheel);}
+  document.removeEventListener('keydown',_vipKey);
+  document.body.style.overflow='';
+  if(inner)inner.innerHTML='';
+};
+
+// ══ VIP CODES ══
+window.generateVipCode=async function(){
+  if(!isAdmin())return;
+  let code,exists=true;
+  while(exists){
+    code=genCode();
+    try{const snap=await getDoc(doc(db,'vipCodes',code));exists=snap.exists();}
+    catch{exists=false;}
+  }
+  try{
+    await setDoc(doc(db,'vipCodes',code),{
+      code,
+      used:false,
+      global:true,// يفتح جميع المحتوى
+      createdAt:new Date().toISOString()
+    });
+    navigator.clipboard.writeText(code).catch(()=>{});
+    ss('✅ كود جديد (يفتح كل المحتوى): '+code);
+  }catch(e){ss('خطأ: '+e.message,'error');}
+};
+
+function renderVipCodes(){
+  const el=document.getElementById('vipCodesList');
+  if(!el)return;
+  if(!vipCodes.length){el.innerHTML='<div class="vip-empty">لا توجد أكواد — اضغط "توليد كود" لإنشاء كود جديد</div>';return;}
+  el.innerHTML=vipCodes.slice(0,30).map(c=>`
+    <div class="ch-code-card" style="${c.used?'opacity:.6':''}">
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:monospace;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.code}</div>
+        <div style="font-size:10px;margin-top:3px;display:flex;gap:8px;align-items:center;">
+          <span class="${c.used?'ch-code-status-used':'ch-code-status-free'}">${c.used?'✗ مستخدم':'✓ متاح'}</span>
+          <span style="color:var(--gold);background:rgba(241,183,109,.08);border:1px solid rgba(241,183,109,.15);padding:1px 7px;border-radius:100px;">🌐 يفتح كل المحتوى</span>
+          ${c.usedBy?`<span style="color:var(--dim);">بواسطة مستخدم</span>`:''}
+        </div>
       </div>
-      <div class="channel-name">${ch.name}</div>
-      <div class="channel-actions">
-        <button class="ch-copy-btn" data-name="${ch.name}">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          نسخ
-        </button>
-        ${isAdmin()?`
-          <button class="ch-copy-btn" style="border-color:rgba(74,158,255,.2);background:rgba(74,158,255,.06);color:#4A9EFF;" onclick="editChannel('${ch.id}','${ch.name.replace(/'/g,"\'")}','${ch.icon||""}')">✏️</button>
-          <button class="ch-del-btn" onclick="deleteChannel('${ch.id}','${ch.name}')">🗑️</button>
-        `:""}
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button onclick="copyCode('${c.code}')" style="padding:5px 11px;border:1px solid rgba(255,255,255,.06);border-radius:8px;background:transparent;color:var(--dim);cursor:pointer;font-family:Cairo;font-size:11px;">نسخ</button>
+        <button onclick="deleteVipCode('${c.id}','${c.code}')" style="width:28px;height:28px;border:1px solid rgba(255,68,68,.2);border-radius:50%;background:rgba(255,68,68,.06);color:#ff8080;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;" title="حذف الكود">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+window.copyCode=function(code){navigator.clipboard.writeText(code).then(()=>ss('تم نسخ الكود: '+code));};
+window.deleteVipCode=async function(id,code){
+  if(!confirm('حذف هذا الكود؟\nسيُلغى وصول أي مستخدم استخدمه!'))return;
+  try{
+    const snap=await getDoc(doc(db,'vipCodes',id));
+    const data=snap.exists()?snap.data():{};
+    await deleteDoc(doc(db,'vipCodes',id));
+    // إذا كان الكود مستخدماً، احفظه في قائمة محظورة
+    if(data.used&&data.usedBy){
+      await setDoc(doc(db,'vipCodes','_revoked_'+data.usedBy),{
+        uid:data.usedBy,revokedAt:new Date().toISOString(),code:code||id
+      });
+    }
+    ss('تم حذف الكود ✅ — تم إلغاء الوصول');
+  }catch(e){ss('خطأ: '+e.message,'error');}
+};
+
+// ══ VIP REQUESTS ══
+window.loadVipRequests=async function(){
+  if(!isAdmin())return;
+  const el=document.getElementById('vipRequestsList');
+  if(!el)return;
+  el.innerHTML='<div class="loading" style="display:flex;"><div class="spin"></div></div>';
+  try{
+    const snap=await getDocs(query(collection(db,'vipRequests'),orderBy('createdAt','desc')));
+    if(snap.empty){el.innerHTML='<div class="vip-empty">لا توجد طلبات</div>';return;}
+    el.innerHTML=snap.docs.map(d=>{
+      const r=d.data();
+      const content=vipContent.find(c=>c.id===r.contentId);
+      const isPending=r.status==='pending';
+      return `<div class="req-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--tx);">${r.userName||r.userEmail}</div>
+            <div style="font-size:11px;color:var(--dim);">${content?.name||'محتوى'} • ${r.method||''}</div>
+            <div style="font-size:10px;color:var(--dim2);">${new Date(r.createdAt).toLocaleString('ar-SA')}</div>
+          </div>
+          <span class="req-status-${r.status}">${r.status==='pending'?'⏳ معلق':r.status==='approved'?'✅ موافق':'❌ مرفوض'}</span>
+        </div>
+        ${r.proofUrl?`<img src="${r.proofUrl}" onclick="openImgViewer('${r.proofUrl}','إثبات الدفع')" style="width:100%;max-height:120px;object-fit:cover;border-radius:9px;cursor:pointer;margin-bottom:8px;" loading="lazy"/>`:''}
+        ${r.note?`<div style="font-size:12px;color:var(--dim);margin-bottom:8px;">📝 ${r.note}</div>`:''}
+        ${isPending?`<div style="display:flex;gap:7px;">
+          <button onclick="openApproveModal('${d.id}')" style="flex:1;padding:8px;border:none;border-radius:9px;background:rgba(34,197,94,.12);color:#4ade80;cursor:pointer;font-family:Cairo;font-size:12px;font-weight:700;border:1px solid rgba(34,197,94,.25);">✅ موافقة وإرسال كود</button>
+          <button onclick="rejectVipRequest('${d.id}')" style="padding:8px 14px;border:1px solid rgba(255,68,68,.25);border-radius:9px;background:rgba(255,68,68,.07);color:#ff8080;cursor:pointer;font-family:Cairo;font-size:12px;font-weight:700;">❌ رفض</button>
+        </div>`:''}
       </div>`;
-    // زر النسخ
-    card.querySelector(".ch-copy-btn").addEventListener("click",function(){
+    }).join('');
+  }catch(e){el.innerHTML=`<div style="color:var(--red);">${e.message}</div>`;}
+};
+
+window.openApproveModal=function(reqId){
+  curVipReqId=reqId;
+  document.getElementById('vipApproveReqId').value=reqId;
+  document.getElementById('vipApproveCode').value=genCode();
+  openM('vipApproveModal');
+};
+window.autoFillCode=function(){document.getElementById('vipApproveCode').value=genCode();};
+
+window.approveVipRequest=async function(){
+  const reqId=document.getElementById('vipApproveReqId').value;
+  const code=document.getElementById('vipApproveCode').value.trim().toUpperCase();
+  if(!code||code.length!==15)return ss('الكود يجب أن يكون 15 خانة','error');
+  try{
+    await setDoc(doc(db,'vipCodes',code),{code,used:false,createdAt:new Date().toISOString()});
+    await updateDoc(doc(db,'vipRequests',reqId),{status:'approved',approvedCode:code,approvedAt:new Date().toISOString()});
+    await addDoc(collection(db,'notifications'),{type:'vip_approved',code,createdAt:new Date().toISOString(),name:'تمت الموافقة على طلبك',image:''});
+    ss('✅ تمت الموافقة وتم حفظ الكود: '+code);
+    closeM('vipApproveModal');loadVipRequests();
+  }catch(e){ss('خطأ: '+e.message,'error');}
+};
+
+window.rejectVipRequest=async function(id){
+  if(!confirm('رفض هذا الطلب؟'))return;
+  try{await updateDoc(doc(db,'vipRequests',id),{status:'rejected',rejectedAt:new Date().toISOString()});ss('تم الرفض');loadVipRequests();}catch(e){ss('خطأ','error');}
+};
+
+// ══ UNLOCK VIP CODE ══
+window.unlockVipCode=async function(){
+  const code=document.getElementById('vipCodeInput').value.trim().toUpperCase();
+  const err=document.getElementById('vipCodeErr');
+  err.style.display='none';
+  if(!code||code.length!==15){
+    err.textContent='الكود يجب أن يكون 15 خانة';err.style.display='block';return;
+  }
+  try{
+    // تحقق من الكود مباشرة
+    const snap=await getDoc(doc(db,'vipCodes',code));
+    if(!snap.exists()){
+      err.textContent='❌ الكود غير صحيح';err.style.display='block';return;
+    }
+    const data=snap.data();
+    // هل الكود مستخدم من شخص آخر؟
+    if(data.used && data.usedBy && data.usedBy!==curUser.uid){
+      err.textContent='❌ هذا الكود مستخدم بالفعل من حساب آخر';err.style.display='block';return;
+    }
+    // سجّل الاستخدام
+    try{
+      await updateDoc(doc(db,'vipCodes',code),{
+        used:true,usedBy:curUser.uid,usedAt:new Date().toISOString()
+      });
+    }catch{}
+    // احفظ محلياً وافتح المحتوى
+    localStorage.setItem('vip_code_'+curUser.uid,code);
+    document.getElementById('vipCodeEntry').style.display='none';
+    document.getElementById('vipUnlockedContent').style.display='block';
+    renderVipMember();
+    ss('🎉 تم فتح جميع المحتوى الحصري!');
+  }catch(e){
+    if(e.code==='permission-denied'){
+      err.textContent='❌ الكود غير صحيح';
+    } else {
+      err.textContent='❌ خطأ: '+e.message;
+    }
+    err.style.display='block';
+  }
+};
+window.lockVipContent=function(){
+  document.getElementById('vipCodeEntry').style.display='block';
+  document.getElementById('vipUnlockedContent').style.display='none';
+};
+
+// ══ VIP REQUEST SUBMIT ══
+let proofBase64='';
+window.previewProof=function(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    proofBase64=e.target.result;
+    const wrap=document.getElementById('proofPreviewWrap');
+    if(wrap)wrap.innerHTML=`<img src="${proofBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>`;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.submitVipRequest=async function(){
+  if(!curUser)return ss('سجّل دخولك أولاً','error');
+  const contentId=document.getElementById('vipReqContent').value;
+  const method=document.getElementById('vipReqMethod').value;
+  const note=document.getElementById('vipReqNote').value.trim();
+  const err=document.getElementById('vipReqErr');
+  const msg=document.getElementById('vipReqMsg');
+  if(!contentId){err.textContent='اختر المحتوى';err.style.display='block';return;}
+  if(!method){err.textContent='اختر طريقة الدفع';err.style.display='block';return;}
+  if(!proofBase64){err.textContent='أرفق صورة إثبات الدفع';err.style.display='block';return;}
+  err.style.display='none';
+  try{
+    await addDoc(collection(db,'vipRequests'),{
+      contentId,method,note,
+      proofUrl:proofBase64,
+      uid:curUser.uid,
+      userEmail:curUser.email,
+      userName:curUser.displayName||curUser.email.split('@')[0],
+      status:'pending',
+      createdAt:new Date().toISOString()
+    });
+    msg.textContent='✅ تم إرسال طلبك! سيراجعه المشرف قريباً وسيرسل لك الكود.';
+    msg.style.display='block';
+    proofBase64='';
+    document.getElementById('proofPreviewWrap').innerHTML='<div style="font-size:28px;opacity:.4;">📷</div><div style="font-size:12px;color:var(--dim);">اضغط لرفع صورة الإثبات</div>';
+    document.getElementById('vipReqContent').value='';
+    document.getElementById('vipReqMethod').value='';
+    document.getElementById('vipReqNote').value='';
+    setTimeout(()=>msg.style.display='none',5000);
+  }catch(e){err.textContent='خطأ: '+e.message;err.style.display='block';}
+};
+
+// ══ CHANNELS ══
+onSnapshot(query(collection(db,'channels'),orderBy('createdAt','asc')),s=>{
+  channels=s.docs.map(d=>({id:d.id,...d.data()}));
+  if(document.getElementById('page-channels')?.classList.contains('active'))renderChannels();
+},()=>{});
+
+function renderChannels(filter=''){
+  const el=document.getElementById('channelsList');
+  const cnt=document.getElementById('channelCount');
+  if(!el)return;
+  const list=filter?channels.filter(c=>(c.name||'').toLowerCase().includes(filter.toLowerCase())):channels;
+  if(cnt)cnt.textContent=list.length+' قناة';
+  if(!list.length){el.innerHTML=`<div class="channels-empty"><div style="font-size:40px;opacity:.3;margin-bottom:12px;">📡</div><p>${filter?'لا توجد نتائج':'لا توجد قنوات بعد'}</p></div>`;return;}
+  el.innerHTML='';
+  list.forEach((ch,i)=>{
+    const card=document.createElement('div');
+    card.className='channel-card';card.style.animationDelay=i*.04+'s';
+    card.innerHTML=`<div class="channel-icon">${ch.icon||'📺'}</div>
+      <div class="channel-name">${ch.name}</div>
+      <div style="display:flex;gap:7px;flex-shrink:0;">
+        <button class="ch-copy-btn" data-name="${ch.name}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> نسخ
+        </button>
+        ${isAdmin()?`<button class="ch-del-btn" onclick="deleteChannel('${ch.id}','${ch.name.replace(/'/g,"\'")}')">🗑️</button>`:''}
+      </div>`;
+    card.querySelector('.ch-copy-btn').addEventListener('click',function(){
       navigator.clipboard.writeText(ch.name).then(()=>{
-        this.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> تم!';
-        this.classList.add("ok");
-        setTimeout(()=>{
-          this.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> نسخ`;
-          this.classList.remove("ok");
-        },2000);
-        ss("تم نسخ: "+ch.name+" ✅");
-      }).catch(()=>ss("فشل النسخ","error"));
+        this.innerHTML='✅ تم!';this.classList.add('ok');
+        setTimeout(()=>{this.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> نسخ';this.classList.remove('ok');},2000);
+        ss('تم نسخ: '+ch.name);
+      });
     });
     el.appendChild(card);
   });
 }
-
-window.filterChannels=function(val){renderChannels(val);};
-
+window.filterChannels=function(v){renderChannels(v);};
 window.openChannelModal=function(){
   channelEditId=null;
-  document.getElementById("channelModalTitle").textContent="📡 إضافة قناة";
-  document.getElementById("channelNameInp").value="";
-  document.getElementById("channelIconInp").value="";
-  document.getElementById("channelModalErr").style.display="none";
-  openM("channelModal");
+  document.getElementById('channelModalTitle').textContent='📡 إضافة قناة';
+  document.getElementById('channelNameInp').value='';
+  document.getElementById('channelIconInp').value='';
+  document.getElementById('channelModalErr').style.display='none';
+  openM('channelModal');
 };
-
-window.editChannel=function(id,name,icon){
-  channelEditId=id;
-  document.getElementById("channelModalTitle").textContent="✏️ تعديل القناة";
-  document.getElementById("channelNameInp").value=name;
-  document.getElementById("channelIconInp").value=icon||"";
-  document.getElementById("channelModalErr").style.display="none";
-  openM("channelModal");
-};
-
 window.saveChannel=async function(){
-  const name=document.getElementById("channelNameInp").value.trim();
-  const icon=document.getElementById("channelIconInp").value.trim()||"📺";
-  const err=document.getElementById("channelModalErr");
-  if(!name){err.textContent="أدخل اسم القناة";err.style.display="block";return;}
+  const name=document.getElementById('channelNameInp').value.trim();
+  const icon=document.getElementById('channelIconInp').value.trim()||'📺';
+  const err=document.getElementById('channelModalErr');
+  if(!name){err.textContent='أدخل اسم القناة';err.style.display='block';return;}
   try{
-    if(channelEditId){
-      await updateDoc(doc(db,"channels",channelEditId),{name,icon,updatedAt:new Date().toISOString()});
-      ss("تم تحديث القناة ✅");
-    } else {
-      await addDoc(collection(db,"channels"),{name,icon,createdAt:new Date().toISOString()});
-      ss("تمت إضافة القناة ✅");
-    }
-    closeM("channelModal");
-  }catch(e){err.textContent="خطأ: "+e.message;err.style.display="block";}
+    if(channelEditId)await updateDoc(doc(db,'channels',channelEditId),{name,icon});
+    else await addDoc(collection(db,'channels'),{name,icon,createdAt:new Date().toISOString()});
+    ss('تم الحفظ ✅');closeM('channelModal');
+  }catch(e){err.textContent='خطأ: '+e.message;err.style.display='block';}
 };
-
 window.deleteChannel=async function(id,name){
   if(!confirm(`حذف قناة "${name}"؟`))return;
-  try{
-    await deleteDoc(doc(db,"channels",id));
-    ss("تم الحذف 🗑️");
-  }catch(e){ss("خطأ: "+e.message,"error");}
+  try{await deleteDoc(doc(db,'channels',id));ss('تم الحذف');}catch(e){ss('خطأ','error');}
+};
+
+// إضافة محتوى VIP لممثلة من صفحة التفاصيل
+window.addVipForCurrentActress=function(){
+  const id=detId||window.detId;
+  if(!id||!isAdmin())return;
+  openVipContentModal(id);
 };
 
 // FIREBASE LISTENERS
@@ -2608,6 +3270,27 @@ function showDet(id){
   document.getElementById("dBio").textContent=a.bio||"لا توجد نبذة.";
   document.getElementById("dNI").textContent=a.name||"—";document.getElementById("dCI").textContent=a.country||"—";document.getElementById("dTI").textContent=(a.types||[]).join(" • ")||"—";
   document.getElementById("dHI").textContent=a.hairColor||"—";
+  // عرض محتوى VIP للممثلة
+  const vipSec=document.getElementById("vipDetSection");
+  const vipDetGrid=document.getElementById("vipDetGrid");
+  const addVipBtn=document.getElementById("addVipFromDetBtn");
+  const actressVip=vipContent.filter(c=>c.actressId===id);
+  if(vipSec){
+    const hasVip=actressVip.length>0||isAdmin();
+    vipSec.style.display=hasVip?"block":"none";
+    if(addVipBtn)addVipBtn.style.display=isAdmin()?"inline-flex":"none";
+    if(vipDetGrid){
+      if(!actressVip.length){
+        vipDetGrid.innerHTML=isAdmin()?'<div style="color:var(--dim);font-size:12px;padding:8px 0;">لا يوجد محتوى بعد — اضغط إضافة</div>':'';
+      } else {
+        vipDetGrid.innerHTML='';
+        actressVip.forEach(function(c,i){
+          var card=createVipCard(c,i,actressVip);
+          vipDetGrid.appendChild(card);
+        });
+      }
+    }
+  }
   const ageWrap=document.getElementById("dAgeWrap"),ageEl=document.getElementById("dAge");
   const age=calcAge(a.birthDate);
   if(age!==null){
