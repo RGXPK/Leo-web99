@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#030303"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Leo v9.9"/>
+<meta name="apple-mobile-web-app-title" content="Leo"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-<meta name="description" content="Leo v9.9 - Secure Data. Powerful Control."/>
+<meta name="description" content="Leo  - Secure Data. Powerful Control."/>
 <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Leo%206v%22%2C%22short_name%22%3A%22Leo%206v%22%2C%22description%22%3A%22Secure%20Data.%20Powerful%20Control.%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030303%22%2C%22theme_color%22%3A%22%23F1B76D%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fg.top4top.io%2Fp_3787q4lgv0.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D"/>
 <link rel="apple-touch-icon" href="https://g.top4top.io/p_3787q4lgv0.png"/>
-<title>Leo v9.9</title>
+<title>Leo</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -613,26 +613,6 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .ac-empty{padding:16px;text-align:center;color:var(--dim);font-size:12px;}
 .ac-fuzzy-tag{font-size:9px;background:rgba(168,85,247,.12);color:#a855f7;padding:2px 7px;border-radius:100px;border:1px solid rgba(168,85,247,.25);flex-shrink:0;}
 
-/* ══ NOTIFICATIONS BELL ══ */
-.bell-btn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:all .2s;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
-.bell-btn:hover{border-color:rgba(241,183,109,.2);color:var(--gold);}
-.bell-badge{position:absolute;top:-4px;left:-4px;background:#FF4444;color:#fff;font-size:9px;font-weight:900;min-width:17px;height:17px;border-radius:100px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0a0a0a;}
-.bell-badge.show{display:flex;}
-.notif-dd{position:fixed;top:72px;left:8px;right:8px;width:auto;max-width:380px;background:#0d0d0d;border:1px solid rgba(255,255,255,.06);border-radius:15px;box-shadow:0 20px 60px rgba(0,0,0,.9);z-index:9990;display:none;max-height:70vh;overflow-y:auto;}
-@media(min-width:480px){.notif-dd{position:absolute;top:calc(100% + 8px);left:auto;right:0;width:340px;max-width:90vw;}}
-.notif-dd.open{display:block;}
-.notif-head{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;font-weight:700;color:var(--tx);display:flex;align-items:center;justify-content:space-between;}
-.notif-item{display:flex;align-items:center;gap:11px;padding:13px 16px;cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.03);position:relative;min-height:60px;}
-.notif-item:last-child{border-bottom:none;}
-.notif-item:hover{background:rgba(241,183,109,.05);}
-.notif-item.unread::before{content:"";position:absolute;right:6px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--gold);}
-.notif-item img{width:40px;height:40px;border-radius:10px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid rgba(255,255,255,.05);}
-.notif-info{flex:1;min-width:0;}
-.notif-title{font-size:12px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.notif-sub{font-size:11px;color:var(--dim);margin-top:2px;}
-.notif-time{font-size:10px;color:var(--dim2);margin-top:3px;}
-.notif-empty{padding:28px;text-align:center;color:var(--dim);font-size:12px;}
-
 /* ══ HOME SLIDER ══ */
 .home-slider-sec{max-width:1200px;margin:0 auto;padding:0 40px 50px;}
 @media(max-width:768px){.home-slider-sec{padding:0 16px 30px;}}
@@ -903,7 +883,7 @@ window.addEventListener('load',()=>{
 <!-- iOS INSTALL HINT -->
 <div id="iosHint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
   <div style="flex:1;">
-    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v9.9</div>
+    <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v10</div>
     <div style="font-size:11px;color:#888;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
   </div>
   <span onclick="document.getElementById('iosHint').style.display='none';" style="font-size:18px;color:#555;cursor:pointer;flex-shrink:0;">×</span>
@@ -926,8 +906,8 @@ window.addEventListener('load',()=>{
 <div id="loginWall" class="wall" style="display:flex;">
   <div class="wall-card">
     <div class="wall-logo-wrap">
-      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.9" class="wall-logo-img"/>
-      <div class="wall-brand">Leo v9.9</div>
+      <img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v10" class="wall-logo-img"/>
+      <div class="wall-brand">Leo v10</div>
       <div class="wall-tagline">SECURE DATA. POWERFUL CONTROL.</div>
     </div>
     <div class="wall-box">
@@ -948,7 +928,7 @@ window.addEventListener('load',()=>{
         <input id="wRPass2" type="password" placeholder="تأكيد كلمة المرور *" class="win"/>
         <input id="wUsername" type="text" placeholder="اسم المستخدم * (5 أحرف إنجليزية)" class="win" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_]/g,'')"/>
         <input id="wInvite" type="text" placeholder="🔑 كود الدعوة *" class="win win-special"/>
-        <div class="win-hint">اسم "leo" محجوز للأول فقط • 5 أحرف على الأقل</div>
+        <div class="win-hint"></div>
         <button id="wRegBtn" class="wbtn">✨ إنشاء الحساب</button>
       </div>
     </div>
@@ -958,20 +938,10 @@ window.addEventListener('load',()=>{
 <!-- NAV -->
 <nav class="nav" id="mainNav" style="display:none;">
   <a class="brand" id="homeBrand" href="#">
-    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.9"/></div>
-    <span class="brand-name">Leo v9.9</span>
+    <div class="brand-logo"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v10"/></div>
+    <span class="brand-name">Leo v10</span>
   </a>
   <div class="nav-sp"></div>
-  <div style="position:static;" id="bellWrap">
-    <button class="bell-btn" id="bellBtn" style="display:none;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span class="bell-badge" id="bellBadge">0</span>
-    </button>
-    <div class="notif-dd" id="notifDd">
-      <div class="notif-head"><span>🔔 الإشعارات</span><span id="notifClearAll" style="font-size:11px;color:var(--gold);cursor:pointer;font-weight:700;">تعليم كمقروء</span></div>
-      <div id="notifList"><div class="notif-empty">لا توجد إشعارات</div></div>
-    </div>
-  </div>
   <div id="navUserBadge" style="display:none;" class="user-chip" onclick="goTo('profile')">
     <div class="user-chip-av" id="navUserAv">L</div>
     <span class="user-chip-name" id="navUserName">المستخدم</span>
@@ -1038,7 +1008,7 @@ window.addEventListener('load',()=>{
     </div>
     <div class="hero-visual">
       <div class="hero-ring"></div>
-      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.9"/></div>
+      <div class="hero-logo-big"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v10"/></div>
     </div>
   </div>
   <div class="home-slider-sec">
@@ -1054,7 +1024,7 @@ window.addEventListener('load',()=>{
   </div>
 
   <div class="features">
-    <div class="features-label">✦ ما يقدمه Leo v9.9 ✦</div>
+    <div class="features-label">✦ ما يقدمه Leo v99 ✦</div>
     <div class="features-grid">
       <div class="feat"><div class="feat-icon">🎬</div><div class="feat-title">تصفح الممثلات</div><div class="feat-desc">قاعدة بيانات متقدمة مع فلاتر متعددة وتوصيات ذكية</div></div>
       <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">مدير الروابط</div><div class="feat-desc">نظّم روابطك في مجلدات ملونة وتتبع النقرات</div></div>
@@ -1062,7 +1032,7 @@ window.addEventListener('load',()=>{
       <div class="feat"><div class="feat-icon">🔑</div><div class="feat-title">نظام دعوة متقدم</div><div class="feat-desc">تسجيل يتطلب كود خاص واسم مستخدم فريد</div></div>
     </div>
   </div>
-  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo v9.9</span> 2025 — SECURE DATA. POWERFUL CONTROL.</footer>
+  <footer class="site-footer">جميع الحقوق محفوظة © <span>Leo v99</span> 2026 — SECURE DATA. POWERFUL CONTROL.</footer>
 </div>
 
 <!-- ACTRESSES -->
@@ -1263,7 +1233,7 @@ window.addEventListener('load',()=>{
 <div class="page" id="page-admin">
   <div class="admin-page">
     <div class="admin-header">
-      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v9.9"/></div>
+      <div class="admin-av"><img src="https://g.top4top.io/p_3787q4lgv0.png" alt="Leo v10"/></div>
       <div><div class="admin-title">لوحة التحكم</div><div class="admin-sub" id="adminEmail">مرحباً بك</div></div>
     </div>
     <div class="admin-tools">
@@ -1796,8 +1766,30 @@ window.addEventListener('load',()=>{
   display:inline-flex;align-items:center;gap:6px;
   background:rgba(241,183,109,.15);border:1px solid rgba(241,183,109,.3);
   padding:3px 10px;border-radius:100px;margin-bottom:6px;
-  font-size:10px;color:var(--gold);font-weight:700;pointer-events:none;
+  font-size:10px;color:var(--gold);font-weight:700;pointer-events:auto;
 }
+.vip-reel-mute-btn{
+  position:fixed;left:12px;bottom:24px;z-index:20;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:16px;backdrop-filter:blur(8px);
+}
+.vip-reel-heart{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:90px;pointer-events:none;z-index:15;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5));
+  animation:vipHeartPop .8s ease forwards;
+}
+@keyframes vipHeartPop{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:0;}
+  25%{transform:translate(-50%,-50%) scale(1.15);opacity:1;}
+  40%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+  100%{transform:translate(-50%,-50%) scale(1.05);opacity:0;}
+}
+.vip-reel-progress{
+  position:absolute;top:0;right:0;left:0;height:2px;background:rgba(255,255,255,.15);z-index:15;
+}
+.vip-reel-progress-bar{height:100%;width:0%;background:var(--gold);transition:width .1s linear;}
 .vip-reel-nav{
   position:fixed;right:12px;top:50%;transform:translateY(-50%);
   display:flex;flex-direction:column;gap:8px;z-index:20;
@@ -1886,6 +1878,7 @@ window.addEventListener('load',()=>{
       <label class="chki"><input type="checkbox" value="Slim" class="aT"> Slim</label>
       <label class="chki"><input type="checkbox" value="Curvy" class="aT"> Curvy</label>
       <label class="chki"><input type="checkbox" value="Athlete" class="aT"> Athlete</label>
+          <label class="chki"><input type="checkbox" value="Athlete" class="aT"> Hentai</label>
     </div></div>
     <div class="mfg"><label>البلد</label><input type="text" id="mCSrch" placeholder="ابحث بلد..." style="margin-bottom:6px;"/><select id="mCountry" class="sinp" style="padding:10px;"></select></div>
     <div class="mfg"><label>الصورة *</label>
@@ -2403,26 +2396,9 @@ onAuthStateChanged(auth,async u=>{
     loadProfileData();
     if(isAdmin())document.getElementById("adminEmail").textContent=u.email;
   }
-  renderActresses();renderLinks();renderFolders();renderAdmin();renderNotifications();
+  renderActresses();renderLinks();renderFolders();renderAdmin();
 });
 
-// ══ NOTIFICATIONS ══
-let notifications=[];
-function readNotifIds(){
-  if(!curUser)return[];
-  try{return JSON.parse(localStorage.getItem("readNotifs_"+curUser.uid)||"[]");}catch{return[];}
-}
-function markNotifRead(id){
-  if(!curUser)return;
-  const ids=readNotifIds();
-  if(!ids.includes(id)){ids.push(id);localStorage.setItem("readNotifs_"+curUser.uid,JSON.stringify(ids));}
-}
-function markAllNotifsRead(){
-  if(!curUser)return;
-  const ids=notifications.map(n=>n.id);
-  localStorage.setItem("readNotifs_"+curUser.uid,JSON.stringify(ids));
-  renderNotifications();
-}
 function timeAgo(iso){
   const diff=Date.now()-new Date(iso).getTime();
   const mins=Math.floor(diff/60000),hrs=Math.floor(diff/3600000),days=Math.floor(diff/86400000);
@@ -2432,49 +2408,6 @@ function timeAgo(iso){
   if(days<30)return`منذ ${days} يوم`;
   return new Date(iso).toLocaleDateString("ar-SA");
 }
-function renderNotifications(){
-  const bell=document.getElementById("bellBtn"),badge=document.getElementById("bellBadge"),list=document.getElementById("notifList");
-  if(!bell||!curUser){if(bell)bell.style.display="none";return;}
-  bell.style.display="flex";
-  const readIds=readNotifIds();
-  const unread=notifications.filter(n=>!readIds.includes(n.id));
-  if(unread.length>0){badge.textContent=unread.length>9?"9+":unread.length;badge.classList.add("show");}
-  else badge.classList.remove("show");
-  if(!notifications.length){list.innerHTML='<div class="notif-empty">لا توجد إشعارات</div>';return;}
-  list.innerHTML=notifications.slice(0,15).map(n=>{
-    const isUnread=!readIds.includes(n.id);
-    return `<div class="notif-item${isUnread?" unread":""}" data-id="${n.id}" data-aid="${n.actressId||""}">
-      <img src="${n.image||PH}" onerror="this.src='${PH}'"/>
-      <div class="notif-info">
-        <div class="notif-title">✨ تمت إضافة ${n.name}</div>
-        <div class="notif-sub">📍 ${n.country||"—"}</div>
-        <div class="notif-time">${timeAgo(n.createdAt)}</div>
-      </div>
-    </div>`;
-  }).join("");
-  list.querySelectorAll(".notif-item").forEach(item=>{
-    item.addEventListener("click",()=>{
-      markNotifRead(item.dataset.id);
-      const aid=item.dataset.aid;
-      document.getElementById("notifDd").classList.remove("open");
-      if(aid){goTo("actresses");setTimeout(()=>showDet(aid),150);}
-      renderNotifications();
-    });
-  });
-}
-const bellBtnEl=document.getElementById("bellBtn");
-if(bellBtnEl){
-  bellBtnEl.addEventListener("click",e=>{
-    e.stopPropagation();
-    document.getElementById("notifDd").classList.toggle("open");
-  });
-}
-document.getElementById("notifClearAll")?.addEventListener("click",e=>{e.stopPropagation();markAllNotifsRead();});
-document.addEventListener("click",e=>{
-  if(!e.target.closest("#bellWrap")){
-    const dd=document.getElementById("notifDd");if(dd)dd.classList.remove("open");
-  }
-});
 
 // ══ HOME SLIDER ══
 let hSlideIdx=0,hSlideTimer=null,hSlideItems=[];
@@ -3072,17 +3005,19 @@ window.openVipViewer=function(id){
   });
   window._vipSlides=slides;
   window._vipCurrentSlide=0;
+  window._vipMuted=window._vipMuted!==undefined?window._vipMuted:true;
   const wmHtml=!isAdmin()?buildWatermarkHTML():'';
   track.innerHTML=slides.map((c,i)=>{
     const isVid=c.type==='video';
     const mediaHtml=isVid
-      ?`<video src="${c._url}" loop playsinline controls preload="metadata" oncontextmenu="return false;" style="max-width:100%;max-height:85vh;outline:none;"></video>`
+      ?`<video src="${c._url}" loop playsinline controls ${window._vipMuted?'muted':''} preload="metadata" oncontextmenu="return false;" style="max-width:100%;max-height:85vh;outline:none;"></video>`
       :`<img src="${c._url}" loading="${i===0||i===startIdx?'eager':'lazy'}" alt="${c.name}" oncontextmenu="return false;" draggable="false" style="max-width:100%;max-height:90vh;"/>`;
     const dots=c._albumTotal>1?`<div class="vip-reel-album-dots">${Array.from({length:c._albumTotal},(_,d)=>`<div class="vip-reel-album-dot${d===c._albumIdx?' on':''}"></div>`).join('')}</div>`:'';
     return `<div class="vip-reel-slide" data-idx="${i}" data-id="${c.id}">
+      <div class="vip-reel-progress"><div class="vip-reel-progress-bar" id="prog-${i}"></div></div>
       ${mediaHtml}${wmHtml}${dots}
       <div class="vip-reel-info">
-        ${c.actressName?`<div class="vip-reel-actress">🎭 ${c.actressName}</div>`:''}
+        ${c.actressName?`<div class="vip-reel-actress" ${c.actressId?`onclick="goToActressFromVip('${c.actressId}')" style="cursor:pointer;"`:''}>🎭 ${c.actressName}</div>`:''}
         <div class="vip-reel-name">${c.name}${c._albumTotal>1?` · ${c._albumIdx+1}/${c._albumTotal}`:''}</div>
         ${c.desc?`<div class="vip-reel-desc">${c.desc}</div>`:''}
       </div>
@@ -3099,6 +3034,34 @@ window.openVipViewer=function(id){
   counter.id='reelCounter';
   counter.textContent=`1 / ${slides.length}`;
   track.appendChild(counter);
+  const muteBtn=document.createElement('div');
+  muteBtn.className='vip-reel-mute-btn';
+  muteBtn.id='reelMuteBtn';
+  muteBtn.innerHTML=window._vipMuted?'🔇':'🔊';
+  muteBtn.onclick=()=>{
+    window._vipMuted=!window._vipMuted;
+    muteBtn.innerHTML=window._vipMuted?'🔇':'🔊';
+    track.querySelectorAll('video').forEach(v=>v.muted=window._vipMuted);
+  };
+  track.appendChild(muteBtn);
+  // النقر المزدوج للإعجاب (مثل تيك توك)
+  track.querySelectorAll('.vip-reel-slide').forEach(slide=>{
+    let lastTap=0;
+    slide.addEventListener('click',(e)=>{
+      if(e.target.closest('.vip-reel-actress'))return;
+      const now=Date.now();
+      if(now-lastTap<300){
+        const heart=document.createElement('div');
+        heart.className='vip-reel-heart';
+        heart.textContent='❤️';
+        heart.style.left=(e.offsetX||slide.clientWidth/2)+'px';
+        heart.style.top=(e.offsetY||slide.clientHeight/2)+'px';
+        slide.appendChild(heart);
+        setTimeout(()=>heart.remove(),800);
+      }
+      lastTap=now;
+    });
+  });
   viewer.style.display='block';
   document.body.style.overflow='hidden';
   const goIdx=slides.findIndex(s=>s.id===id);
@@ -3128,15 +3091,33 @@ window.reelGoTo=function(idx,instant){
   const total=window._vipSlides?.length||0;
   if(idx<0||idx>=total)return;
   const ov=track.querySelector(`[data-idx="${window._vipCurrentSlide}"] video`);
-  if(ov)ov.pause();
+  if(ov){ov.pause();ov.removeEventListener('timeupdate',ov._progHandler);}
   window._vipCurrentSlide=idx;
   track.scrollTo({top:idx*window.innerHeight,behavior:instant?'auto':'smooth'});
   setTimeout(()=>{
-    const nv=track.querySelector(`[data-idx="${idx}"] video`);
-    if(nv){nv.currentTime=0;nv.play().catch(()=>{});}
+    const slide=track.querySelector(`[data-idx="${idx}"]`);
+    const nv=slide?.querySelector('video');
+    const prog=document.getElementById(`prog-${idx}`);
+    if(nv){
+      nv.muted=window._vipMuted;
+      nv.currentTime=0;nv.play().catch(()=>{});
+      nv._progHandler=()=>{if(prog&&nv.duration)prog.style.width=(nv.currentTime/nv.duration*100)+'%';};
+      nv.addEventListener('timeupdate',nv._progHandler);
+    } else if(prog){
+      // صورة: شريط تقدم زمني ثابت (5 ثوانٍ) كإشارة بصرية فقط
+      prog.style.transition='none';prog.style.width='0%';
+      requestAnimationFrame(()=>{prog.style.transition='width 5s linear';prog.style.width='100%';});
+    }
     const ct=document.getElementById('reelCounter');
     if(ct)ct.textContent=`${idx+1} / ${total}`;
   },instant?60:380);
+};
+
+window.goToActressFromVip=function(actressId){
+  if(!actressId)return;
+  closeVipViewer();
+  goTo('actresses');
+  setTimeout(()=>showDet(actressId),200);
 };
 
 window.closeVipViewer=function(){
@@ -3385,7 +3366,6 @@ window.approveVipRequest=async function(){
       createdBy:curUser.email
     });
     await updateDoc(doc(db,'vipRequests',reqId),{status:'approved',approvedCode:code,approvedAt:new Date().toISOString()});
-    await addDoc(collection(db,'notifications'),{type:'vip_approved',code,createdAt:new Date().toISOString(),name:'تمت الموافقة على طلبك',image:''});
     ss('✅ تمت الموافقة وتم حفظ الكود: '+code);
     closeM('vipApproveModal');loadVipRequests();
   }catch(e){ss('خطأ: '+e.message,'error');}
@@ -3748,11 +3728,6 @@ window.publishNow=async function(id){
     await addDoc(collection(db,'vipContent'),{...data,published:true,publishedAt:new Date().toISOString()});
     // حدّث الجدول كـ منشور
     await updateDoc(doc(db,'vipScheduled',id),{published:true,publishedAt:new Date().toISOString()});
-    // إشعار للمستخدمين
-    await addDoc(collection(db,'notifications'),{
-      type:'new_vip',name:'محتوى حصري جديد: '+c.name,
-      image:c.url||'',createdAt:new Date().toISOString()
-    });
     ss('✅ تم نشر "'+c.name+'" بنجاح!');
     logActivity&&logActivity('نشر محتوى VIP مجدول',c.name);
   }catch(e){ss('خطأ في النشر: '+e.message,'error');}
@@ -3868,10 +3843,6 @@ async function renderVipCodesPage(){
 
 // FIREBASE LISTENERS
 onSnapshot(query(collection(db,"actresses"),orderBy("name")),s=>{actresses=s.docs.map(d=>({id:d.id,...d.data()}));renderActresses();popCS();popCF();updStats();renderAdmin();const sp=document.getElementById("page-stats");if(sp&&sp.classList.contains("active"))renderStats();buildHomeSlider();},()=>{});
-onSnapshot(query(collection(db,"notifications"),orderBy("createdAt","desc")),s=>{
-  notifications=s.docs.map(d=>({id:d.id,...d.data()})).slice(0,30);
-  renderNotifications();
-},()=>{});
 onSnapshot(query(collection(db,"linkFolders"),orderBy("name")),s=>{folders=s.docs.map(d=>({id:d.id,...d.data()}));renderFolders();popFS();renderAdmin();},()=>{});
 onSnapshot(query(collection(db,"links"),orderBy("createdAt","desc")),s=>{links=s.docs.map(d=>({id:d.id,...d.data()}));renderLinks();renderFolders();updStats();renderAdmin();},()=>{});
 
@@ -3890,10 +3861,11 @@ document.getElementById("mCSrch").addEventListener("input",()=>{const t=document
 
 // FILTERS
 function getFA(){
-  const term=document.getElementById("aSearch").value.trim().toLowerCase(),sort=document.getElementById("aSortBy").value;
+  const rawTerm=document.getElementById("aSearch").value.trim();
+  const term=normalizeAr(rawTerm),sort=document.getElementById("aSortBy").value;
   let f=actresses.filter(a=>{
     if(term){
-      const nameL=a.name.toLowerCase();
+      const nameL=normalizeAr(a.name);
       const directMatch=nameL.includes(term);
       let fuzzyMatch=false;
       if(!directMatch&&term.length>=2){
@@ -3907,8 +3879,14 @@ function getFA(){
     if(selHair.size>0&&!selHair.has(a.hairColor))return false;
     return true;
   });
-  f.sort((a,b)=>{if(sort==="name-asc")return a.name.localeCompare(b.name,"ar");if(sort==="name-desc")return b.name.localeCompare(a.name,"ar");if(sort==="country")return(a.country||"").localeCompare(b.country||"","ar");if(sort==="newest")return(b.createdAt||"").localeCompare(a.createdAt||"");return 0;});
-  updChips(term);return f;
+  f.sort((a,b)=>{
+    if(term){
+      const na=normalizeAr(a.name),nb=normalizeAr(b.name);
+      const sa=na.startsWith(term)?0:1,sb=nb.startsWith(term)?0:1;
+      if(sa!==sb)return sa-sb;
+    }
+    if(sort==="name-asc")return a.name.localeCompare(b.name,"ar");if(sort==="name-desc")return b.name.localeCompare(a.name,"ar");if(sort==="country")return(a.country||"").localeCompare(b.country||"","ar");if(sort==="newest")return(b.createdAt||"").localeCompare(a.createdAt||"");return 0;});
+  updChips(rawTerm);return f;
 }
 function updChips(term){
   const bar=document.getElementById("aChips"),bdg=document.getElementById("fBdg");
@@ -4110,17 +4088,6 @@ document.getElementById("saveA").addEventListener("click",async()=>{
       const ref=await addDoc(collection(db,"actresses"),data);
       ss("تمت الإضافة ✅");
       logActivity("إضافة ممثلة",data.name+" • "+data.country);
-      // إرسال إشعار للمستخدمين بإضافة ممثلة جديدة
-      try{
-        await addDoc(collection(db,"notifications"),{
-          type:"new_actress",
-          actressId:ref.id,
-          name:data.name,
-          image:data.image||"",
-          country:data.country||"",
-          createdAt:new Date().toISOString()
-        });
-      }catch{}
     }closeM("aModal");}
   catch(err){ss("خطأ: "+err.message,"error");}finally{btn.textContent="💾 حفظ";btn.disabled=false;}
 });
@@ -4477,6 +4444,18 @@ function levenshtein(a,b){
   return dp[m][n];
 }
 
+function normalizeAr(s){
+  if(!s)return"";
+  return s.toString().toLowerCase()
+    .replace(/[\u064B-\u0652\u0670\u0640]/g,"") // إزالة التشكيل والتطويل
+    .replace(/[أإآا]/g,"ا")
+    .replace(/ى/g,"ي")
+    .replace(/ة/g,"ه")
+    .replace(/ؤ/g,"و")
+    .replace(/ئ/g,"ي")
+    .replace(/\s+/g," ")
+    .trim();
+}
 function similarity(a,b){
   const maxLen=Math.max(a.length,b.length);
   if(maxLen===0)return 1;
@@ -4499,9 +4478,16 @@ function buildAutocomplete(term){
   if(!dd)return;
   if(!term||term.length<1){dd.classList.remove("open");dd.innerHTML="";acResults=[];return;}
 
-  const t=term.toLowerCase().trim();
-  // مطابقة مباشرة (تحتوي على النص)
-  const direct=actresses.filter(a=>a.name.toLowerCase().includes(t));
+  const t=normalizeAr(term);
+  // مطابقة مباشرة (تحتوي على النص) — مرتبة بحيث الأسماء التي تبدأ بالحرف/الكلمة تظهر أولاً
+  const direct=actresses
+    .filter(a=>normalizeAr(a.name).includes(t))
+    .sort((a,b)=>{
+      const na=normalizeAr(a.name),nb=normalizeAr(b.name);
+      const sa=na.startsWith(t)?0:1,sb=nb.startsWith(t)?0:1;
+      if(sa!==sb)return sa-sb;
+      return na.localeCompare(nb,"ar");
+    });
   // مطابقة تقريبية (fuzzy) للأسماء غير المباشرة
   let fuzzy=[];
   if(t.length>=2){
@@ -4509,8 +4495,8 @@ function buildAutocomplete(term){
       .filter(a=>!direct.includes(a))
       .map(a=>{
         // قارن مع كل كلمة من اسم الممثلة
-        const words=a.name.toLowerCase().split(/\s+/);
-        const bestSim=Math.max(...words.map(w=>similarity(w,t)),similarity(a.name.toLowerCase(),t));
+        const words=normalizeAr(a.name).split(/\s+/);
+        const bestSim=Math.max(...words.map(w=>similarity(w,t)),similarity(normalizeAr(a.name),t));
         return{a,sim:bestSim};
       })
       .filter(x=>x.sim>=0.55)
