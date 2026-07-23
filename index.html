@@ -1623,6 +1623,14 @@ Leo</div>
     </div>
     <div class="mfg"><label>رابط الصورة/الفيديو *</label><input type="text" id="vipCUrl" placeholder="https://..."/></div>
     <div class="mfg" id="vipAlbumWrap" style="display:none;"><label>روابط إضافية (ألبوم) — كل رابط في سطر</label><textarea id="vipCAlbum" rows="3" placeholder="https://img1.com&#10;https://img2.com&#10;..."></textarea></div>
+    <div class="mfg" id="vipVideoModeWrap" style="display:none;background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.12);border-radius:11px;padding:12px;">
+      <label>🎥 طريقة عرض الفيديو</label>
+      <select id="vipCVideoMode" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
+        <option value="reels">📱 ريلز — عمودي، تمرير سريع (فيديو قصير)</option>
+        <option value="youtube">▶️ يوتيوب — أفقي، مشغل كامل (فيديو طويل)</option>
+      </select>
+      <div style="font-size:10px;color:var(--dim);margin-top:6px;">ريلز: تمرير عمودي متتابع مثل تيك توك. يوتيوب: مشغل أفقي مع تفاصيل ومقترحات أسفل الفيديو.</div>
+    </div>
     <div class="mfg"><label>وصف</label><textarea id="vipCDesc" rows="2" placeholder="وصف اختياري..."></textarea></div>
     <div class="mfg"><label>السعر (للعرض)</label><input type="text" id="vipCPrice" placeholder="مثال: 5$"/></div>
     <div class="mfg" style="background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.12);border-radius:11px;padding:12px;">
@@ -1731,6 +1739,11 @@ Leo</div>
   <div id="vipReelsTrack" style="height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;"></div>
 </div>
 
+<!-- VIP YOUTUBE-STYLE VIDEO VIEWER (للفيديوهات الطويلة) -->
+<div id="vipYoutubeViewer" style="display:none;position:fixed;inset:0;background:#0f0f0f;z-index:9999;overflow-y:auto;">
+  <div id="ytViewerContent"></div>
+</div>
+
 <style>
 #vipReelsTrack{
   height:100vh;overflow-y:scroll;
@@ -1830,6 +1843,31 @@ Leo</div>
 }
 .vip-reel-album-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);transition:all .2s;}
 .vip-reel-album-dot.on{background:var(--gold);width:14px;border-radius:3px;}
+
+/* ══ YOUTUBE-STYLE VIP VIDEO VIEWER ══ */
+.yt-topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;padding:10px 14px;background:rgba(15,15,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06);}
+.yt-back-btn{border:none;background:transparent;color:var(--gold);font-family:Cairo;font-size:13px;font-weight:700;cursor:pointer;padding:6px 10px;border-radius:100px;display:flex;align-items:center;gap:6px;}
+.yt-back-btn:hover{background:rgba(241,183,109,.08);}
+.yt-player-wrap{position:relative;width:100%;background:#000;line-height:0;}
+.yt-player-wrap video{width:100%;max-height:70vh;display:block;background:#000;outline:none;}
+.yt-info-panel{padding:16px 18px 8px;max-width:900px;margin:0 auto;}
+.yt-title{font-size:17px;font-weight:900;color:var(--tx);font-family:Tajawal;line-height:1.5;margin-bottom:10px;}
+.yt-meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.yt-actress-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(241,183,109,.08);border:1px solid rgba(241,183,109,.2);color:var(--gold);font-family:Cairo;font-size:12px;font-weight:700;padding:6px 13px;border-radius:100px;cursor:pointer;}
+.yt-actress-chip:hover{background:rgba(241,183,109,.15);}
+.yt-price-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--dim);font-family:Cairo;font-size:12px;font-weight:700;padding:6px 13px;border-radius:100px;}
+.yt-desc-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--dim);line-height:1.8;white-space:pre-wrap;}
+.yt-suggest-title{max-width:900px;margin:6px auto 10px;padding:0 18px;font-size:13px;font-weight:700;color:var(--tx);}
+.yt-suggest-list{max-width:900px;margin:0 auto;padding:0 18px 30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.yt-suggest-card{display:flex;gap:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:8px;cursor:pointer;transition:background .2s;}
+.yt-suggest-card:hover{background:rgba(241,183,109,.05);}
+.yt-suggest-thumb{position:relative;width:96px;height:64px;flex-shrink:0;border-radius:9px;overflow:hidden;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;}
+.yt-suggest-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.yt-suggest-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(0,0,0,.25);}
+.yt-suggest-info{display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.yt-suggest-name{font-size:12.5px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px;}
+.yt-suggest-actress{font-size:11px;color:var(--gold);}
+@media(max-width:480px){.yt-player-wrap video{max-height:38vh;}}
 </style>
 
 <!-- VIP CODES ADMIN PAGE (Standalone) -->
@@ -2015,6 +2053,8 @@ function submitVipRequest(){if(window.submitVipRequest)window.submitVipRequest()
 function previewProof(el){if(window.previewProof)window.previewProof(el);}
 function openVipViewer(id){if(window.openVipViewer)window.openVipViewer(id);}
 function closeVipViewer(){if(window.closeVipViewer)window.closeVipViewer();}
+function openVipYoutubeViewer(id){if(window.openVipYoutubeViewer)window.openVipYoutubeViewer(id);}
+function closeVipYoutubeViewer(){if(window.closeVipYoutubeViewer)window.closeVipYoutubeViewer();}
 function reelGoTo(i,instant){if(window.reelGoTo)window.reelGoTo(i,instant||false);}
 function openChannelModal(){if(window.openChannelModal)window.openChannelModal();}
 function saveChannel(){if(window.saveChannel)window.saveChannel();}
@@ -2864,12 +2904,14 @@ function renderVipAdmin(){
     card.className='vip-card';
     card.style.animationDelay=i*.05+'s';
     const thumb=c.url||'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP';
-    const typeLabel=c.type==='video'?'🎬 فيديو':c.type==='album'?'📸 ألبوم':'🖼️ صورة';
-    card.innerHTML=`<div class="vip-card-media">
+    const isYtVid=c.type==='video'&&c.videoMode==='youtube';
+    const typeLabel=c.type==='video'?(isYtVid?'▶️ يوتيوب':'📱 ريلز'):c.type==='album'?'📸 ألبوم':'🖼️ صورة';
+    const viewFn=isYtVid?`openVipYoutubeViewer('${c.id}')`:`openVipViewer('${c.id}')`;
+    card.innerHTML=`<div class="vip-card-media" onclick="${viewFn}">
       <img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x190/030303/F1B76D?text=VIP'" loading="lazy"/>
       <div class="vip-card-grad"></div>
       <div class="vip-card-type">${typeLabel}</div>
-      <button class="vip-card-del" onclick="deleteVipContent('${c.id}')">🗑️</button>
+      <button class="vip-card-del" onclick="event.stopPropagation();deleteVipContent('${c.id}')">🗑️</button>
       <div class="vip-card-info">
         <div class="vip-card-name">${c.name}</div>
         ${c.price?`<div style="font-size:10px;color:var(--gold);">${c.price}</div>`:''}
@@ -2931,10 +2973,12 @@ function createVipCard(c,i){
   card.className='vip-card';
   card.style.animationDelay=i*.05+'s';
   const thumb=c.url||'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP';
-  const typeLabel=c.type==='video'?'🎬':c.type==='album'?'📸':'🖼️';
+  const isYtVid=c.type==='video'&&c.videoMode==='youtube';
+  const typeLabel=c.type==='video'?(isYtVid?'▶️':'📱'):c.type==='album'?'📸':'🖼️';
   // علامة مائية فقط للمستخدمين العاديين (ليس للأدمن في لوحته)
   const wmHtml=!isAdmin()?buildWatermarkHTML():'';
-  card.innerHTML=`<div class="vip-card-media" onclick="openVipViewer('${c.id}')">
+  const viewFn=isYtVid?`openVipYoutubeViewer('${c.id}')`:`openVipViewer('${c.id}')`;
+  card.innerHTML=`<div class="vip-card-media" onclick="${viewFn}">
     <img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x190/030303/F1B76D?text=VIP'" loading="lazy" oncontextmenu="return false;" draggable="false"/>
     <div class="vip-card-grad"></div>
     ${wmHtml}
@@ -2957,6 +3001,8 @@ window.openVipContentModal=function(preActressId=''){
   ['vipCName','vipCUrl','vipCDesc','vipCPrice'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('vipCType').value='image';
   document.getElementById('vipAlbumWrap').style.display='none';
+  const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display='none';
+  const vmSel=document.getElementById('vipCVideoMode');if(vmSel)vmSel.value='reels';
   const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
   const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
   // تعبئة قائمة الممثلات
@@ -2971,6 +3017,8 @@ window.openVipContentModal=function(preActressId=''){
 };
 document.getElementById('vipCType')?.addEventListener('change',function(){
   document.getElementById('vipAlbumWrap').style.display=this.value==='album'?'block':'none';
+  const vmw=document.getElementById('vipVideoModeWrap');
+  if(vmw)vmw.style.display=this.value==='video'?'block':'none';
 });
 
 window.saveVipContent=async function(){
@@ -2980,6 +3028,7 @@ window.saveVipContent=async function(){
   const desc=document.getElementById('vipCDesc').value.trim();
   const price=document.getElementById('vipCPrice').value.trim();
   const actressId=document.getElementById('vipCActress')?.value||'';
+  const videoMode=type==='video'?(document.getElementById('vipCVideoMode')?.value||'reels'):'';
   const albumRaw=document.getElementById('vipCAlbum')?.value||'';
   const album=albumRaw.split('\n').map(u=>u.trim()).filter(Boolean);
   const isScheduled=document.getElementById('vipCScheduled')?.checked;
@@ -2997,6 +3046,7 @@ window.saveVipContent=async function(){
   try{
     const data={
       name,type,url,desc,price,album,
+      videoMode,
       actressId:actressId||'',
       actressName:actress?.name||'',
       actressImg:actress?.image||'',
@@ -3027,7 +3077,7 @@ window.openVipViewer=function(id){
   const viewer=document.getElementById('vipMediaViewer');
   const track=document.getElementById('vipReelsTrack');
   if(!viewer||!track)return;
-  const slides=vipContent.map(c=>{
+  const slides=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')).map(c=>{
     if(c.type==='album'){
       const imgs=[c.url,...(c.album||[])].filter(Boolean);
       return {...c,_imgs:imgs};
@@ -3184,6 +3234,61 @@ window.closeVipViewer=function(){
   track?.querySelectorAll('video').forEach(v=>{v.pause();v.src='';});
   if(track){track.onscroll=null;track.innerHTML='';}
   window._vipSlides=[];window._vipCurrentSlide=0;
+};
+
+// ══ VIP YOUTUBE-STYLE VIDEO VIEWER (للفيديوهات الطويلة) ══
+window.openVipYoutubeViewer=function(id){
+  const c=vipContent.find(x=>x.id===id);
+  if(!c)return;
+  const viewer=document.getElementById('vipYoutubeViewer');
+  const wrap=document.getElementById('ytViewerContent');
+  if(!viewer||!wrap)return;
+  const wmHtml=!isAdmin()?buildWatermarkHTML():'';
+  // فيديوهات يوتيوب أخرى كمقترحات (باستثناء الفيديو الحالي)
+  const suggestions=vipContent.filter(x=>x.id!==id&&x.type==='video'&&x.videoMode==='youtube');
+  wrap.innerHTML=`
+    <div class="yt-topbar"><button class="yt-back-btn" onclick="closeVipYoutubeViewer()">→ رجوع</button></div>
+    <div class="yt-player-wrap">
+      <video id="ytPlayerVideo" src="${c.url}" controls playsinline autoplay preload="metadata" oncontextmenu="return false;" controlsList="nodownload"></video>
+      ${wmHtml}
+    </div>
+    <div class="yt-info-panel">
+      <div class="yt-title">${c.name}</div>
+      <div class="yt-meta-row">
+        ${c.actressName?`<div class="yt-actress-chip" ${c.actressId?`onclick="goToActressFromVip('${c.actressId}')"`:''}>🎭 ${c.actressName}</div>`:''}
+        ${c.price?`<div class="yt-price-chip">💰 ${c.price}</div>`:''}
+      </div>
+      ${c.desc?`<div class="yt-desc-box">${c.desc}</div>`:''}
+    </div>
+    ${suggestions.length?`<div class="yt-suggest-title">🎬 فيديوهات أخرى قد تعجبك</div><div class="yt-suggest-list" id="ytSuggestList"></div>`:''}
+  `;
+  if(suggestions.length){
+    const list=document.getElementById('ytSuggestList');
+    suggestions.forEach(s=>{
+      const card=document.createElement('div');
+      card.className='yt-suggest-card';
+      card.onclick=()=>openVipYoutubeViewer(s.id);
+      card.innerHTML=`<div class="yt-suggest-thumb"><div class="yt-suggest-play">▶️</div></div>
+        <div class="yt-suggest-info">
+          <div class="yt-suggest-name">${s.name}</div>
+          ${s.actressName?`<div class="yt-suggest-actress">🎭 ${s.actressName}</div>`:''}
+        </div>`;
+      list.appendChild(card);
+    });
+  }
+  viewer.style.display='block';
+  viewer.scrollTop=0;
+  document.body.style.overflow='hidden';
+};
+
+window.closeVipYoutubeViewer=function(){
+  const viewer=document.getElementById('vipYoutubeViewer');
+  const v=document.getElementById('ytPlayerVideo');
+  if(v){v.pause();v.removeAttribute('src');v.load();}
+  if(viewer)viewer.style.display='none';
+  document.body.style.overflow='';
+  const wrap=document.getElementById('ytViewerContent');
+  if(wrap)wrap.innerHTML='';
 };
 
 // ══ VIP CODES ══
