@@ -959,6 +959,10 @@ Leo</div>
     <div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
     <span>حصري</span><span style="font-size:9px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;padding:2px 7px;border-radius:100px;font-weight:900;margin-right:auto;">VIP</span>
   </div>
+  <div class="dtab" id="ytTab" style="display:none">
+    <div class="dtab-icon" style="color:#FF3B3B;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.75 2.75 0 0 0-1.94-1.95C17.9 4.75 12 4.75 12 4.75s-5.9 0-7.64.49A2.75 2.75 0 0 0 2.42 7.19 28.7 28.7 0 0 0 1.93 12a28.7 28.7 0 0 0 .49 4.81 2.75 2.75 0 0 0 1.94 1.95c1.74.49 7.64.49 7.64.49s5.9 0 7.64-.49a2.75 2.75 0 0 0 1.94-1.95A28.7 28.7 0 0 0 22.07 12a28.7 28.7 0 0 0-.49-4.81zM9.85 15.02V8.98L15.5 12z"/></svg></div>
+    <span>يوتيوب</span><span style="font-size:9px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;padding:2px 7px;border-radius:100px;font-weight:900;margin-right:auto;">VIP</span>
+  </div>
   <div class="dtab" data-page="channels" id="channelsTab" style="display:none">
     <div class="dtab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.35 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 6.1 6.1l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div> القنوات
   </div>
@@ -1536,6 +1540,13 @@ Leo</div>
           <div style="font-size:12px;font-weight:700;color:var(--gold);background:rgba(241,183,109,.08);border:1px solid rgba(241,183,109,.2);padding:5px 13px;border-radius:100px;">✦ محتوى مفتوح ✦</div>
           <button onclick="lockVipContent()" style="font-size:11px;color:var(--dim);background:transparent;border:none;cursor:pointer;font-family:Cairo;">🔒 إغلاق</button>
         </div>
+        <div id="ytHomeSection" style="display:none;margin-bottom:24px;">
+          <div class="yt-home-header">
+            <div class="yt-home-logo"><span class="yt-home-play">▶</span>يوتيوب<span class="yt-home-badge">حصري VIP</span></div>
+            <div class="yt-home-sub">فيديوهات طويلة حصرية</div>
+          </div>
+          <div class="yt-home-grid" id="ytHomeGrid"></div>
+        </div>
         <div class="vip-content-grid" id="vipContentGrid"></div>
       </div>
       <div class="vip-steps">
@@ -1630,6 +1641,9 @@ Leo</div>
         <option value="youtube">▶️ يوتيوب — أفقي، مشغل كامل (فيديو طويل)</option>
       </select>
       <div style="font-size:10px;color:var(--dim);margin-top:6px;">ريلز: تمرير عمودي متتابع مثل تيك توك. يوتيوب: مشغل أفقي مع تفاصيل ومقترحات أسفل الفيديو.</div>
+      <label style="display:block;margin-top:12px;">🖼️ صورة مصغّرة للفيديو (Thumbnail)</label>
+      <input type="text" id="vipCThumb" placeholder="رابط صورة الغلاف (اختياري)" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;"/>
+      <div style="font-size:10px;color:var(--dim);margin-top:6px;">إن لم تُدخل صورة، سيتم عرض أول لقطة من الفيديو تلقائياً.</div>
     </div>
     <div class="mfg"><label>وصف</label><textarea id="vipCDesc" rows="2" placeholder="وصف اختياري..."></textarea></div>
     <div class="mfg"><label>السعر (للعرض)</label><input type="text" id="vipCPrice" placeholder="مثال: 5$"/></div>
@@ -1868,6 +1882,32 @@ Leo</div>
 .yt-suggest-name{font-size:12.5px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px;}
 .yt-suggest-actress{font-size:11px;color:var(--gold);}
 @media(max-width:480px){.yt-player-wrap video{max-height:38vh;}}
+
+/* ══ YOUTUBE-STYLE VIP HOME FEED (تصميم مطابق لتطبيق يوتيوب) ══ */
+.yt-home-header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06);}
+.yt-home-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:var(--tx);font-family:Tajawal;}
+.yt-home-play{display:flex;align-items:center;justify-content:center;width:22px;height:16px;background:#FF3B3B;color:#fff;border-radius:5px;font-size:9px;box-shadow:0 0 12px rgba(255,59,59,.4);}
+.yt-home-badge{font-size:9px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;padding:2px 8px;border-radius:100px;}
+.yt-home-sub{font-size:11px;color:var(--dim);}
+.yt-home-grid{display:flex;flex-direction:column;}
+.yt-home-card{width:100%;cursor:pointer;animation:fadeIn .4s ease both;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:16px;}
+.yt-home-card:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.yt-home-thumb{position:relative;width:calc(100% + 36px);aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);margin:0 -18px;}
+.yt-home-thumb video,.yt-home-thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
+.yt-home-thumb-badge{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.8);color:#fff;font-size:12px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px;}
+.yt-home-thumb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:rgba(0,0,0,0);transition:background .2s;opacity:0;}
+.yt-home-card:hover .yt-home-thumb-play{opacity:1;background:rgba(0,0,0,.2);}
+.yt-home-thumb-play span{width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.yt-home-info{display:flex;align-items:flex-start;gap:10px;padding-top:10px;}
+.yt-home-avatarwrap{flex-shrink:0;}
+.yt-home-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid rgba(241,183,109,.25);display:block;}
+.yt-home-avatar-fallback{width:36px;height:36px;border-radius:50%;background:rgba(241,183,109,.1);border:1px solid rgba(241,183,109,.25);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.yt-home-texts{flex:1;min-width:0;}
+.yt-home-vtitle{font-size:14px;font-weight:700;color:var(--tx);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;}
+.yt-home-channel{font-size:12px;color:var(--dim);}
+.yt-home-channel b{color:var(--gold);font-weight:700;}
+.yt-home-menu{flex-shrink:0;background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer;padding:2px 6px;line-height:1;}
+@media(max-width:480px){.yt-home-vtitle{font-size:13px;}.yt-home-avatar,.yt-home-avatar-fallback{width:32px;height:32px;}}
 </style>
 
 <!-- VIP CODES ADMIN PAGE (Standalone) -->
@@ -2213,6 +2253,19 @@ burger.addEventListener("click",()=>{
   }
 });
 document.querySelectorAll(".dtab[data-page]").forEach(t=>t.addEventListener("click",()=>goTo(t.dataset.page)));
+document.getElementById("ytTab")?.addEventListener("click",()=>{
+  goTo("vip");
+  let tries=0;
+  const tryScroll=()=>{
+    const sec=document.getElementById("ytHomeSection");
+    if(sec&&sec.style.display!=="none"){
+      sec.scrollIntoView({behavior:"smooth",block:"start"});
+    }else if(tries<20){
+      tries++;setTimeout(tryScroll,150);
+    }
+  };
+  setTimeout(tryScroll,200);
+});
 document.getElementById("homeBrand").addEventListener("click",e=>{e.preventDefault();goTo("home");});
 
 // MULTI SELECT
@@ -2422,6 +2475,7 @@ onAuthStateChanged(auth,async u=>{
   document.getElementById("statsTab").style.display=isAdmin()?"flex":"none";
   document.getElementById("favTab").style.display=u?"flex":"none";
   document.getElementById("vipTab").style.display=u?"flex":"none";
+  document.getElementById("ytTab").style.display=u?"flex":"none";
   document.getElementById("channelsTab").style.display=u?"flex":"none";
   const addChBtn=document.getElementById("addChannelBtn");if(addChBtn)addChBtn.style.display=isAdmin()?"flex":"none";
   // عرض لوحة VIP
@@ -2922,13 +2976,15 @@ function renderVipAdmin(){
 }
 
 function renderVipMember(){
+  renderYtHomeGrid();
   const grid=document.getElementById('vipContentGrid');
   if(!grid)return;
-  if(!vipContent.length){grid.innerHTML='<div class="vip-empty">لا يوجد محتوى حصري بعد</div>';return;}
+  const gridContent=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube'));
+  if(!gridContent.length){grid.innerHTML=vipContent.length?'':'<div class="vip-empty">لا يوجد محتوى حصري بعد</div>';return;}
   grid.innerHTML='';
   // تجميع حسب الممثلة
-  const withActress=vipContent.filter(c=>c.actressId);
-  const withoutActress=vipContent.filter(c=>!c.actressId);
+  const withActress=gridContent.filter(c=>c.actressId);
+  const withoutActress=gridContent.filter(c=>!c.actressId);
   const actressGroups={};
   withActress.forEach(c=>{
     if(!actressGroups[c.actressId])actressGroups[c.actressId]={name:c.actressName,img:c.actressImg,items:[]};
@@ -2968,6 +3024,61 @@ function renderVipMember(){
     });
   }
 }
+
+// ══ يوتيوب VIP — قسم الصفحة الرئيسية (يظهر فقط للمشتركين الذين فعّلوا الكود) ══
+function renderYtHomeGrid(){
+  const section=document.getElementById('ytHomeSection');
+  const grid=document.getElementById('ytHomeGrid');
+  if(!section||!grid)return;
+  const ytVideos=vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube');
+  if(!ytVideos.length){section.style.display='none';grid.innerHTML='';return;}
+  section.style.display='block';
+  grid.innerHTML='';
+  ytVideos.forEach((c,i)=>{
+    const card=document.createElement('div');
+    card.className='yt-home-card';
+    card.style.animationDelay=i*.04+'s';
+    card.onclick=()=>openVipYoutubeViewer(c.id);
+    const avatarHtml=c.actressImg
+      ?`<img src="${c.actressImg}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'yt-home-avatar-fallback',textContent:'🎭'}))" class="yt-home-avatar"/>`
+      :`<div class="yt-home-avatar-fallback">🎭</div>`;
+    const badgeId='ytdur_'+c.id+'_'+i;
+    // الصورة المصغّرة: صورة يحددها الأدمن، أو أول لقطة من الفيديو كبديل
+    const thumbHtml=c.thumb
+      ?`<img src="${c.thumb}" onerror="this.remove()"/>`
+      :`<video src="${c.url}" muted preload="metadata" oncontextmenu="return false;"></video>`;
+    const metaLine=[c.actressName?`<b>${c.actressName}</b>`:'محتوى حصري',c.createdAt?timeAgo(c.createdAt):''].filter(Boolean).join(' · ');
+    card.innerHTML=`
+      <div class="yt-home-thumb">
+        ${thumbHtml}
+        <div class="yt-home-thumb-badge" id="${badgeId}">▶</div>
+        <div class="yt-home-thumb-play"><span>▶️</span></div>
+      </div>
+      <div class="yt-home-info">
+        <div class="yt-home-avatarwrap">${avatarHtml}</div>
+        <div class="yt-home-texts">
+          <div class="yt-home-vtitle">${c.name}</div>
+          <div class="yt-home-channel">${metaLine}</div>
+        </div>
+        <button class="yt-home-menu" onclick="event.stopPropagation();">⋮</button>
+      </div>`;
+    grid.appendChild(card);
+    // جلب مدة الفيديو الحقيقية وعرضها في الشارة (مثل يوتيوب)
+    const probe=document.createElement('video');
+    probe.preload='metadata';probe.muted=true;probe.src=c.url;
+    probe.addEventListener('loadedmetadata',()=>{
+      const d=Math.floor(probe.duration||0);
+      if(isFinite(d)&&d>0){
+        const h=Math.floor(d/3600),m=Math.floor((d%3600)/60),s=d%60;
+        const txt=h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`;
+        const badge=document.getElementById(badgeId);
+        if(badge)badge.textContent=txt;
+      }
+      probe.removeAttribute('src');
+    });
+    probe.addEventListener('error',()=>{});
+  });
+}
 function createVipCard(c,i){
   const card=document.createElement('div');
   card.className='vip-card';
@@ -3003,6 +3114,7 @@ window.openVipContentModal=function(preActressId=''){
   document.getElementById('vipAlbumWrap').style.display='none';
   const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display='none';
   const vmSel=document.getElementById('vipCVideoMode');if(vmSel)vmSel.value='reels';
+  const thumbEl=document.getElementById('vipCThumb');if(thumbEl)thumbEl.value='';
   const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
   const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
   // تعبئة قائمة الممثلات
@@ -3029,6 +3141,7 @@ window.saveVipContent=async function(){
   const price=document.getElementById('vipCPrice').value.trim();
   const actressId=document.getElementById('vipCActress')?.value||'';
   const videoMode=type==='video'?(document.getElementById('vipCVideoMode')?.value||'reels'):'';
+  const thumb=type==='video'?(document.getElementById('vipCThumb')?.value.trim()||''):'';
   const albumRaw=document.getElementById('vipCAlbum')?.value||'';
   const album=albumRaw.split('\n').map(u=>u.trim()).filter(Boolean);
   const isScheduled=document.getElementById('vipCScheduled')?.checked;
@@ -3046,7 +3159,7 @@ window.saveVipContent=async function(){
   try{
     const data={
       name,type,url,desc,price,album,
-      videoMode,
+      videoMode,thumb,
       actressId:actressId||'',
       actressName:actress?.name||'',
       actressImg:actress?.image||'',
@@ -3249,7 +3362,7 @@ window.openVipYoutubeViewer=function(id){
   wrap.innerHTML=`
     <div class="yt-topbar"><button class="yt-back-btn" onclick="closeVipYoutubeViewer()">→ رجوع</button></div>
     <div class="yt-player-wrap">
-      <video id="ytPlayerVideo" src="${c.url}" controls playsinline autoplay preload="metadata" oncontextmenu="return false;" controlsList="nodownload"></video>
+      <video id="ytPlayerVideo" src="${c.url}" ${c.thumb?`poster="${c.thumb}"`:''} controls playsinline autoplay preload="metadata" oncontextmenu="return false;" controlsList="nodownload"></video>
       ${wmHtml}
     </div>
     <div class="yt-info-panel">
