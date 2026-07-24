@@ -700,6 +700,8 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .vip-card-name{font-size:12px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .vip-card-del{position:absolute;top:8px;left:8px;width:26px;height:26px;border:none;border-radius:50%;background:rgba(255,68,68,.7);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:0;transition:opacity .2s;}
 .vip-card:hover .vip-card-del{opacity:1;}
+.vip-card-edit{position:absolute;top:8px;left:40px;width:26px;height:26px;border:none;border-radius:50%;background:rgba(241,183,109,.85);color:#0a0a0a;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:0;transition:opacity .2s;}
+.vip-card:hover .vip-card-edit{opacity:1;}
 .vip-lock-box{text-align:center;padding:40px 20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:14px;margin-bottom:14px;}
 .vip-code-input{width:100%;padding:14px 16px;border-radius:13px;border:1px solid rgba(241,183,109,.3);background:rgba(241,183,109,.04);color:var(--gold);font-family:monospace;font-size:15px;font-weight:700;letter-spacing:3px;text-align:center;outline:none;text-transform:uppercase;box-sizing:border-box;margin-bottom:10px;}
 .vip-code-input:focus{border-color:rgba(241,183,109,.6);box-shadow:0 0 0 3px rgba(241,183,109,.1);}
@@ -1618,7 +1620,7 @@ Leo</div>
 <!-- VIP CONTENT MODAL -->
 <div id="vipContentModal" class="modal">
   <div class="mbox" style="max-width:440px;">
-    <h3>🎬 إضافة محتوى VIP</h3>
+    <h3 id="vipContentModalTitle">🎬 إضافة محتوى VIP</h3>
     <div class="mfg"><label>الاسم *</label><input type="text" id="vipCName" placeholder="اسم المحتوى"/></div>
     <div class="mfg"><label>🎭 ربط بممثلة (اختياري)</label>
       <select id="vipCActress" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
@@ -1647,7 +1649,7 @@ Leo</div>
     </div>
     <div class="mfg"><label>وصف</label><textarea id="vipCDesc" rows="2" placeholder="وصف اختياري..."></textarea></div>
     <div class="mfg"><label>السعر (للعرض)</label><input type="text" id="vipCPrice" placeholder="مثال: 5$"/></div>
-    <div class="mfg" style="background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.12);border-radius:11px;padding:12px;">
+    <div class="mfg" id="vipScheduleBox" style="background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.12);border-radius:11px;padding:12px;">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:0;">
         <input type="checkbox" id="vipCScheduled" onchange="toggleScheduleFields()" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"/>
         <span style="font-size:13px;font-weight:700;color:var(--gold);">⏰ جدولة النشر لوقت لاحق</span>
@@ -1666,7 +1668,7 @@ Leo</div>
         <div style="font-size:10px;color:var(--dim);">📍 بتوقيتك المحلي — سيُنشر تلقائياً عند حلول الموعد</div>
       </div>
     </div>
-    <div class="mfooter"><button class="btn btn-ghost" onclick="closeM('vipContentModal')">إلغاء</button><button class="btn btn-gold" onclick="saveVipContent()">💾 حفظ</button></div>
+    <div class="mfooter"><button class="btn btn-ghost" onclick="closeM('vipContentModal')">إلغاء</button><button class="btn btn-gold" id="vipContentSaveBtn" onclick="saveVipContent()">💾 حفظ</button></div>
   </div>
 </div>
 
@@ -2081,6 +2083,7 @@ function loadSuggestions(){if(window.loadSuggestions)window.loadSuggestions();}
 function openVipContentModal(){if(window.openVipContentModal)window.openVipContentModal();}
 function saveVipContent(){if(window.saveVipContent)window.saveVipContent();}
 function deleteVipContent(id){if(window.deleteVipContent)window.deleteVipContent(id);}
+function editVipContent(id){if(window.editVipContent)window.editVipContent(id);}
 function generateVipCode(){if(window.generateVipCode)window.generateVipCode();}
 function loadVipRequests(){if(window.loadVipRequests)window.loadVipRequests();}
 function openApproveModal(id){if(window.openApproveModal)window.openApproveModal(id);}
@@ -2965,6 +2968,7 @@ function renderVipAdmin(){
       <img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x190/030303/F1B76D?text=VIP'" loading="lazy"/>
       <div class="vip-card-grad"></div>
       <div class="vip-card-type">${typeLabel}</div>
+      <button class="vip-card-edit" onclick="event.stopPropagation();editVipContent('${c.id}')">✏️</button>
       <button class="vip-card-del" onclick="event.stopPropagation();deleteVipContent('${c.id}')">🗑️</button>
       <div class="vip-card-info">
         <div class="vip-card-name">${c.name}</div>
@@ -3109,6 +3113,7 @@ function populateVipContentSelect(){
 }
 
 window.openVipContentModal=function(preActressId=''){
+  window._vipEditId='';
   ['vipCName','vipCUrl','vipCDesc','vipCPrice'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('vipCType').value='image';
   document.getElementById('vipAlbumWrap').style.display='none';
@@ -3117,6 +3122,9 @@ window.openVipContentModal=function(preActressId=''){
   const thumbEl=document.getElementById('vipCThumb');if(thumbEl)thumbEl.value='';
   const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
   const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
+  const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='';
+  const t=document.getElementById('vipContentModalTitle');if(t)t.textContent='🎬 إضافة محتوى VIP';
+  const b=document.getElementById('vipContentSaveBtn');if(b)b.textContent='💾 حفظ';
   // تعبئة قائمة الممثلات
   const sel=document.getElementById('vipCActress');
   if(sel){
@@ -3124,6 +3132,35 @@ window.openVipContentModal=function(preActressId=''){
       [...actresses].sort((a,b)=>a.name.localeCompare(b.name))
       .map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
     if(preActressId)sel.value=preActressId;
+  }
+  openM('vipContentModal');
+};
+
+window.editVipContent=function(id){
+  const c=vipContent.find(x=>x.id===id);
+  if(!c)return;
+  window._vipEditId=id;
+  document.getElementById('vipCName').value=c.name||'';
+  document.getElementById('vipCUrl').value=c.url||'';
+  document.getElementById('vipCDesc').value=c.desc||'';
+  document.getElementById('vipCPrice').value=c.price||'';
+  document.getElementById('vipCType').value=c.type||'image';
+  const albumEl=document.getElementById('vipCAlbum');if(albumEl)albumEl.value=(c.album||[]).join('\n');
+  document.getElementById('vipAlbumWrap').style.display=c.type==='album'?'block':'none';
+  const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display=c.type==='video'?'block':'none';
+  const vmSel=document.getElementById('vipCVideoMode');if(vmSel)vmSel.value=c.videoMode||'reels';
+  const thumbEl=document.getElementById('vipCThumb');if(thumbEl)thumbEl.value=c.thumb||'';
+  const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
+  const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
+  const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='none';
+  const t=document.getElementById('vipContentModalTitle');if(t)t.textContent='✏️ تعديل المحتوى';
+  const b=document.getElementById('vipContentSaveBtn');if(b)b.textContent='💾 حفظ التعديلات';
+  const sel=document.getElementById('vipCActress');
+  if(sel){
+    sel.innerHTML='<option value="">-- بدون ربط --</option>'+
+      [...actresses].sort((a,b)=>a.name.localeCompare(b.name))
+      .map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+    sel.value=c.actressId||'';
   }
   openM('vipContentModal');
 };
@@ -3156,6 +3193,21 @@ window.saveVipContent=async function(){
     if(new Date(publishAt)<=new Date())return ss('يجب أن يكون الموعد في المستقبل','error');
   }
   const actress=actressId?actresses.find(a=>a.id===actressId):null;
+  const editId=window._vipEditId;
+  if(editId){
+    try{
+      await updateDoc(doc(db,'vipContent',editId),{
+        name,type,url,desc,price,album,videoMode,thumb,
+        actressId:actressId||'',
+        actressName:actress?.name||'',
+        actressImg:actress?.image||''
+      });
+      ss('تم تحديث المحتوى ✅');
+      window._vipEditId='';
+      closeM('vipContentModal');
+    }catch(e){ss('خطأ: '+e.message,'error');}
+    return;
+  }
   try{
     const data={
       name,type,url,desc,price,album,
