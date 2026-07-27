@@ -1529,6 +1529,17 @@ Leo</div>
     </div>
     <!-- مستخدم -->
     <div id="vipUserPanel" style="display:none;">
+      <div id="vipFreeSection" style="display:none;margin-bottom:22px;">
+        <div style="font-size:12px;font-weight:700;color:#4ade80;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);padding:5px 13px;border-radius:100px;display:inline-block;margin-bottom:14px;">🌍 محتوى مجاني — يظهر للجميع</div>
+        <div id="ytFreeSection" style="display:none;margin-bottom:24px;">
+          <div class="yt-home-header">
+            <div class="yt-home-logo"><span class="yt-home-play">▶</span>يوتيوب</div>
+            <div class="yt-home-sub">فيديوهات مجانية</div>
+          </div>
+          <div class="yt-home-grid" id="ytFreeGrid"></div>
+        </div>
+        <div class="vip-content-grid" id="vipFreeGrid"></div>
+      </div>
       <div id="vipCodeEntry" class="vip-section" style="text-align:center;">
         <div style="font-size:42px;margin-bottom:10px;">🔑</div>
         <div style="font-size:16px;font-weight:700;color:var(--tx);margin-bottom:6px;">أدخل كودك الحصري</div>
@@ -1632,6 +1643,13 @@ Leo</div>
         <option value="image">🖼️ صورة</option>
         <option value="video">🎬 فيديو</option>
         <option value="album">📸 ألبوم صور</option>
+      </select>
+    </div>
+    <div class="mfg" style="background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.15);border-radius:11px;padding:12px;">
+      <label>👥 من يمكنه مشاهدة هذا المحتوى؟</label>
+      <select id="vipCAccess" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
+        <option value="vip">🔒 حصري VIP — يتطلب كود وصول</option>
+        <option value="free">🌍 مجاني — يظهر للجميع</option>
       </select>
     </div>
     <div class="mfg"><label>رابط الصورة/الفيديو *</label><input type="text" id="vipCUrl" placeholder="https://..."/></div>
@@ -2021,6 +2039,18 @@ Leo</div>
   </div>
 </div>
 
+<div id="videoModal" class="modal">
+  <div class="mbox" style="max-width:720px;padding:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <h3 id="videoModalTitle" style="margin:0;padding:0;border:none;font-size:14px;">🎬 فيديو</h3>
+      <button onclick="closeVideoModal()" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--tx);width:28px;height:28px;border-radius:9px;cursor:pointer;font-size:14px;">✕</button>
+    </div>
+    <div style="position:relative;padding-top:56.25%;background:#000;border-radius:12px;overflow:hidden;">
+      <iframe id="videoFrame" src="" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
 <div id="fModal" class="modal">
   <div class="mbox" style="max-width:320px;">
     <h3 id="fMTitle">📁 مجلد جديد</h3>
@@ -2139,6 +2169,52 @@ const FB={apiKey:"AIzaSyCX_8zRseJFqMMwNCdSwxOhNYGV5UexcfI",authDomain:"actresses
 const app=initializeApp(FB),db=getFirestore(app),auth=getAuth(app);
 enableIndexedDbPersistence(db).catch(()=>{});
 
+// ══════════════════════════════════════════════════════════════
+// دعم روابط فيديو مشروع "video-upload" (تيليجرام + Firestore منفصل)
+// أي رابط بالشكل .../v/ID أو .../file/ID يترجم تلقائياً لرابط تشغيل حقيقي
+// ══════════════════════════════════════════════════════════════
+const VU_FB={apiKey:"AIzaSyAhvrYLmyC85YuQaES2QmDfftG9zGkHZAg",authDomain:"upload-d9f13.firebaseapp.com",projectId:"upload-d9f13",storageBucket:"upload-d9f13.firebasestorage.app",messagingSenderId:"450447935996",appId:"1:450447935996:web:0e6ddb4036e49a7c85ca79"};
+const VU_BOT_TOKEN="8853388205:AAGsJhSkMXjYVNjYlxiq8gMVNA61sLhNHdM";
+const vuApp=initializeApp(VU_FB,"video-upload-embed");
+const vuDb=getFirestore(vuApp);
+const _vuCache=new Map(); // تخزين مؤقت لتفادي إعادة الجلب لنفس الفيديو أكثر من مرة
+
+function vuExtractId(url){
+  if(!url)return null;
+  const m=String(url).match(/\/(?:v|file)\/([a-zA-Z0-9_-]+)/);
+  return m?m[1]:null;
+}
+
+async function vuGetTgFileUrl(fileId){
+  const res=await fetch(`https://api.telegram.org/bot${VU_BOT_TOKEN}/getFile?file_id=${fileId}`);
+  const data=await res.json();
+  if(!data.ok)throw new Error(data.description||"telegram getFile failed");
+  return `https://api.telegram.org/file/bot${VU_BOT_TOKEN}/${data.result.file_path}`;
+}
+
+// تاخذ رابط (سواء رابط مباشر قديم أو رابط video-upload) وترجع {playUrl, posterUrl, title, duration}
+async function resolveVideoSource(rawUrl,fallbackThumb){
+  const id=vuExtractId(rawUrl);
+  if(!id){
+    // رابط مباشر عادي (زي قبل) — يرجع كما هو بدون أي تغيير
+    return{playUrl:rawUrl,posterUrl:fallbackThumb||"",title:"",duration:0};
+  }
+  if(_vuCache.has(id))return _vuCache.get(id);
+  const p=(async()=>{
+    const snap=await getDoc(doc(vuDb,"videos",id));
+    if(!snap.exists())throw new Error("الفيديو غير موجود أو تم حذفه");
+    const v=snap.data();
+    const playUrl=await vuGetTgFileUrl(v.telegramFileId);
+    let posterUrl=fallbackThumb||"";
+    if(!posterUrl&&v.thumbFileId){
+      try{posterUrl=await vuGetTgFileUrl(v.thumbFileId);}catch{}
+    }
+    return{playUrl,posterUrl,title:v.title||"",duration:v.duration||0};
+  })();
+  _vuCache.set(id,p);
+  return p;
+}
+
 if(location.protocol==="file:"){
   document.addEventListener("DOMContentLoaded",()=>{
     const w=document.createElement("div");
@@ -2206,6 +2282,30 @@ function closeM(id){document.getElementById(id).classList.remove("open");}
 window.openM=openM;
 window.closeM=closeM;
 
+function getEmbedUrl(url){
+  try{
+    const gd=url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+    if(gd)return `https://drive.google.com/file/d/${gd[1]}/preview`;
+    const u=new URL(url);
+    if((u.hostname==="youtube.com"||u.hostname==="www.youtube.com")&&u.searchParams.get("v"))return `https://www.youtube.com/embed/${u.searchParams.get("v")}`;
+    if(u.hostname==="youtu.be"&&u.pathname.length>1)return `https://www.youtube.com/embed/${u.pathname.slice(1)}`;
+    return null;
+  }catch{return null;}
+}
+window.getEmbedUrl=getEmbedUrl;
+
+function openVideoModal(embedUrl,title){
+  document.getElementById("videoFrame").src=embedUrl;
+  document.getElementById("videoModalTitle").textContent="🎬 "+(title||"فيديو");
+  openM("videoModal");
+}
+function closeVideoModal(){
+  document.getElementById("videoFrame").src="";
+  closeM("videoModal");
+}
+window.openVideoModal=openVideoModal;
+window.closeVideoModal=closeVideoModal;
+
 window.goTo=function(p){
   // شريط التحميل العلوي
   const bar=document.getElementById("pageLoaderBar");
@@ -2221,7 +2321,7 @@ window.goTo=function(p){
   closeDrawer();window.scrollTo(0,0);
   if(p==="favorites")renderFavs();if(p==="profile")loadProfileData();if(p==="suggest")loadMySuggestions();
   if(p==="channels"){renderChannels();}
-  if(p==="vip"){renderVipAdmin&&isAdmin()&&renderVipAdmin();populateVipContentSelect&&populateVipContentSelect();isAdmin()&&renderVipStats&&renderVipStats();!isAdmin()&&renderVipExpiryBanner&&renderVipExpiryBanner();}
+  if(p==="vip"){renderVipAdmin&&isAdmin()&&renderVipAdmin();populateVipContentSelect&&populateVipContentSelect();isAdmin()&&renderVipStats&&renderVipStats();!isAdmin()&&renderVipExpiryBanner&&renderVipExpiryBanner();!isAdmin()&&renderVipMember&&renderVipMember();}
   if(p==="vip-request"){populateVipContentSelect&&populateVipContentSelect();}if(p==="suggestions-admin")setTimeout(loadSuggestions,100);if(p==="links"){renderLinks();renderFolders();}
   if(p==="users")setTimeout(loadUsers,100);
   if(p==="stats")setTimeout(()=>{renderStats();renderHairStats();renderWorldMap();},100);
@@ -2941,6 +3041,7 @@ onSnapshot(query(collection(db,'vipContent'),orderBy('createdAt','desc')),s=>{
   if(document.getElementById('page-vip')?.classList.contains('active'))renderVipAdmin();
   populateVipContentSelect();
   renderVipStats();
+  if(curUser&&!isAdmin())renderVipMember();// تحديث المحتوى المجاني/الحصري فوراً لكل مستخدم
 },()=>{});
 
 onSnapshot(query(collection(db,'vipCodes'),orderBy('createdAt','desc')),s=>{
@@ -2963,11 +3064,16 @@ function renderVipAdmin(){
     const thumb=c.url||'https://via.placeholder.com/200x190/030303/F1B76D?text=VIP';
     const isYtVid=c.type==='video'&&c.videoMode==='youtube';
     const typeLabel=c.type==='video'?(isYtVid?'▶️ يوتيوب':'📱 ريلز'):c.type==='album'?'📸 ألبوم':'🖼️ صورة';
+    const isFree=c.access==='free';
+    const accessBadge=isFree
+      ?'<div style="position:absolute;top:8px;right:8px;background:rgba(34,197,94,.85);color:#0a0a0a;font-size:9px;font-weight:900;padding:3px 8px;border-radius:100px;">🌍 مجاني</div>'
+      :'<div style="position:absolute;top:8px;right:8px;background:rgba(241,183,109,.85);color:#0a0a0a;font-size:9px;font-weight:900;padding:3px 8px;border-radius:100px;">🔒 VIP</div>';
     const viewFn=isYtVid?`openVipYoutubeViewer('${c.id}')`:`openVipViewer('${c.id}')`;
     card.innerHTML=`<div class="vip-card-media" onclick="${viewFn}">
       <img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x190/030303/F1B76D?text=VIP'" loading="lazy"/>
       <div class="vip-card-grad"></div>
       <div class="vip-card-type">${typeLabel}</div>
+      ${accessBadge}
       <button class="vip-card-edit" onclick="event.stopPropagation();editVipContent('${c.id}')">✏️</button>
       <button class="vip-card-del" onclick="event.stopPropagation();deleteVipContent('${c.id}')">🗑️</button>
       <div class="vip-card-info">
@@ -2981,14 +3087,24 @@ function renderVipAdmin(){
 
 function renderVipMember(){
   renderYtHomeGrid();
-  const grid=document.getElementById('vipContentGrid');
+  const vipItems=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access!=='free');
+  const freeItems=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access==='free');
+  renderGroupedGrid(vipItems,'vipContentGrid','لا يوجد محتوى حصري بعد');
+  renderGroupedGrid(freeItems,'vipFreeGrid','');
+  const freeSection=document.getElementById('vipFreeSection');
+  const ytFreeHasItems=(document.getElementById('ytFreeGrid')?.children.length||0)>0;
+  if(freeSection)freeSection.style.display=(freeItems.length||ytFreeHasItems)?'block':'none';
+}
+
+// تجميع أي مجموعة محتوى (حصري VIP أو مجاني) حسب الممثلة وعرضها داخل شبكة معيّنة
+function renderGroupedGrid(items,gridId,emptyMsg){
+  const grid=document.getElementById(gridId);
   if(!grid)return;
-  const gridContent=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube'));
-  if(!gridContent.length){grid.innerHTML=vipContent.length?'':'<div class="vip-empty">لا يوجد محتوى حصري بعد</div>';return;}
+  if(!items.length){grid.innerHTML=emptyMsg?`<div class="vip-empty">${emptyMsg}</div>`:'';return;}
   grid.innerHTML='';
   // تجميع حسب الممثلة
-  const withActress=gridContent.filter(c=>c.actressId);
-  const withoutActress=gridContent.filter(c=>!c.actressId);
+  const withActress=items.filter(c=>c.actressId);
+  const withoutActress=items.filter(c=>!c.actressId);
   const actressGroups={};
   withActress.forEach(c=>{
     if(!actressGroups[c.actressId])actressGroups[c.actressId]={name:c.actressName,img:c.actressImg,items:[]};
@@ -3002,12 +3118,12 @@ function renderVipMember(){
       <img src="${group.img||'https://via.placeholder.com/40x40/030303/F1B76D?text=?'}" onerror="this.src='https://via.placeholder.com/40/030303/F1B76D?text=?'" style="width:40px;height:40px;border-radius:10px;object-fit:cover;object-position:top;border:1px solid rgba(241,183,109,.2);"/>
       <div>
         <div style="font-size:14px;font-weight:700;color:var(--gold);font-family:Tajawal;">🎭 ${group.name}</div>
-        <div style="font-size:11px;color:var(--dim);">${group.items.length} محتوى حصري</div>
+        <div style="font-size:11px;color:var(--dim);">${group.items.length} محتوى</div>
       </div>
     </div>
-    <div class="vip-content-grid" id="vipGroup_${aid}"></div>`;
+    <div class="vip-content-grid" id="grp_${gridId}_${aid}"></div>`;
     grid.appendChild(section);
-    const groupGrid=section.querySelector('#vipGroup_'+aid);
+    const groupGrid=section.querySelector('#grp_'+gridId+'_'+aid);
     group.items.forEach((c,i)=>{
       const card=createVipCard(c,i);
       groupGrid.appendChild(card);
@@ -3029,12 +3145,15 @@ function renderVipMember(){
   }
 }
 
-// ══ يوتيوب VIP — قسم الصفحة الرئيسية (يظهر فقط للمشتركين الذين فعّلوا الكود) ══
+// ══ يوتيوب — قسم الصفحة الرئيسية (نسختان: حصري VIP بعد فتح الكود، ومجاني يظهر للجميع) ══
 function renderYtHomeGrid(){
-  const section=document.getElementById('ytHomeSection');
-  const grid=document.getElementById('ytHomeGrid');
+  renderYtFeed(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access!=='free'),'ytHomeSection','ytHomeGrid');
+  renderYtFeed(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access==='free'),'ytFreeSection','ytFreeGrid');
+}
+function renderYtFeed(ytVideos,sectionId,gridId){
+  const section=document.getElementById(sectionId);
+  const grid=document.getElementById(gridId);
   if(!section||!grid)return;
-  const ytVideos=vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube');
   if(!ytVideos.length){section.style.display='none';grid.innerHTML='';return;}
   section.style.display='block';
   grid.innerHTML='';
@@ -3046,11 +3165,15 @@ function renderYtHomeGrid(){
     const avatarHtml=c.actressImg
       ?`<img src="${c.actressImg}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'yt-home-avatar-fallback',textContent:'🎭'}))" class="yt-home-avatar"/>`
       :`<div class="yt-home-avatar-fallback">🎭</div>`;
-    const badgeId='ytdur_'+c.id+'_'+i;
-    // الصورة المصغّرة: صورة يحددها الأدمن، أو أول لقطة من الفيديو كبديل
+    const badgeId='ytdur_'+gridId+'_'+c.id+'_'+i;
+    const thumbId='ytthumb_'+gridId+'_'+c.id+'_'+i;
+    const isVuLink=!!vuExtractId(c.url);
+    // الصورة المصغّرة: صورة يحددها الأدمن، أو أول لقطة من الفيديو كبديل (فقط للروابط المباشرة القديمة)
     const thumbHtml=c.thumb
       ?`<img src="${c.thumb}" onerror="this.remove()"/>`
-      :`<video src="${c.url}" muted preload="metadata" oncontextmenu="return false;"></video>`;
+      :isVuLink
+        ?`<div class="yt-home-avatar-fallback" id="${thumbId}" style="width:100%;height:100%;border-radius:0;font-size:28px;">🎬</div>`
+        :`<video src="${c.url}" muted preload="metadata" oncontextmenu="return false;"></video>`;
     const metaLine=[c.actressName?`<b>${c.actressName}</b>`:'محتوى حصري',c.createdAt?timeAgo(c.createdAt):''].filter(Boolean).join(' · ');
     card.innerHTML=`
       <div class="yt-home-thumb">
@@ -3067,7 +3190,22 @@ function renderYtHomeGrid(){
         <button class="yt-home-menu" onclick="event.stopPropagation();">⋮</button>
       </div>`;
     grid.appendChild(card);
-    // جلب مدة الفيديو الحقيقية وعرضها في الشارة (مثل يوتيوب)
+    if(isVuLink){
+      // فيديو video-upload: نجيب المدة والصورة المصغّرة جاهزتين من Firestore/تيليجرام بدون تحميل الفيديو كامل
+      resolveVideoSource(c.url,c.thumb).then(src=>{
+        const badge=document.getElementById(badgeId);
+        if(badge&&src.duration>0){
+          const d=Math.floor(src.duration),h=Math.floor(d/3600),m=Math.floor((d%3600)/60),s=d%60;
+          badge.textContent=h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`;
+        }
+        if(!c.thumb&&src.posterUrl){
+          const thumbEl=document.getElementById(thumbId);
+          if(thumbEl)thumbEl.outerHTML=`<img src="${src.posterUrl}" onerror="this.remove()"/>`;
+        }
+      }).catch(()=>{});
+      return;
+    }
+    // جلب مدة الفيديو الحقيقية وعرضها في الشارة (مثل يوتيوب) — للروابط المباشرة القديمة فقط
     const probe=document.createElement('video');
     probe.preload='metadata';probe.muted=true;probe.src=c.url;
     probe.addEventListener('loadedmetadata',()=>{
@@ -3120,6 +3258,7 @@ window.openVipContentModal=function(preActressId=''){
   const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display='none';
   const vmSel=document.getElementById('vipCVideoMode');if(vmSel)vmSel.value='reels';
   const thumbEl=document.getElementById('vipCThumb');if(thumbEl)thumbEl.value='';
+  const accEl=document.getElementById('vipCAccess');if(accEl)accEl.value='vip';
   const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
   const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
   const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='';
@@ -3150,6 +3289,7 @@ window.editVipContent=function(id){
   const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display=c.type==='video'?'block':'none';
   const vmSel=document.getElementById('vipCVideoMode');if(vmSel)vmSel.value=c.videoMode||'reels';
   const thumbEl=document.getElementById('vipCThumb');if(thumbEl)thumbEl.value=c.thumb||'';
+  const accEl=document.getElementById('vipCAccess');if(accEl)accEl.value=c.access||'vip';
   const sch=document.getElementById('vipCScheduled');if(sch)sch.checked=false;
   const sf=document.getElementById('vipScheduleFields');if(sf)sf.style.display='none';
   const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='none';
@@ -3179,6 +3319,7 @@ window.saveVipContent=async function(){
   const actressId=document.getElementById('vipCActress')?.value||'';
   const videoMode=type==='video'?(document.getElementById('vipCVideoMode')?.value||'reels'):'';
   const thumb=type==='video'?(document.getElementById('vipCThumb')?.value.trim()||''):'';
+  const access=document.getElementById('vipCAccess')?.value||'vip';
   const albumRaw=document.getElementById('vipCAlbum')?.value||'';
   const album=albumRaw.split('\n').map(u=>u.trim()).filter(Boolean);
   const isScheduled=document.getElementById('vipCScheduled')?.checked;
@@ -3197,7 +3338,7 @@ window.saveVipContent=async function(){
   if(editId){
     try{
       await updateDoc(doc(db,'vipContent',editId),{
-        name,type,url,desc,price,album,videoMode,thumb,
+        name,type,url,desc,price,album,videoMode,thumb,access,
         actressId:actressId||'',
         actressName:actress?.name||'',
         actressImg:actress?.image||''
@@ -3211,7 +3352,7 @@ window.saveVipContent=async function(){
   try{
     const data={
       name,type,url,desc,price,album,
-      videoMode,thumb,
+      videoMode,thumb,access,
       actressId:actressId||'',
       actressName:actress?.name||'',
       actressImg:actress?.image||'',
@@ -3258,7 +3399,10 @@ window.openVipViewer=function(id){
     const isAlbum=c.type==='album'&&c._imgs.length>1;
     let mediaHtml;
     if(isVid){
-      mediaHtml=`<video src="${c.url}" loop playsinline controls ${window._vipMuted?'muted':''} preload="metadata" oncontextmenu="return false;" style="max-width:100%;max-height:85vh;outline:none;"></video>`;
+      const vuId=vuExtractId(c.url);
+      mediaHtml=vuId
+        ?`<video data-vu-url="${c.url}" ${c.thumb?`poster="${c.thumb}"`:''} loop playsinline controls ${window._vipMuted?'muted':''} preload="metadata" oncontextmenu="return false;" style="max-width:100%;max-height:85vh;outline:none;"></video>`
+        :`<video src="${c.url}" loop playsinline controls ${window._vipMuted?'muted':''} preload="metadata" oncontextmenu="return false;" style="max-width:100%;max-height:85vh;outline:none;"></video>`;
     } else if(isAlbum){
       mediaHtml=`<div class="vip-album-track" id="album-${i}" dir="ltr">${c._imgs.map((u,ai)=>`<div class="vip-album-page"><img src="${u}" loading="${ai===0?'eager':'lazy'}" alt="${c.name}" oncontextmenu="return false;" draggable="false"/></div>`).join('')}</div>`;
     } else {
@@ -3275,6 +3419,17 @@ window.openVipViewer=function(id){
       </div>
     </div>`;
   }).join('');
+  // تفعيل روابط video-upload/تيليجرام: نجيب رابط التشغيل الحقيقي لكل فيديو معلّم بـ data-vu-url
+  track.querySelectorAll('video[data-vu-url]').forEach(vEl=>{
+    const rawUrl=vEl.getAttribute('data-vu-url');
+    resolveVideoSource(rawUrl).then(src=>{
+      vEl.src=src.playUrl;
+      if(src.posterUrl&&!vEl.getAttribute('poster'))vEl.poster=src.posterUrl;
+    }).catch(()=>{
+      const slide=vEl.closest('.vip-reel-slide');
+      if(slide)slide.insertAdjacentHTML('beforeend','<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#ff8080;font-size:13px;background:rgba(0,0,0,.5);">تعذّر تحميل الفيديو</div>');
+    });
+  });
   // أزرار التنقل
   const nav=document.createElement('div');
   nav.className='vip-reel-nav';
@@ -3414,7 +3569,8 @@ window.openVipYoutubeViewer=function(id){
   wrap.innerHTML=`
     <div class="yt-topbar"><button class="yt-back-btn" onclick="closeVipYoutubeViewer()">→ رجوع</button></div>
     <div class="yt-player-wrap">
-      <video id="ytPlayerVideo" src="${c.url}" ${c.thumb?`poster="${c.thumb}"`:''} controls playsinline autoplay preload="metadata" oncontextmenu="return false;" controlsList="nodownload"></video>
+      <video id="ytPlayerVideo" ${c.thumb?`poster="${c.thumb}"`:''} controls playsinline preload="metadata" oncontextmenu="return false;" controlsList="nodownload"></video>
+      <div id="ytPlayerLoading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px;background:rgba(0,0,0,.35);">جارِ التحميل...</div>
       ${wmHtml}
     </div>
     <div class="yt-info-panel">
@@ -3427,6 +3583,21 @@ window.openVipYoutubeViewer=function(id){
     </div>
     ${suggestions.length?`<div class="yt-suggest-title">🎬 فيديوهات أخرى قد تعجبك</div><div class="yt-suggest-list" id="ytSuggestList"></div>`:''}
   `;
+  // جلب رابط التشغيل الحقيقي (يدعم روابط video-upload/تيليجرام والروابط المباشرة القديمة معاً)
+  (async()=>{
+    const vEl=document.getElementById('ytPlayerVideo');
+    const loadingEl=document.getElementById('ytPlayerLoading');
+    try{
+      const src=await resolveVideoSource(c.url,c.thumb);
+      if(!vEl||vEl.id!=='ytPlayerVideo')return; // المستخدم غادر المشغل قبل انتهاء الجلب
+      vEl.src=src.playUrl;
+      if(src.posterUrl&&!vEl.getAttribute('poster'))vEl.poster=src.posterUrl;
+      if(loadingEl)loadingEl.remove();
+      vEl.play().catch(()=>{});
+    }catch(err){
+      if(loadingEl)loadingEl.textContent="تعذّر تحميل الفيديو (قد يتجاوز حجمه 20MB أو تم حذفه).";
+    }
+  })();
   if(suggestions.length){
     const list=document.getElementById('ytSuggestList');
     suggestions.forEach(s=>{
@@ -4454,6 +4625,7 @@ function renderLinks(){
     const tags=(link.tags||"").split(",").map(t=>t.trim()).filter(Boolean);
     const domain=(()=>{try{return new URL(link.url).hostname;}catch{return "";}})();
     const folderColor=folder?.color||"";
+    const embedUrl=getEmbedUrl(link.url);
     card.className="lcard"+(link.pinned?" pinned":"");
     card.style.animationDelay=i*.04+"s";
     card.innerHTML=`
@@ -4475,7 +4647,7 @@ function renderLinks(){
       </div>
       <div class="lcard-actions">
         <button class="lcopy-btn" data-url="${link.url}">📋 نسخ</button>
-        <a class="lopen-btn" href="${link.url}" target="_blank" rel="noopener" data-id="${link.id}">🔗</a>
+        ${embedUrl?`<a class="lopen-btn" href="javascript:void(0)" data-id="${link.id}" data-embed="${embedUrl.replace(/"/g,"&quot;")}" data-title="${(link.title||"").replace(/"/g,"&quot;")}">🎬</a>`:`<a class="lopen-btn" href="${link.url}" target="_blank" rel="noopener" data-id="${link.id}">🔗</a>`}
         ${isAdmin()?`
           <button class="lpin-btn${link.pinned?" pinned":""}" data-id="${link.id}">${link.pinned?"📌":"📍"}</button>
           <button class="ledit-btn" data-id="${link.id}">✏️</button>
@@ -4489,7 +4661,8 @@ function renderLinks(){
         ss("تم نسخ الرابط ✅");
       }).catch(()=>ss("فشل النسخ","error"));
     });
-    card.querySelector(".lopen-btn")?.addEventListener("click",async()=>{
+    card.querySelector(".lopen-btn")?.addEventListener("click",async function(){
+      if(this.dataset.embed)openVideoModal(this.dataset.embed,this.dataset.title);
       try{await updateDoc(doc(db,"links",link.id),{clicks:(link.clicks||0)+1});}catch{}
     });
     if(isAdmin()){
@@ -4543,6 +4716,7 @@ window.openLModal=openLModal;
 document.getElementById("addLBtn").addEventListener("click",()=>openLModal());
 document.getElementById("cancelL").addEventListener("click",()=>closeM("lModal"));
 document.getElementById("lModal").addEventListener("click",e=>{if(e.target===document.getElementById("lModal"))closeM("lModal");});
+document.getElementById("videoModal").addEventListener("click",e=>{if(e.target===document.getElementById("videoModal"))closeVideoModal();});
 document.getElementById("saveL").addEventListener("click",async()=>{
   if(!isAdmin())return;
   const title=document.getElementById("lMT").value.trim();let url=document.getElementById("lMU").value.trim();
