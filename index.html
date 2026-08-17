@@ -99,8 +99,28 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .d-user-role{font-size:11px;color:var(--dim);margin-top:2px;}
 
 /* PAGES */
-.page{display:none;min-height:100vh;padding-top:80px;}
+.page{display:none;min-height:100vh;padding-top:80px;padding-bottom:74px;}
 .page.active{display:block;}
+
+/* ══ شريط تنقل سفلي ══ */
+.bottom-nav{position:fixed;bottom:0;right:0;left:0;z-index:900;display:none;align-items:stretch;justify-content:space-around;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(241,183,109,.12);padding-bottom:env(safe-area-inset-bottom,0);box-shadow:0 -4px 20px rgba(0,0,0,.3);}
+@media(max-width:860px){.bottom-nav{display:flex;}}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 4px 8px;background:none;border:none;cursor:pointer;color:var(--dim);transition:color .15s;}
+.bnav-item svg{transition:transform .15s;}
+.bnav-item span{font-size:10px;font-weight:600;font-family:Cairo;}
+.bnav-item.on{color:var(--gold);}
+.bnav-item.on svg{transform:translateY(-1px);}
+@media(max-width:860px){#pwaInstallBtn,#iosHint{bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;}}
+
+/* ══ شاشة افتتاحية ══ */
+#splashScreen{position:fixed;inset:0;z-index:99999;background:#030303;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .5s ease,visibility .5s ease;}
+#splashScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.splash-logo{font-family:"Tajawal";font-size:44px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;animation:splashPulse 1.8s ease-in-out infinite;}
+.splash-sub{font-size:11px;font-weight:700;color:var(--dim);letter-spacing:4px;margin-top:-6px;}
+.splash-dot{width:34px;height:3px;border-radius:100px;background:rgba(241,183,109,.15);overflow:hidden;margin-top:14px;position:relative;}
+.splash-dot::after{content:"";position:absolute;top:0;bottom:0;width:14px;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--gd));animation:splashSlide 1.1s ease-in-out infinite;}
+@keyframes splashPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.75;transform:scale(.97);}}
+@keyframes splashSlide{0%{left:-14px;}100%{left:34px;}}
 
 /* HOME */
 .hero{min-height:calc(100vh - 80px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:60px 40px;max-width:1200px;margin:0 auto;gap:60px;}
@@ -919,18 +939,49 @@ window.addEventListener('load',()=>{
 </head>
 <body>
 
+<!-- SPLASH SCREEN -->
+<div id="splashScreen">
+  <div class="splash-logo">Leo</div>
+  <div class="splash-sub">V11</div>
+  <div class="splash-dot"></div>
+</div>
+
 <!-- MAINTENANCE -->
 
 <div class="page-loader-bar" id="pageLoaderBar"></div>
 <!-- PWA INSTALL BTN -->
-<div id="pwaInstallBtn" onclick="installPWA()" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:12px 22px;background:linear-gradient(135deg,#F1B76D,#c8883a);border-radius:100px;cursor:pointer;box-shadow:0 8px 30px rgba(241,183,109,.4);animation:float 3s ease-in-out infinite;border:none;font-family:Cairo;">
+<nav class="bottom-nav" id="bottomNav">
+  <button class="dtab bnav-item on" data-page="home">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>الرئيسية</span>
+  </button>
+  <button class="dtab bnav-item" data-page="youtube">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><polygon points="10 9 15 12 10 15 10 9" fill="currentColor" stroke="none"/></svg>
+    <span>يوتيوب</span>
+  </button>
+  <button class="dtab bnav-item" data-page="gallery">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+    <span>المعرض</span>
+  </button>
+  <button class="dtab bnav-item" data-page="vip">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20V10l4 4 4-9 4 9 4-4v10"/></svg>
+    <span>VIP</span>
+  </button>
+  <button class="dtab bnav-item" data-page="profile">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>حسابي</span>
+  </button>
+</nav>
+
+<div id="pwaInstallBtn" onclick="installPWA()" style="display:none;position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:12px 22px;background:linear-gradient(135deg,#F1B76D,#c8883a);border-radius:100px;cursor:pointer;box-shadow:0 8px 30px rgba(241,183,109,.4);animation:float 3s ease-in-out infinite;border:none;font-family:Cairo;">
+
   <img src="https://files.catbox.moe/n2ewpc.png" style="width:26px;height:26px;border-radius:7px;object-fit:cover;"/>
   <span style="font-size:13px;font-weight:700;color:#0a0a0a;">📲 ثبّت التطبيق</span>
   <span onclick="event.stopPropagation();document.getElementById('pwaInstallBtn').style.display='none';" style="font-size:16px;color:#0a0a0a;opacity:.6;margin-right:4px;">×</span>
 </div>
 
 <!-- iOS INSTALL HINT -->
-<div id="iosHint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
+<div id="iosHint" style="display:none;position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:8000;align-items:center;gap:10px;padding:14px 18px;background:rgba(10,10,10,.95);border:1px solid rgba(241,183,109,.3);border-radius:16px;max-width:300px;width:calc(100% - 40px);backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.6);">
   <div style="flex:1;">
     <div style="font-size:13px;font-weight:700;color:#F1B76D;margin-bottom:4px;">📲 ثبّت Leo v10</div>
     <div style="font-size:11px;color:#888;line-height:1.6;">اضغط على <span style="color:#F1B76D;">⎋ مشاركة</span> ثم <span style="color:#F1B76D;">"إضافة إلى الشاشة الرئيسية"</span></div>
@@ -1819,7 +1870,7 @@ Leo</div>
         <label class="chki"><input type="checkbox" value="Bikini" class="vCat"> Bikini</label>
         <label class="chki"><input type="checkbox" value="Solo Girls" class="vCat"> Solo Girls</label>
         <label class="chki"><input type="checkbox" value="Oral" class="vCat"> Oral</label>
-        <label class="chki"><input type="checkbox" value="Hentai" class="vCat"> Hentai</label>
+        <label class="chki"><input type="checkbox" value="funny" class="vCat"> funny</label>
         <label class="chki"><input type="checkbox" value="Blonde" class="vCat"> Blonde</label>
         <label class="chki"><input type="checkbox" value="Redhead" class="vCat"> Redhead</label>
         <label class="chki"><input type="checkbox" value="Brunette" class="vCat"> Brunette</label>
@@ -2302,7 +2353,7 @@ Leo</div>
       <label class="chki"><input type="checkbox" value="Bikini" class="aCat"> Bikini</label>
       <label class="chki"><input type="checkbox" value="Solo Girls" class="aCat"> Solo Girls</label>
       <label class="chki"><input type="checkbox" value="Oral" class="aCat"> Oral</label>
-      <label class="chki"><input type="checkbox" value="Hentai" class="aCat"> Hentai</label>
+      <label class="chki"><input type="checkbox" value="funny" class="aCat"> funny</label>
       <label class="chki"><input type="checkbox" value="Blonde" class="aCat"> Blonde</label>
       <label class="chki"><input type="checkbox" value="Redhead" class="aCat"> Redhead</label>
       <label class="chki"><input type="checkbox" value="Brunette" class="aCat"> Brunette</label>
@@ -2639,6 +2690,21 @@ const ICO={
   images:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="16" height="14" rx="2"/><path d="M6 22h14a2 2 0 0 0 2-2V8"/></svg>',
   search:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
 };
+const _splashStart=Date.now();
+let _splashHidden=false;
+function hideSplash(){
+  if(_splashHidden)return;
+  _splashHidden=true;
+  const el=document.getElementById('splashScreen');
+  if(!el)return;
+  const elapsed=Date.now()-_splashStart;
+  const wait=Math.max(0,700-elapsed);// حد أدنى لعرض الشاشة حتى لا تومض بسرعة على الاتصال السريع
+  setTimeout(()=>{
+    el.classList.add('hide');
+    setTimeout(()=>el.remove(),600);
+  },wait);
+}
+setTimeout(hideSplash,6000);// شبكة إنقاذ لو تأخر أو فشل تحديد حالة الدخول لأي سبب
 function shuffleArr(arr){
   const a=arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -2885,6 +2951,7 @@ document.getElementById("profileLogout").addEventListener("click",async()=>{awai
 
 // AUTH STATE
 onAuthStateChanged(auth,async u=>{
+  hideSplash();
   curUser=u;
   _isAdminCache=u?checkIsAdminUid(u.uid):false;
   _favsCache=null;
@@ -3206,7 +3273,7 @@ window.saveMaintMsg=async function(){
   }catch(err){ss("خطأ: "+err.message,"error");}
 };
 
-// ══ BULK TeenS ══
+// ══ BULK ACTIONS ══
 let bulkModeActive=false,bulkSelected=new Set();
 window.toggleBulkSelect=function(id,card){
   if(bulkSelected.has(id)){bulkSelected.delete(id);card.classList.remove("selected");}
@@ -3734,7 +3801,7 @@ function renderYtFeed(ytVideos,sectionId,gridId){
 }
 
 // ══ صفحة التصنيفات (ممثلات + فيديوهات بنفس الصفحة) ══
-const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','Hentai','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen'];
+const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','funny','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen'];
 let catMode='actress';
 let catSelected=new Set();
 
