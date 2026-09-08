@@ -1271,6 +1271,11 @@ Leo</div>
           <span>محتوى VIP حصري</span>
           <button id="addVipFromDetBtn" style="display:none;padding:5px 12px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:11px;font-weight:700;cursor:pointer;" onclick="addVipForCurrentActress()">➕ إضافة</button>
         </div>
+        <div id="vipDetTabs" style="display:none;gap:8px;margin:10px 0 12px;">
+          <button id="vipDetTabAll" class="cat-mode-btn on" onclick="setVipDetTab('all')" style="padding:7px 14px;font-size:12px;">الكل</button>
+          <button id="vipDetTabVideo" class="cat-mode-btn" onclick="setVipDetTab('video')" style="padding:7px 14px;font-size:12px;">🎬 فيديوهات</button>
+          <button id="vipDetTabPhoto" class="cat-mode-btn" onclick="setVipDetTab('photo')" style="padding:7px 14px;font-size:12px;">🖼️ صور</button>
+        </div>
         <div id="vipDetGrid" class="pdc-grid" style="margin-top:10px;"></div>
       </div>
     </div>
@@ -1754,6 +1759,10 @@ Leo</div>
         <button id="pinDiscoverToggle" class="yt-rt-icon-btn" onclick="toggleGalleryDiscover()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
       </div>
     </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <button id="galModeAll" class="cat-mode-btn on" onclick="setGalMode('all')">📌 الكل</button>
+      <button id="galModeBoards" class="cat-mode-btn" onclick="setGalMode('boards')">🗂️ المجموعات</button>
+    </div>
     <div id="pinSearchBar" style="display:none;margin-bottom:12px;">
       <input type="text" id="pinSearchInput" class="yt-search-input" placeholder="ابحث بالمعرض..." oninput="filterPinSearch()"/>
     </div>
@@ -1765,7 +1774,26 @@ Leo</div>
     </div>
     <div class="pin-grid" id="pinGrid"></div>
     <div id="pinEmpty" style="display:none;text-align:center;padding:50px 20px;color:var(--dim);font-size:13px;">لا يوجد صور أو ألبومات بعد</div>
+
+    <!-- عرض المجموعات (Boards) -->
+    <div id="boardsView" style="display:none;">
+      <div id="boardsListView">
+        <div class="boards-cover-grid" id="boardsCoverGrid"></div>
+      </div>
+      <div id="boardOpenView" style="display:none;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <button class="yt-rt-icon-btn" onclick="closeBoardView()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          <div id="boardOpenTitle" style="font-size:15px;font-weight:800;color:var(--tx);"></div>
+        </div>
+        <div class="pin-grid" id="boardOpenGrid"></div>
+        <div id="boardOpenEmpty" style="display:none;text-align:center;padding:40px 20px;color:var(--dim);font-size:13px;">هذي المجموعة فاضية بعد</div>
+      </div>
+    </div>
   </div>
+
+  <!-- زر إضافة عائم (للأدمن فقط) -->
+  <button id="galFabAdd" onclick="openVipContentModal()" style="display:none;position:fixed;bottom:90px;left:20px;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-size:26px;cursor:pointer;box-shadow:0 8px 24px rgba(241,183,109,.4);z-index:400;display:flex;align-items:center;justify-content:center;">+</button>
+
 </div>
 
 
@@ -1827,10 +1855,9 @@ Leo</div>
   <div class="mbox" style="max-width:440px;">
     <h3 id="vipContentModalTitle">🎬 إضافة محتوى VIP</h3>
     <div class="mfg"><label>الاسم *</label><input type="text" id="vipCName" placeholder="اسم المحتوى"/></div>
-    <div class="mfg"><label>🎭 ربط بممثلة (اختياري)</label>
-      <select id="vipCActress" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
-        <option value="">-- بدون ربط --</option>
-      </select>
+    <div class="mfg"><label>🎭 ربط بممثلة أو أكثر (اختياري)</label>
+      <input type="text" id="vipCActressSearch" placeholder="ابحث عن ممثلة..." oninput="filterActressPicker()" style="width:100%;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:12.5px;outline:none;margin-bottom:8px;"/>
+      <div id="vipCActressList" style="max-height:170px;overflow-y:auto;display:flex;flex-direction:column;gap:1px;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:6px;"></div>
     </div>
     <div class="mfg"><label>النوع</label>
       <select id="vipCType" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;">
@@ -1870,7 +1897,7 @@ Leo</div>
         <label class="chki"><input type="checkbox" value="Bikini" class="vCat"> Bikini</label>
         <label class="chki"><input type="checkbox" value="Solo Girls" class="vCat"> Solo Girls</label>
         <label class="chki"><input type="checkbox" value="Oral" class="vCat"> Oral</label>
-        <label class="chki"><input type="checkbox" value="funny" class="vCat"> funny</label>
+        <label class="chki"><input type="checkbox" value="Hentai" class="vCat"> Hentai</label>
         <label class="chki"><input type="checkbox" value="Blonde" class="vCat"> Blonde</label>
         <label class="chki"><input type="checkbox" value="Redhead" class="vCat"> Redhead</label>
         <label class="chki"><input type="checkbox" value="Brunette" class="vCat"> Brunette</label>
@@ -1896,6 +1923,7 @@ Leo</div>
         <label class="chki"><input type="checkbox" value="Amateur" class="vCat"> Amateur</label>
         <label class="chki"><input type="checkbox" value="Studio" class="vCat"> Studio</label>
         <label class="chki"><input type="checkbox" value="Teen" class="vCat"> Teen</label>
+        <label class="chki"><input type="checkbox" value="Harem" class="vCat"> Harem</label>
       </div>
       <div style="margin-top:12px;display:flex;gap:8px;">
         <div style="flex:2;">
@@ -2029,6 +2057,11 @@ Leo</div>
 <!-- VIP YOUTUBE-STYLE VIDEO VIEWER (للفيديوهات الطويلة) -->
 <div id="vipYoutubeViewer" style="display:none;position:fixed;inset:0;background:#0f0f0f;z-index:9999;overflow-y:auto;">
   <div id="ytViewerContent"></div>
+</div>
+
+<!-- PINTEREST-STYLE PIN DETAIL VIEWER -->
+<div id="pinDetailViewer" style="display:none;position:fixed;inset:0;background:#0a0a0a;z-index:9999;overflow-y:auto;">
+  <div id="pinDetailContent"></div>
 </div>
 
 <style>
@@ -2254,10 +2287,13 @@ Leo</div>
 @media(min-width:560px){.pin-grid{column-count:3;}}
 @media(min-width:900px){.pin-grid{column-count:4;}}
 @media(min-width:1200px){.pin-grid{column-count:5;}}
-.pin-card{break-inside:avoid;margin-bottom:16px;border-radius:16px;overflow:hidden;cursor:pointer;position:relative;background:#111;transition:transform .18s;}
-.pin-card:hover{transform:translateY(-2px);}
-.pin-img-wrap{position:relative;width:100%;line-height:0;}
-.pin-img-wrap img{width:100%;display:block;}
+.pin-card{break-inside:avoid;margin-bottom:16px;border-radius:16px;overflow:hidden;cursor:pointer;position:relative;background:#111;}
+.pin-img-wrap{position:relative;width:100%;line-height:0;overflow:hidden;background:linear-gradient(100deg,#161616 30%,#232323 45%,#161616 60%);background-size:300% 100%;animation:pinShimmer 1.4s ease-in-out infinite;}
+.pin-img-wrap img{width:100%;display:block;transition:transform .35s ease,opacity .3s ease;opacity:0;}
+.pin-img-wrap img.loaded{opacity:1;}
+.pin-card:hover .pin-img-wrap img{transform:scale(1.06);}
+@keyframes pinShimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.pin-img-wrap.loaded{animation:none;background:none;}
 .pin-hover-ov{position:absolute;inset:0;opacity:0;transition:opacity .15s;background:linear-gradient(to bottom,rgba(0,0,0,.45) 0%,transparent 22%,transparent 68%,rgba(0,0,0,.6) 100%);}
 .pin-card:hover .pin-hover-ov{opacity:1;}
 .pin-save-btn{position:absolute;top:10px;left:10px;padding:9px 16px;border:none;border-radius:100px;background:#E60023;color:#fff;font-family:Cairo;font-size:12.5px;font-weight:800;cursor:pointer;opacity:0;transform:translateY(-4px);transition:opacity .15s,transform .15s,background .15s;z-index:2;}
@@ -2275,6 +2311,59 @@ Leo</div>
 .pin-menu-pop{position:absolute;top:46px;right:10px;background:#181818;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:6px;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.5);min-width:170px;}
 .pin-menu-pop button{display:block;width:100%;text-align:right;padding:9px 12px;border:none;background:transparent;color:var(--tx);font-family:Cairo;font-size:12px;cursor:pointer;border-radius:8px;}
 .pin-menu-pop button:hover{background:rgba(255,255,255,.06);}
+
+/* ══ نافذة "احفظ في مجموعة" ══ */
+.pin-board-pop{position:absolute;z-index:2000;background:#181818;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;width:260px;box-shadow:0 12px 36px rgba(0,0,0,.6);}
+.pbp-title{font-size:13px;font-weight:800;color:var(--tx);margin-bottom:10px;}
+.pbp-list{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.pbp-empty{font-size:11.5px;color:var(--dim);padding:8px 2px;}
+.pbp-row{display:flex;align-items:center;gap:9px;padding:7px 6px;border-radius:9px;background:transparent;border:none;cursor:pointer;text-align:right;width:100%;}
+.pbp-row:hover{background:rgba(255,255,255,.05);}
+.pbp-check{width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:#0a0a0a;flex-shrink:0;}
+.pbp-check.on{background:#E60023;border-color:#E60023;color:#fff;}
+.pbp-cover{width:30px;height:30px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.pbp-cover img{width:100%;height:100%;object-fit:cover;}
+.pbp-name{font-size:12.5px;color:var(--tx);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pbp-new{display:flex;gap:6px;border-top:1px solid rgba(255,255,255,.08);padding-top:10px;}
+.pbp-new input{flex:1;padding:8px 10px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--tx);font-family:Cairo;font-size:11.5px;outline:none;}
+.pbp-new button{padding:8px 12px;border:none;border-radius:9px;background:var(--gold);color:#0a0a0a;font-family:Cairo;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;}
+.pbp-alsofav{width:100%;margin-top:10px;padding:9px;border:none;border-radius:9px;background:rgba(255,255,255,.05);color:var(--dim);font-family:Cairo;font-size:11.5px;cursor:pointer;}
+.pbp-alsofav.on{background:rgba(241,183,109,.1);color:var(--gold);}
+
+/* ══ تصفح المجموعات (Boards) بصفحة المعرض ══ */
+.boards-cover-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+.board-cover-card{cursor:pointer;}
+.board-cover-stack{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.03);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;}
+.board-cover-stack.single{grid-template-columns:1fr;grid-template-rows:1fr;}
+.board-cover-stack img{width:100%;height:100%;object-fit:cover;display:block;}
+.board-cover-empty{grid-column:1/-1;grid-row:1/-1;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:26px;}
+.board-cover-name{margin-top:8px;font-size:12.5px;font-weight:700;color:var(--tx);}
+.board-cover-count{font-size:10.5px;color:var(--dim);}
+.board-new-card{display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:1;border-radius:14px;border:2px dashed rgba(255,255,255,.12);cursor:pointer;color:var(--dim);gap:6px;}
+.board-new-card:hover{border-color:rgba(241,183,109,.3);color:var(--gold);}
+
+/* ══ صفحة تفاصيل البن (Pin Detail — تصميم بينترست الأصلي) ══ */
+.pd-topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,10,10,.9);backdrop-filter:blur(10px);}
+.pd-close{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pd-wrap{max-width:960px;margin:0 auto;padding:8px 16px 50px;}
+@media(min-width:760px){.pd-wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}}
+.pd-media{border-radius:20px;overflow:hidden;background:#111;position:sticky;top:70px;}
+.pd-media img{width:100%;display:block;}
+.pd-album-strip{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#000;}
+.pd-album-strip img{width:56px;height:56px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:.5;flex-shrink:0;}
+.pd-album-strip img.on{opacity:1;outline:2px solid var(--gold);}
+.pd-side{padding-top:14px;}
+.pd-Teens{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.pd-icon-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:var(--tx);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pd-icon-btn:hover{background:rgba(255,255,255,.12);}
+.pd-save-btn{margin-inline-start:auto;padding:12px 24px;border:none;border-radius:100px;background:#E60023;color:#fff;font-family:Cairo;font-size:14px;font-weight:800;cursor:pointer;}
+.pd-save-btn.on{background:rgba(255,255,255,.1);color:var(--tx);}
+.pd-title{font-size:20px;font-weight:900;color:var(--tx);margin-bottom:10px;line-height:1.4;}
+.pd-desc{font-size:13.5px;color:var(--dim);line-height:1.8;margin-bottom:16px;}
+.pd-actress-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:20px;cursor:pointer;}
+.pd-actress-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top;}
+.pd-actress-name{font-size:13px;font-weight:800;color:var(--tx);}
+.pd-more-title{font-size:15px;font-weight:800;color:var(--tx);margin:10px 0 14px;}
 </style>
 
 <!-- VIP CODES ADMIN PAGE (Standalone) -->
@@ -2353,7 +2442,7 @@ Leo</div>
       <label class="chki"><input type="checkbox" value="Bikini" class="aCat"> Bikini</label>
       <label class="chki"><input type="checkbox" value="Solo Girls" class="aCat"> Solo Girls</label>
       <label class="chki"><input type="checkbox" value="Oral" class="aCat"> Oral</label>
-      <label class="chki"><input type="checkbox" value="funny" class="aCat"> funny</label>
+      <label class="chki"><input type="checkbox" value="Hentai" class="aCat"> Hentai</label>
       <label class="chki"><input type="checkbox" value="Blonde" class="aCat"> Blonde</label>
       <label class="chki"><input type="checkbox" value="Redhead" class="aCat"> Redhead</label>
       <label class="chki"><input type="checkbox" value="Brunette" class="aCat"> Brunette</label>
@@ -2379,6 +2468,7 @@ Leo</div>
       <label class="chki"><input type="checkbox" value="Amateur" class="aCat"> Amateur</label>
       <label class="chki"><input type="checkbox" value="Studio" class="aCat"> Studio</label>
       <label class="chki"><input type="checkbox" value="Teen" class="aCat"> Teen</label>
+      <label class="chki"><input type="checkbox" value="Harem" class="aCat"> Harem</label>
     </div></div>
     <div class="mfg"><label>البلد</label><input type="text" id="mCSrch" placeholder="ابحث بلد..." style="margin-bottom:6px;"/><select id="mCountry" class="sinp" style="padding:10px;"></select></div>
     <div class="mfg"><label>الصورة *</label>
@@ -2705,6 +2795,70 @@ function hideSplash(){
   },wait);
 }
 setTimeout(hideSplash,6000);// شبكة إنقاذ لو تأخر أو فشل تحديد حالة الدخول لأي سبب
+// ══ دوال مساعدة لدعم ربط المحتوى بأكثر من ممثلة ══
+function getContentActressIds(c){
+  if(Array.isArray(c.actressIds)&&c.actressIds.length)return c.actressIds;
+  return c.actressId?[c.actressId]:[];
+}
+window.setVipDetTab=function(tab){
+  window._vipDetTab=tab;
+  document.getElementById('vipDetTabAll')?.classList.toggle('on',tab==='all');
+  document.getElementById('vipDetTabVideo')?.classList.toggle('on',tab==='video');
+  document.getElementById('vipDetTabPhoto')?.classList.toggle('on',tab==='photo');
+  renderVipDetGrid();
+};
+function renderVipDetGrid(){
+  const vipDetGrid=document.getElementById("vipDetGrid");
+  if(!vipDetGrid)return;
+  const id=window._curDetActressId;
+  const actressVipAll=vipContent.filter(c=>getContentActressIds(c).includes(id));
+  const tab=window._vipDetTab||'all';
+  const actressVip=tab==='video'?actressVipAll.filter(c=>c.type==='video')
+    :tab==='photo'?actressVipAll.filter(c=>c.type==='image'||c.type==='album')
+    :actressVipAll;
+  const isUnlocked=curUser?document.getElementById("vipUnlockedContent")?.style.display==="block":false;
+  const canView=isAdmin()||isUnlocked;
+  if(!actressVipAll.length){
+    vipDetGrid.innerHTML=isAdmin()?'<div style="color:var(--dim);font-size:12px;padding:8px 0;">لا يوجد محتوى بعد — اضغط إضافة</div>':'';
+  } else if(!canView){
+    vipDetGrid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:24px 16px;background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.15);border-radius:14px;">
+      <div style="color:var(--gold);margin-bottom:10px;display:flex;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">يوجد ${actressVipAll.length} محتوى حصري لهذه الممثلة</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:14px;">فعّل كود VIP لمشاهدته</div>
+      <button onclick="goTo('vip')" style="padding:9px 20px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;">🔑 فتح المحتوى الحصري</button>
+    </div>`;
+  } else if(!actressVip.length){
+    vipDetGrid.innerHTML='<div style="color:var(--dim);font-size:12px;padding:8px 0;">لا يوجد محتوى بهذا القسم</div>';
+  } else {
+    vipDetGrid.innerHTML='';
+    actressVip.forEach((c)=>{
+      vipDetGrid.appendChild(buildProfileVipCard(c));
+    });
+  }
+}
+function getContentActresses(c){
+  return getContentActressIds(c).map(id=>actresses.find(a=>a.id===id)).filter(Boolean);
+}
+function getContentActressNames(c){
+  const ids=getContentActressIds(c);
+  const names=ids.map(id=>(actresses.find(a=>a.id===id)||{}).name).filter(Boolean);
+  return names.length?names:(c.actressName?[c.actressName]:[]);
+}
+function renderActressPicker(selectedIds){
+  const list=document.getElementById('vipCActressList');
+  if(!list)return;
+  const sorted=[...actresses].sort((a,b)=>a.name.localeCompare(b.name));
+  list.innerHTML=sorted.map(a=>`
+    <label class="chki" data-aname="${a.name.toLowerCase()}" style="padding:6px 8px;">
+      <input type="checkbox" class="vCActressChk" value="${a.id}" ${selectedIds.includes(a.id)?'checked':''}> ${a.name}
+    </label>`).join('');
+}
+window.filterActressPicker=function(){
+  const q=(document.getElementById('vipCActressSearch')?.value||'').trim().toLowerCase();
+  document.querySelectorAll('#vipCActressList .chki').forEach(row=>{
+    row.style.display=(!q||row.dataset.aname.includes(q))?'flex':'none';
+  });
+};
 function shuffleArr(arr){
   const a=arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -2761,7 +2915,7 @@ window.goTo=function(p){
   if(p==="vip"){renderVipAdmin&&isAdmin()&&renderVipAdmin();populateVipContentSelect&&populateVipContentSelect();isAdmin()&&renderVipStats&&renderVipStats();!isAdmin()&&renderVipExpiryBanner&&renderVipExpiryBanner();!isAdmin()&&renderVipMember&&renderVipMember();}
   if(p==="youtube"){renderYtChips&&renderYtChips();renderYtHomeGrid&&renderYtHomeGrid();}
   if(p==="categories"){renderCatChips&&renderCatChips();renderCatResults&&renderCatResults();}
-  if(p==="gallery"){renderPinChips&&renderPinChips();renderPinGrid&&renderPinGrid();}
+  if(p==="gallery"){renderPinChips&&renderPinChips();renderPinGrid&&renderPinGrid();renderBoardsCoverGrid&&renderBoardsCoverGrid();const fab=document.getElementById('galFabAdd');if(fab)fab.style.display=isAdmin()?'flex':'none';}
   if(p==="vip-request"){populateVipContentSelect&&populateVipContentSelect();}if(p==="suggestions-admin")setTimeout(loadSuggestions,100);if(p==="links"){renderLinks();renderFolders();}
   if(p==="users")setTimeout(loadUsers,100);
   if(p==="stats")setTimeout(()=>{renderStats();renderHairStats();renderWorldMap();},100);
@@ -2954,8 +3108,8 @@ onAuthStateChanged(auth,async u=>{
   hideSplash();
   curUser=u;
   _isAdminCache=u?checkIsAdminUid(u.uid):false;
-  _favsCache=null;
-  if(u)loadFavsFromCloud();
+  _favsCache=null;_boardsCache=null;
+  if(u){loadFavsFromCloud();loadBoardsFromCloud();}
   const wall=document.getElementById("loginWall");
   const nav=document.getElementById("mainNav");
   const drawer=document.getElementById("drawer");
@@ -3273,7 +3427,7 @@ window.saveMaintMsg=async function(){
   }catch(err){ss("خطأ: "+err.message,"error");}
 };
 
-// ══ BULK ACTIONS ══
+// ══ BULK TeenS ══
 let bulkModeActive=false,bulkSelected=new Set();
 window.toggleBulkSelect=function(id,card){
   if(bulkSelected.has(id)){bulkSelected.delete(id);card.classList.remove("selected");}
@@ -3613,13 +3767,18 @@ function renderGroupedGrid(items,gridId,emptyMsg){
   if(!grid)return;
   if(!items.length){grid.innerHTML=emptyMsg?`<div class="vip-empty">${emptyMsg}</div>`:'';return;}
   grid.innerHTML='';
-  // تجميع حسب الممثلة
-  const withActress=items.filter(c=>c.actressId);
-  const withoutActress=items.filter(c=>!c.actressId);
+  // تجميع حسب الممثلة (يدعم أكثر من ممثلة لكل محتوى)
+  const withActress=items.filter(c=>getContentActressIds(c).length);
+  const withoutActress=items.filter(c=>!getContentActressIds(c).length);
   const actressGroups={};
   withActress.forEach(c=>{
-    if(!actressGroups[c.actressId])actressGroups[c.actressId]={name:c.actressName,img:c.actressImg,items:[]};
-    actressGroups[c.actressId].items.push(c);
+    getContentActressIds(c).forEach(aid=>{
+      if(!actressGroups[aid]){
+        const a=actresses.find(x=>x.id===aid);
+        actressGroups[aid]={name:a?a.name:c.actressName,img:a?a.image:c.actressImg,items:[]};
+      }
+      actressGroups[aid].items.push(c);
+    });
   });
   // عرض مجموعات الممثلات
   Object.entries(actressGroups).forEach(([aid,group])=>{
@@ -3663,7 +3822,7 @@ function applyYtFilters(list){
   return list.filter(c=>{
     if(chip==='🌍 مجاني'&&c.access!=='free')return false;
     if(chip==='🔒 حصري'&&c.access==='free')return false;
-    if(chip!=='الكل'&&chip!=='🌍 مجاني'&&chip!=='🔒 حصري'&&c.actressName!==chip)return false;
+    if(chip!=='الكل'&&chip!=='🌍 مجاني'&&chip!=='🔒 حصري'&&!getContentActressNames(c).includes(chip))return false;
     if(q&&!((c.name||'').toLowerCase().includes(q)||(c.actressName||'').toLowerCase().includes(q)))return false;
     return true;
   });
@@ -3671,7 +3830,7 @@ function applyYtFilters(list){
 function renderYtChips(){
   const row=document.getElementById('ytChipsRow');
   if(!row)return;
-  const channels=[...new Set(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.actressName).map(c=>c.actressName))];
+  const channels=[...new Set(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube').flatMap(c=>getContentActressNames(c)))];
   const chips=['الكل','🌍 مجاني','🔒 حصري',...channels];
   const active=window._ytActiveChip||'الكل';
   row.innerHTML=chips.map(c=>`<button class="yt-chip${active===c?' on':''}" data-c="${c.replace(/"/g,'&quot;')}">${c}</button>`).join('');
@@ -3801,7 +3960,7 @@ function renderYtFeed(ytVideos,sectionId,gridId){
 }
 
 // ══ صفحة التصنيفات (ممثلات + فيديوهات بنفس الصفحة) ══
-const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','funny','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen'];
+const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','Hentai','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen','Harem'];
 let catMode='actress';
 let catSelected=new Set();
 
@@ -3883,7 +4042,7 @@ function applyPinFilters(list){
   return list.filter(c=>{
     if(chip==='🌍 مجاني'&&c.access!=='free')return false;
     if(chip==='🔒 حصري'&&c.access==='free')return false;
-    if(chip!=='الكل'&&chip!=='🌍 مجاني'&&chip!=='🔒 حصري'&&c.actressName!==chip)return false;
+    if(chip!=='الكل'&&chip!=='🌍 مجاني'&&chip!=='🔒 حصري'&&!getContentActressNames(c).includes(chip))return false;
     if(q&&!((c.name||'').toLowerCase().includes(q)||(c.actressName||'').toLowerCase().includes(q)))return false;
     return true;
   });
@@ -3891,7 +4050,7 @@ function applyPinFilters(list){
 function renderPinChips(){
   const row=document.getElementById('pinChipsRow');
   if(!row)return;
-  const channels=[...new Set(vipContent.filter(c=>(c.type==='image'||c.type==='album')&&c.actressName).map(c=>c.actressName))];
+  const channels=[...new Set(vipContent.filter(c=>(c.type==='image'||c.type==='album')).flatMap(c=>getContentActressNames(c)))];
   const chips=['الكل','🌍 مجاني','🔒 حصري',...channels];
   const active=window._pinActiveChip||'الكل';
   row.innerHTML=chips.map(c=>`<button class="yt-chip${active===c?' on':''}" data-c="${c.replace(/"/g,'&quot;')}">${c}</button>`).join('');
@@ -3919,6 +4078,70 @@ window.togglePinSearch=function(){
 window.filterPinSearch=function(){
   window._pinSearchQuery=document.getElementById('pinSearchInput')?.value||'';
   renderPinGrid();
+};
+window.setGalMode=function(mode){
+  document.getElementById('galModeAll')?.classList.toggle('on',mode==='all');
+  document.getElementById('galModeBoards')?.classList.toggle('on',mode==='boards');
+  const allEls=['pinSearchBar','pinChipsRow','pinGrid','pinEmpty'];
+  const showAll=mode==='all';
+  document.getElementById('boardsView').style.display=showAll?'none':'block';
+  ['pinChipsRow','pinGrid','pinEmpty'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=showAll?(id==='pinChipsRow'?'flex':''):'none';});
+  if(mode==='boards'){closeBoardView();renderBoardsCoverGrid();}
+};
+function renderBoardsCoverGrid(){
+  const grid=document.getElementById('boardsCoverGrid');
+  if(!grid)return;
+  const boards=curUser?getBoards():[];
+  grid.innerHTML='';
+  boards.forEach(b=>{
+    const items=(b.itemIds||[]).map(id=>vipContent.find(x=>x.id===id)).filter(Boolean);
+    const card=document.createElement('div');
+    card.className='board-cover-card';
+    card.onclick=()=>openBoardView(b.id);
+    const covers=items.slice(0,4);
+    card.innerHTML=`
+      <div class="board-cover-stack${covers.length<=1?' single':''}">
+        ${covers.length?covers.map(it=>`<img src="${it.url}" onerror="this.remove()"/>`).join(''):'<div class="board-cover-empty">📌</div>'}
+      </div>
+      <div class="board-cover-name">${b.name}</div>
+      <div class="board-cover-count">${items.length} عنصر</div>`;
+    grid.appendChild(card);
+  });
+  const newCard=document.createElement('div');
+  newCard.className='board-new-card';
+  newCard.onclick=createNewBoard;
+  newCard.innerHTML=`<div style="font-size:26px;">+</div><div style="font-size:11.5px;">مجموعة جديدة</div>`;
+  grid.appendChild(newCard);
+}
+window.createNewBoard=function(){
+  if(!curUser)return ss('سجّل دخولك أولاً','error');
+  const name=prompt('اسم المجموعة الجديدة:');
+  if(!name||!name.trim())return;
+  const boards=getBoards();
+  boards.push({id:'b_'+Date.now(),name:name.trim(),itemIds:[],createdAt:new Date().toISOString()});
+  saveBoards(boards);
+  renderBoardsCoverGrid();
+  ss('✅ أُنشئت المجموعة');
+};
+window.openBoardView=function(boardId){
+  const boards=getBoards();
+  const b=boards.find(x=>x.id===boardId);
+  if(!b)return;
+  document.getElementById('boardsListView').style.display='none';
+  document.getElementById('boardOpenView').style.display='block';
+  document.getElementById('boardOpenTitle').textContent=b.name;
+  const grid=document.getElementById('boardOpenGrid');
+  const emptyEl=document.getElementById('boardOpenEmpty');
+  grid.innerHTML='';
+  const items=(b.itemIds||[]).map(id=>vipContent.find(x=>x.id===id)).filter(Boolean);
+  emptyEl.style.display=items.length?'none':'block';
+  items.forEach(it=>grid.appendChild(buildPinCard(it)));
+};
+window.closeBoardView=function(){
+  const listView=document.getElementById('boardsListView');
+  const openView=document.getElementById('boardOpenView');
+  if(listView)listView.style.display='block';
+  if(openView)openView.style.display='none';
 };
 function renderPinGrid(){
   const grid=document.getElementById('pinGrid');
@@ -3958,10 +4181,81 @@ function buildProfileVipCard(c){
     </div>`;
   return card;
 }
+// ══ صفحة تفاصيل البن (تصميم بينترست الأصلي: صورة + معلومات + المزيد من كذا) ══
+window.openPinDetail=function(id){
+  const c=vipContent.find(x=>x.id===id);
+  if(!c)return;
+  const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
+  if(c.access!=='free'&&!unlocked){
+    ss('🔒 افتح كودك أولاً لمشاهدة هذا المحتوى','error');
+    goTo('vip');
+    return;
+  }
+  const viewer=document.getElementById('pinDetailViewer');
+  const content=document.getElementById('pinDetailContent');
+  if(!viewer||!content)return;
+  const isAlbum=c.type==='album';
+  const imgs=isAlbum?[c.url,...(c.album||[])].filter(Boolean):[c.url];
+  const isSaved=curUser?getFavs().includes(c.id):false;
+  // المزيد من كذا: نفس الممثلات أولاً، ثم نفس التصنيفات، صور وألبومات فقط
+  const cAids=getContentActressIds(c);
+  const cActresses=getContentActresses(c);
+  const pool=vipContent.filter(x=>x.id!==c.id&&(x.type==='image'||x.type==='album')&&(x.access==='free'||unlocked));
+  const sameActress=cAids.length?pool.filter(x=>getContentActressIds(x).some(aid=>cAids.includes(aid))):[];
+  const sameCategory=pool.filter(x=>!sameActress.includes(x)&&(x.categories||[]).some(cat=>(c.categories||[]).includes(cat)));
+  const more=[...sameActress,...sameCategory].slice(0,18);
+  content.innerHTML=`
+    <div class="pd-topbar">
+      <button class="pd-close" onclick="closePinDetail()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div style="font-size:13px;font-weight:800;color:var(--tx);">${c.name}</div>
+      <div style="width:38px;"></div>
+    </div>
+    <div class="pd-wrap">
+      <div>
+        <div class="pd-media"><img src="${imgs[0]}" id="pdMainImg"/></div>
+        ${isAlbum&&imgs.length>1?`<div class="pd-album-strip" id="pdAlbumStrip">${imgs.map((im,i)=>`<img src="${im}" class="${i===0?'on':''}" onclick="pdSwitchImg(this,'${im.replace(/'/g,"\\'")}')"/>`).join('')}</div>`:''}
+      </div>
+      <div class="pd-side">
+        <div class="pd-Teens">
+          <button class="pd-icon-btn" onclick="shareYtVideo('${c.name.replace(/'/g,"\\'")}')">${ICO.share}</button>
+          <button class="pd-icon-btn" onclick="reportBrokenLink('${c.id}','${c.name.replace(/'/g,"\\'")}')">${ICO.flag}</button>
+          <button class="pd-save-btn${isSaved?' on':''}" id="pdSaveBtn">${isSaved?'✓ محفوظ':'حفظ'}</button>
+        </div>
+        <div class="pd-title">${c.name}</div>
+        ${c.desc?`<div class="pd-desc">${c.desc}</div>`:''}
+        ${cActresses.map(a=>`<div class="pd-actress-row" onclick="closePinDetail();goToActressFromVip('${a.id}')">
+          ${a.image?`<img src="${a.image}" class="pd-actress-avatar" onerror="this.remove()"/>`:''}
+          <div class="pd-actress-name">🎭 ${a.name}</div>
+        </div>`).join('')}
+        ${more.length?`<div class="pd-more-title">المزيد ${cActresses.length?'من '+cActresses.map(a=>a.name).join(' و '):'مشابه'}</div><div class="pin-grid" id="pdMoreGrid"></div>`:''}
+      </div>
+    </div>`;
+  const saveBtn=document.getElementById('pdSaveBtn');
+  saveBtn.addEventListener('click',()=>openSaveToBoardMenu(c,saveBtn));
+  if(more.length){
+    const grid=document.getElementById('pdMoreGrid');
+    more.forEach(m=>grid.appendChild(buildPinCard(m)));
+  }
+  viewer.style.display='block';
+  content.scrollTop=0;
+  document.body.style.overflow='hidden';
+};
+window.pdSwitchImg=function(el,src){
+  document.getElementById('pdMainImg').src=src;
+  document.querySelectorAll('#pdAlbumStrip img').forEach(i=>i.classList.remove('on'));
+  el.classList.add('on');
+};
+window.closePinDetail=function(){
+  const viewer=document.getElementById('pinDetailViewer');
+  if(viewer)viewer.style.display='none';
+  document.getElementById('pinDetailContent').innerHTML='';
+  document.body.style.overflow='';
+};
+
 function buildPinCard(c){
   const card=document.createElement('div');
   card.className='pin-card';
-  card.onclick=(e)=>{if(e.target.closest('.pin-save-btn,.pin-more-btn,.pin-menu-pop'))return;openVipViewer(c.id);};
+  card.onclick=(e)=>{if(e.target.closest('.pin-save-btn,.pin-more-btn,.pin-menu-pop,.pin-board-pop'))return;openPinDetail(c.id);};
   const isAlbum=c.type==='album';
   const count=isAlbum?1+(c.album||[]).length:0;
   const isSaved=curUser?getFavs().includes(c.id):false;
@@ -3978,11 +4272,14 @@ function buildPinCard(c){
         ${c.actressName?`<div class="pin-actress">🎭 ${c.actressName}</div>`:''}
       </div>
     </div>`;
+  const imgEl=card.querySelector('img');
+  const wrapEl=card.querySelector('.pin-img-wrap');
+  imgEl.addEventListener('load',()=>{imgEl.classList.add('loaded');wrapEl.classList.add('loaded');});
+  if(imgEl.complete)imgEl.dispatchEvent(new Event('load'));
   const saveBtn=card.querySelector('.pin-save-btn');
   saveBtn.addEventListener('click',e=>{
     e.stopPropagation();
-    toggleFav(c.id,saveBtn);
-    saveBtn.innerHTML=saveBtn.classList.contains('on')?ICO.check+' محفوظ':'حفظ';
+    openSaveToBoardMenu(c,saveBtn);
   });
   const moreBtn=card.querySelector('.pin-more-btn');
   moreBtn.addEventListener('click',e=>{
@@ -3993,7 +4290,7 @@ function buildPinCard(c){
     menu.innerHTML=`
       <button data-act="open">${ICO.eye} فتح</button>
       <button data-act="report">${ICO.flag} إبلاغ عن رابط معطوب</button>`;
-    menu.querySelector('[data-act="open"]').onclick=(ev)=>{ev.stopPropagation();menu.remove();openVipViewer(c.id);};
+    menu.querySelector('[data-act="open"]').onclick=(ev)=>{ev.stopPropagation();menu.remove();openPinDetail(c.id);};
     menu.querySelector('[data-act="report"]').onclick=(ev)=>{ev.stopPropagation();menu.remove();reportBrokenLink(c.id,c.name);};
     card.querySelector('.pin-img-wrap').appendChild(menu);
     const closeMenu=(ev)=>{if(!menu.contains(ev.target)){menu.remove();document.removeEventListener('click',closeMenu);}};
@@ -4053,14 +4350,9 @@ window.openVipContentModal=function(preActressId=''){
   const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='';
   const t=document.getElementById('vipContentModalTitle');if(t)t.textContent='🎬 إضافة محتوى VIP';
   const b=document.getElementById('vipContentSaveBtn');if(b)b.textContent='💾 حفظ';
-  // تعبئة قائمة الممثلات
-  const sel=document.getElementById('vipCActress');
-  if(sel){
-    sel.innerHTML='<option value="">-- بدون ربط --</option>'+
-      [...actresses].sort((a,b)=>a.name.localeCompare(b.name))
-      .map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
-    if(preActressId)sel.value=preActressId;
-  }
+  // تعبئة قائمة الممثلات (اختيار متعدد)
+  const asEl=document.getElementById('vipCActressSearch');if(asEl)asEl.value='';
+  renderActressPicker(preActressId?[preActressId]:[]);
   openM('vipContentModal');
 };
 
@@ -4087,13 +4379,8 @@ window.editVipContent=function(id){
   const schBox=document.getElementById('vipScheduleBox');if(schBox)schBox.style.display='none';
   const t=document.getElementById('vipContentModalTitle');if(t)t.textContent='✏️ تعديل المحتوى';
   const b=document.getElementById('vipContentSaveBtn');if(b)b.textContent='💾 حفظ التعديلات';
-  const sel=document.getElementById('vipCActress');
-  if(sel){
-    sel.innerHTML='<option value="">-- بدون ربط --</option>'+
-      [...actresses].sort((a,b)=>a.name.localeCompare(b.name))
-      .map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
-    sel.value=c.actressId||'';
-  }
+  const asEl=document.getElementById('vipCActressSearch');if(asEl)asEl.value='';
+  renderActressPicker(getContentActressIds(c));
   openM('vipContentModal');
 };
 document.getElementById('vipCType')?.addEventListener('change',function(){
@@ -4108,7 +4395,7 @@ window.saveVipContent=async function(){
   const url=document.getElementById('vipCUrl').value.trim();
   const desc=document.getElementById('vipCDesc').value.trim();
   const price=document.getElementById('vipCPrice').value.trim();
-  const actressId=document.getElementById('vipCActress')?.value||'';
+  const actressIds=[...document.querySelectorAll('.vCActressChk:checked')].map(c=>c.value);
   const videoMode=type==='video'?(document.getElementById('vipCVideoMode')?.value||'reels'):'';
   const thumb=type==='video'?(document.getElementById('vipCThumb')?.value.trim()||''):'';
   const categories=type==='video'?[...document.querySelectorAll('.vCat')].filter(c=>c.checked).map(c=>c.value):[];
@@ -4128,15 +4415,17 @@ window.saveVipContent=async function(){
     publishAt=new Date(`${schedDate}T${schedTime}`).toISOString();
     if(new Date(publishAt)<=new Date())return ss('يجب أن يكون الموعد في المستقبل','error');
   }
-  const actress=actressId?actresses.find(a=>a.id===actressId):null;
+  const linkedActresses=actressIds.map(aid=>actresses.find(a=>a.id===aid)).filter(Boolean);
+  const primaryActress=linkedActresses[0]||null;
   const editId=window._vipEditId;
   if(editId){
     try{
       await updateDoc(doc(db,'vipContent',editId),{
         name,type,url,desc,price,album,videoMode,thumb,access,categories,series,episode,
-        actressId:actressId||'',
-        actressName:actress?.name||'',
-        actressImg:actress?.image||''
+        actressIds,
+        actressId:primaryActress?.id||'',
+        actressName:primaryActress?.name||'',
+        actressImg:primaryActress?.image||''
       });
       ss('تم تحديث المحتوى ✅');
       window._vipEditId='';
@@ -4148,9 +4437,10 @@ window.saveVipContent=async function(){
     const data={
       name,type,url,desc,price,album,
       videoMode,thumb,access,categories,series,episode,
-      actressId:actressId||'',
-      actressName:actress?.name||'',
-      actressImg:actress?.image||'',
+      actressIds,
+      actressId:primaryActress?.id||'',
+      actressName:primaryActress?.name||'',
+      actressImg:primaryActress?.image||'',
       published:!isScheduled,// مباشر أو منتظر
       publishAt:publishAt||null,
       createdAt:new Date().toISOString(),
@@ -4207,13 +4497,22 @@ window.toggleFeatured=async function(id){
 
 // ══ VIP REELS VIEWER (TikTok/Instagram style) ══
 window.openVipViewer=function(id,discover){
-  const startIdx=vipContent.findIndex(x=>x.id===id);
-  if(startIdx===-1)return;
+  const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
+  const admin=isAdmin();
+  let pool=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube'));
+  if(!admin)pool=pool.filter(c=>c.access==='free'||unlocked);
+  const startIdx=pool.findIndex(x=>x.id===id);
+  if(startIdx===-1){
+    // المحتوى المطلوب حصري ولم يُفتح بعد لهذا المستخدم
+    ss&&ss('🔒 افتح كودك أولاً لمشاهدة هذا المحتوى','error');
+    goTo('vip');
+    return;
+  }
   const viewer=document.getElementById('vipMediaViewer');
   const track=document.getElementById('vipReelsTrack');
   if(!viewer||!track)return;
   const useDiscover=discover||window._vipDiscoverActive;
-  let slides=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')).map(c=>{
+  let slides=pool.map(c=>{
     if(c.type==='album'){
       const imgs=[c.url,...(c.album||[])].filter(Boolean);
       return {...c,_imgs:imgs};
@@ -4249,7 +4548,7 @@ window.openVipViewer=function(id,discover){
       <div class="vip-reel-progress"><div class="vip-reel-progress-bar" id="prog-${i}"></div></div>
       ${mediaHtml}${wmHtml}${dots}
       <div class="vip-reel-info">
-        ${c.actressName?`<div class="vip-reel-actress" ${c.actressId?`onclick="goToActressFromVip('${c.actressId}')" style="cursor:pointer;"`:''}>🎭 ${c.actressName}</div>`:''}
+        ${getContentActresses(c).map(a=>`<div class="vip-reel-actress" onclick="goToActressFromVip('${a.id}')" style="cursor:pointer;">🎭 ${a.name}</div>`).join('')}
         <div class="vip-reel-name">${c.name}${isAlbum?` · 1/${c._imgs.length}`:''}</div>
         ${c.desc?`<div class="vip-reel-desc">${c.desc}</div>`:''}
         <button onclick="event.stopPropagation();reportBrokenLink('${c.id}','${c.name.replace(/'/g,"\\'")}')" style="margin-top:8px;padding:5px 12px;border:1px solid rgba(255,255,255,.15);border-radius:100px;background:rgba(0,0,0,.3);color:rgba(255,255,255,.7);font-family:Cairo;font-size:10px;cursor:pointer;">🚩 إبلاغ عن رابط معطوب</button>
@@ -4404,19 +4703,28 @@ window.openVipDiscover=function(){
 window.openVipYoutubeViewer=function(id){
   const c=vipContent.find(x=>x.id===id);
   if(!c)return;
+  const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
+  if(c.access!=='free'&&!unlocked&&!isAdmin()){
+    ss&&ss('🔒 افتح كودك أولاً لمشاهدة هذا الفيديو','error');
+    goTo('vip');
+    return;
+  }
   const viewer=document.getElementById('vipYoutubeViewer');
   const wrap=document.getElementById('ytViewerContent');
   if(!viewer||!wrap)return;
   const wmHtml=!isAdmin()?buildWatermarkHTML():'';
+  const canSeeVip=unlocked||isAdmin();
   // فيديوهات يوتيوب أخرى كمقترحات (باستثناء الفيديو الحالي)
-  let suggestions=vipContent.filter(x=>x.id!==id&&x.type==='video'&&x.videoMode==='youtube'&&!(c.series&&x.series===c.series));
+  let suggestions=vipContent.filter(x=>x.id!==id&&x.type==='video'&&x.videoMode==='youtube'&&!(c.series&&x.series===c.series)&&(x.access==='free'||canSeeVip));
   if(window._ytDiscoverActive)suggestions=shuffleArr(suggestions);
   // حلقات نفس المسلسل مرتبة برقم الحلقة
-  const episodes=c.series?vipContent.filter(x=>x.type==='video'&&x.videoMode==='youtube'&&x.series===c.series).sort((a,b)=>(a.episode||0)-(b.episode||0)):[];
+  const episodes=c.series?vipContent.filter(x=>x.type==='video'&&x.videoMode==='youtube'&&x.series===c.series&&(x.access==='free'||canSeeVip)).sort((a,b)=>(a.episode||0)-(b.episode||0)):[];
   const curEpIdx=episodes.findIndex(e=>e.id===id);
   const nextEp=(curEpIdx>=0&&curEpIdx<episodes.length-1)?episodes[curEpIdx+1]:null;
   const embedUrl=getEmbedUrl(c.url);
-  const isSubbed=c.actressId&&curUser?getFavs().includes(c.actressId):false;
+  const cActresses=getContentActresses(c);
+  const primaryA=cActresses[0]||null;
+  const isSubbed=primaryA&&curUser?getFavs().includes(primaryA.id):false;
   const isSaved=curUser?getFavs().includes(c.id):false;
   const isLiked=curUser?getLikes().includes(c.id):false;
   wrap.innerHTML=`
@@ -4433,9 +4741,9 @@ window.openVipYoutubeViewer=function(id){
       <div class="yt-title">${c.name}${c.series?` <span style="color:var(--dim);font-weight:400;font-size:13px;">· ${c.series}${c.episode?' · الحلقة '+c.episode:''}</span>`:''}</div>
       <div class="yt-stats-row">${ICO.eye} ${fmtViews(c.views||0)} مشاهدة  ·  ${c.createdAt?timeAgo(c.createdAt):''}${c.price?'  ·  💰 '+c.price:''}</div>
       <div class="yt-channel-row">
-        ${c.actressImg?`<img src="${c.actressImg}" class="yt-channel-avatar" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'yt-channel-avatar-fallback',innerHTML:ICO.user}))"/>`:`<div class="yt-channel-avatar-fallback">${ICO.user}</div>`}
-        <div class="yt-channel-name" ${c.actressId?`onclick="goToActressFromVip('${c.actressId}')"`:''}>${c.actressName||'محتوى حصري'}</div>
-        ${c.actressId?`<button class="yt-sub-btn${isSubbed?' on':''}" id="ytSubBtn" onclick="ytToggleSub('${c.actressId}')">${isSubbed?ICO.check+' مشترك':ICO.bell+' اشتراك'}</button>`:''}
+        ${primaryA?.image?`<img src="${primaryA.image}" class="yt-channel-avatar" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'yt-channel-avatar-fallback',innerHTML:ICO.user}))"/>`:`<div class="yt-channel-avatar-fallback">${ICO.user}</div>`}
+        <div class="yt-channel-name">${cActresses.length?cActresses.map(a=>`<span onclick="goToActressFromVip('${a.id}')" style="cursor:pointer;">${a.name}</span>`).join('، '):'محتوى حصري'}</div>
+        ${primaryA?`<button class="yt-sub-btn${isSubbed?' on':''}" id="ytSubBtn" onclick="ytToggleSub('${primaryA.id}')">${isSubbed?ICO.check+' مشترك':ICO.bell+' اشتراك'}</button>`:''}
       </div>
       <div class="yt-Teen-row">
         <button class="yt-Teen-btn${isLiked?' on':''}" id="ytLikeBtn" onclick="toggleYtLike('${c.id}')">${ICO.thumbsUp} <span id="ytLikeCount">${fmtViews(c.likesCount||0)}</span></button>
@@ -5422,32 +5730,25 @@ function showDet(id){
   const vipSec=document.getElementById("vipDetSection");
   const vipDetGrid=document.getElementById("vipDetGrid");
   const addVipBtn=document.getElementById("addVipFromDetBtn");
-  const actressVip=vipContent.filter(c=>c.actressId===id);
+  const actressVipAll=vipContent.filter(c=>getContentActressIds(c).includes(id));
+  window._curDetActressId=id;
   if(vipSec){
     // تحقق هل المستخدم فعّل كود VIP (مفتوح المحتوى الحصري بالكامل)
     const isUnlocked=curUser?document.getElementById("vipUnlockedContent")?.style.display==="block":false;
     const canView=isAdmin()||isUnlocked;
-    const hasVip=actressVip.length>0||isAdmin();
+    const hasVip=actressVipAll.length>0||isAdmin();
     vipSec.style.display=hasVip?"block":"none";
     if(addVipBtn)addVipBtn.style.display=isAdmin()?"inline-flex":"none";
-    if(vipDetGrid){
-      if(!actressVip.length){
-        vipDetGrid.innerHTML=isAdmin()?'<div style="color:var(--dim);font-size:12px;padding:8px 0;">لا يوجد محتوى بعد — اضغط إضافة</div>':'';
-      } else if(!canView){
-        // مقفل - يظهر فقط تلميح بدون المحتوى الفعلي
-        vipDetGrid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:24px 16px;background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.15);border-radius:14px;">
-          <div style="color:var(--gold);margin-bottom:10px;display:flex;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">يوجد ${actressVip.length} محتوى حصري لهذه الممثلة</div>
-          <div style="font-size:11px;color:var(--dim);margin-bottom:14px;">فعّل كود VIP لمشاهدته</div>
-          <button onclick="goTo('vip')" style="padding:9px 20px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--gold),var(--gd));color:#0a0a0a;font-family:Cairo;font-size:12px;font-weight:700;cursor:pointer;">🔑 فتح المحتوى الحصري</button>
-        </div>`;
-      } else {
-        vipDetGrid.innerHTML='';
-        actressVip.forEach((c)=>{
-          vipDetGrid.appendChild(buildProfileVipCard(c));
-        });
-      }
-    }
+    const tabsEl=document.getElementById('vipDetTabs');
+    const hasVideo=actressVipAll.some(c=>c.type==='video');
+    const hasPhoto=actressVipAll.some(c=>c.type==='image'||c.type==='album');
+    if(tabsEl)tabsEl.style.display=(hasVideo&&hasPhoto)?'flex':'none';
+    if(!hasVideo||!hasPhoto)window._vipDetTab='all';
+    const curTab=window._vipDetTab||'all';
+    document.getElementById('vipDetTabAll')?.classList.toggle('on',curTab==='all');
+    document.getElementById('vipDetTabVideo')?.classList.toggle('on',curTab==='video');
+    document.getElementById('vipDetTabPhoto')?.classList.toggle('on',curTab==='photo');
+    renderVipDetGrid();
   }
   const ageWrap=document.getElementById("dAgeWrap"),ageEl=document.getElementById("dAge");
   const age=calcAge(a.birthDate);
@@ -5710,6 +6011,89 @@ async function loadFavsFromCloud(){
     try{_favsCache=JSON.parse(localStorage.getItem("favs_"+curUser.uid)||"[]");}catch{_favsCache=[];}
   }
 }
+async function loadBoardsFromCloud(){
+  if(!curUser){_boardsCache=[];return;}
+  try{
+    const snap=await getDoc(doc(db,"users",curUser.uid));
+    const cloudBoards=(snap.exists()&&Array.isArray(snap.data().boards))?snap.data().boards:null;
+    if(cloudBoards){
+      _boardsCache=cloudBoards;
+      localStorage.setItem("boards_"+curUser.uid,JSON.stringify(cloudBoards));
+    } else {
+      let local=[];
+      try{local=JSON.parse(localStorage.getItem("boards_"+curUser.uid)||"[]");}catch{}
+      _boardsCache=local;
+      if(local.length)await setDoc(doc(db,"users",curUser.uid),{boards:local},{merge:true}).catch(()=>{});
+    }
+  }catch{
+    try{_boardsCache=JSON.parse(localStorage.getItem("boards_"+curUser.uid)||"[]");}catch{_boardsCache=[];}
+  }
+}
+let _boardsCache=null;
+function getBoards(){
+  if(_boardsCache)return _boardsCache;
+  const k=curUser?"boards_"+curUser.uid:null;if(!k)return[];
+  try{return JSON.parse(localStorage.getItem(k)||"[]");}catch{return[];}
+}
+function saveBoards(a){
+  _boardsCache=a;
+  const k=curUser?"boards_"+curUser.uid:null;
+  if(k)localStorage.setItem(k,JSON.stringify(a));
+  if(curUser)setDoc(doc(db,"users",curUser.uid),{boards:a},{merge:true}).catch(()=>{});
+}
+window.openSaveToBoardMenu=function(c,btn){
+  if(!curUser)return ss("سجّل دخولك أولاً","error");
+  document.querySelectorAll('.pin-board-pop').forEach(m=>m.remove());
+  const boards=getBoards();
+  const pop=document.createElement('div');
+  pop.className='pin-board-pop';
+  const rows=boards.map(b=>{
+    const inBoard=(b.itemIds||[]).includes(c.id);
+    return `<button class="pbp-row" data-bid="${b.id}"><span class="pbp-check${inBoard?' on':''}">${inBoard?ICO.check:''}</span><span class="pbp-cover">${b.itemIds&&b.itemIds.length?`<img src="${(vipContent.find(x=>x.id===b.itemIds[0])||{}).url||''}"/>`:'📌'}</span><span class="pbp-name">${b.name}</span></button>`;
+  }).join('');
+  pop.innerHTML=`
+    <div class="pbp-title">احفظ في مجموعة</div>
+    <div class="pbp-list">${rows||'<div class="pbp-empty">لا توجد مجموعات بعد</div>'}</div>
+    <div class="pbp-new"><input type="text" id="pbpNewName" placeholder="اسم مجموعة جديدة..."/><button id="pbpCreateBtn">+ إنشاء</button></div>
+    <button class="pbp-alsofav${getFavs().includes(c.id)?' on':''}" id="pbpAlsoFav">${getFavs().includes(c.id)?ICO.check+' محفوظ بالمفضلة أيضاً':'حفظ بالمفضلة العامة أيضاً'}</button>`;
+  document.body.appendChild(pop);
+  const posBtn=btn.getBoundingClientRect();
+  pop.style.top=(window.scrollY+posBtn.bottom+8)+'px';
+  pop.style.left=Math.max(10,posBtn.left-140)+'px';
+  pop.querySelectorAll('.pbp-row').forEach(row=>{
+    row.addEventListener('click',()=>{
+      const bid=row.dataset.bid;
+      const b=boards.find(x=>x.id===bid);
+      if(!b)return;
+      b.itemIds=b.itemIds||[];
+      const idx=b.itemIds.indexOf(c.id);
+      if(idx>-1)b.itemIds.splice(idx,1);else b.itemIds.unshift(c.id);
+      saveBoards(boards);
+      row.querySelector('.pbp-check').classList.toggle('on');
+      row.querySelector('.pbp-check').innerHTML=row.querySelector('.pbp-check').classList.contains('on')?ICO.check:'';
+      ss(idx>-1?'أُزيل من المجموعة':'تمت الإضافة للمجموعة 📌');
+    });
+  });
+  pop.querySelector('#pbpCreateBtn').addEventListener('click',()=>{
+    const inp=pop.querySelector('#pbpNewName');
+    const name=inp.value.trim();
+    if(!name)return;
+    const newBoard={id:'b_'+Date.now(),name,itemIds:[c.id],createdAt:new Date().toISOString()};
+    boards.push(newBoard);
+    saveBoards(boards);
+    pop.remove();
+    openSaveToBoardMenu(c,btn);
+    ss('✅ أُنشئت المجموعة وأُضيف لها');
+  });
+  pop.querySelector('#pbpAlsoFav').addEventListener('click',(e)=>{
+    toggleFav(c.id,btn);
+    btn.innerHTML=btn.classList.contains('on')?ICO.check+' محفوظ':'حفظ';
+    e.currentTarget.classList.toggle('on');
+    e.currentTarget.innerHTML=e.currentTarget.classList.contains('on')?ICO.check+' محفوظ بالمفضلة أيضاً':'حفظ بالمفضلة العامة أيضاً';
+  });
+  const closeMenu=(ev)=>{if(!pop.contains(ev.target)&&ev.target!==btn){pop.remove();document.removeEventListener('click',closeMenu);}};
+  setTimeout(()=>document.addEventListener('click',closeMenu),0);
+};
 function getFavs(){
   if(_favsCache)return _favsCache;
   const k=curUser?"favs_"+curUser.uid:null;if(!k)return[];
