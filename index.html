@@ -110,6 +110,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--tx);min-hei
 .bnav-item span{font-size:10px;font-weight:600;font-family:Cairo;}
 .bnav-item.on{color:var(--gold);}
 .bnav-item.on svg{transform:translateY(-1px);}
+body.preview-active{padding-top:38px;}
 @media(max-width:860px){#pwaInstallBtn,#iosHint{bottom:calc(78px + env(safe-area-inset-bottom,0px)) !important;}}
 
 /* ══ شاشة افتتاحية ══ */
@@ -950,6 +951,11 @@ window.addEventListener('load',()=>{
 
 <div class="page-loader-bar" id="pageLoaderBar"></div>
 <!-- PWA INSTALL BTN -->
+<div id="previewModeBanner" style="display:none;position:fixed;top:0;right:0;left:0;z-index:9500;background:#7c3aed;color:#fff;padding:9px 14px;align-items:center;justify-content:center;gap:10px;font-family:Cairo;font-size:12px;font-weight:700;text-align:center;">
+  <span>🔍 وضع المعاينة نشط — تشوف الموقع كمستخدم عادي</span>
+  <button onclick="exitPreviewMode()" style="padding:5px 12px;border:none;border-radius:100px;background:#fff;color:#7c3aed;font-family:Cairo;font-size:11px;font-weight:800;cursor:pointer;">إنهاء</button>
+</div>
+
 <nav class="bottom-nav" id="bottomNav">
   <button class="dtab bnav-item on" data-page="home">
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1436,6 +1442,11 @@ Leo</div>
         </div>
         <div id="usernameMsg" style="font-size:11px;margin-top:6px;display:none;"></div>
       </div>
+      <div class="profile-section" id="adminPreviewSection" style="display:none;">
+        <div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:10px;">🔍 معاينة كمستخدم عادي</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:10px;">تشوف الموقع بالضبط زي ما يشوفه مستخدم عادي غير أدمن ولم يفتح كود VIP، بدون ما تسجل خروج فعلياً.</div>
+        <button onclick="enterPreviewMode()" class="btn btn-ghost bsm" style="width:100%;">تفعيل وضع المعاينة</button>
+      </div>
       <button class="logout-btn" id="profileLogout">🚪 تسجيل الخروج</button>
     </div>
   </div>
@@ -1737,6 +1748,11 @@ Leo</div>
       <button class="cat-mode-btn" id="catModeVideo" onclick="setCatMode('video')">🎬 فيديوهات</button>
     </div>
     <div class="cat-chips" id="catChipsRow"></div>
+    <div id="catActressFilterWrap" style="display:none;margin-bottom:14px;">
+      <select id="catActressFilter" onchange="onCatActressFilterChange()" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:12.5px;outline:none;">
+        <option value="">🎭 كل الممثلات</option>
+      </select>
+    </div>
     <div id="catVipBanner" style="display:none;align-items:center;gap:12px;background:rgba(241,183,109,.06);border:1px solid rgba(241,183,109,.18);border-radius:14px;padding:12px 14px;margin-bottom:16px;">
       <div style="font-size:22px;">🔒</div>
       <div style="flex:1;font-size:12px;color:var(--dim);">يوجد فيديوهات حصرية أكثر ضمن هذا التصنيف</div>
@@ -1924,6 +1940,9 @@ Leo</div>
         <label class="chki"><input type="checkbox" value="Studio" class="vCat"> Studio</label>
         <label class="chki"><input type="checkbox" value="Teen" class="vCat"> Teen</label>
         <label class="chki"><input type="checkbox" value="Harem" class="vCat"> Harem</label>
+        <label class="chki"><input type="checkbox" value="Big Ass" class="vCat"> Big Ass</label>
+        <label class="chki"><input type="checkbox" value="BBW" class="vCat"> BBW</label>
+        <label class="chki"><input type="checkbox" value="DP" class="vCat"> DP</label>
       </div>
       <div style="margin-top:12px;display:flex;gap:8px;">
         <div style="flex:2;">
@@ -1939,6 +1958,10 @@ Leo</div>
     </div>
     <div class="mfg"><label>وصف</label><textarea id="vipCDesc" rows="2" placeholder="وصف اختياري..."></textarea></div>
     <div class="mfg"><label>السعر (للعرض)</label><input type="text" id="vipCPrice" placeholder="مثال: 5$"/></div>
+    <div class="mfg"><label>⏰ تاريخ انتهاء الصلاحية (اختياري)</label>
+      <input type="datetime-local" id="vipCExpiresAt" style="width:100%;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--tx);font-family:Cairo;font-size:13px;outline:none;color-scheme:dark;"/>
+      <div style="font-size:10px;color:var(--dim);margin-top:6px;">بعد هذا الموعد، يختفي المحتوى تلقائياً عن المستخدمين (يبقى ظاهراً لك بلوحة الأدمن فقط).</div>
+    </div>
     <div class="mfg" id="vipScheduleBox" style="background:rgba(241,183,109,.04);border:1px solid rgba(241,183,109,.12);border-radius:11px;padding:12px;">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:0;">
         <input type="checkbox" id="vipCScheduled" onchange="toggleScheduleFields()" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"/>
@@ -2304,6 +2327,7 @@ Leo</div>
 .pin-album-badge{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.72);color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:100px;backdrop-filter:blur(4px);z-index:1;}
 .pin-vip-badge{position:absolute;top:10px;left:10px;background:rgba(241,183,109,.92);color:#0a0a0a;font-size:10.5px;padding:3px 8px;border-radius:100px;font-weight:800;z-index:1;transition:opacity .15s;}
 .pin-card:hover .pin-vip-badge{opacity:0;}
+.new-badge{position:absolute;top:10px;right:10px;background:#22c55e;color:#fff;font-size:10px;font-weight:900;padding:3px 9px;border-radius:100px;z-index:2;box-shadow:0 2px 8px rgba(34,197,94,.4);}
 .pin-caption{position:absolute;bottom:0;right:0;left:0;padding:10px 12px;opacity:0;transform:translateY(6px);transition:opacity .15s,transform .15s;z-index:2;}
 .pin-card:hover .pin-caption{opacity:1;transform:translateY(0);}
 .pin-name{font-size:12.5px;font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.6);}
@@ -2469,6 +2493,9 @@ Leo</div>
       <label class="chki"><input type="checkbox" value="Studio" class="aCat"> Studio</label>
       <label class="chki"><input type="checkbox" value="Teen" class="aCat"> Teen</label>
       <label class="chki"><input type="checkbox" value="Harem" class="aCat"> Harem</label>
+      <label class="chki"><input type="checkbox" value="Big Ass" class="aCat"> Big Ass</label>
+      <label class="chki"><input type="checkbox" value="BBW" class="aCat"> BBW</label>
+      <label class="chki"><input type="checkbox" value="DP" class="aCat"> DP</label>
     </div></div>
     <div class="mfg"><label>البلد</label><input type="text" id="mCSrch" placeholder="ابحث بلد..." style="margin-bottom:6px;"/><select id="mCountry" class="sinp" style="padding:10px;"></select></div>
     <div class="mfg"><label>الصورة *</label>
@@ -2757,7 +2784,8 @@ function nextBirthday(birthDate){
   if(next<now)next=new Date(now.getFullYear()+1,b.getMonth(),b.getDate());
   return next;
 }
-function isAdmin(){return !!(curUser&&_isAdminCache);}
+function isAdmin(){return !!(curUser&&_isAdminCache&&!window._previewMode);}
+function isRealAdmin(){return !!(curUser&&_isAdminCache);}
 function openM(id){document.getElementById(id).classList.add("open");}
 function closeM(id){document.getElementById(id).classList.remove("open");}
 window.openM=openM;
@@ -2811,7 +2839,7 @@ function renderVipDetGrid(){
   const vipDetGrid=document.getElementById("vipDetGrid");
   if(!vipDetGrid)return;
   const id=window._curDetActressId;
-  const actressVipAll=vipContent.filter(c=>getContentActressIds(c).includes(id));
+  const actressVipAll=visibleContent().filter(c=>getContentActressIds(c).includes(id));
   const tab=window._vipDetTab||'all';
   const actressVip=tab==='video'?actressVipAll.filter(c=>c.type==='video')
     :tab==='photo'?actressVipAll.filter(c=>c.type==='image'||c.type==='album')
@@ -2859,6 +2887,37 @@ window.filterActressPicker=function(){
     row.style.display=(!q||row.dataset.aname.includes(q))?'flex':'none';
   });
 };
+// ══ شارة "جديد" منذ آخر زيارة ══
+const _prevVisitTime=localStorage.getItem('lastVisitTs')||null;
+localStorage.setItem('lastVisitTs',new Date().toISOString());
+function isContentExpired(c){
+  return !!(c.expiresAt&&new Date(c.expiresAt).getTime()<Date.now());
+}
+function visibleContent(){
+  if(isAdmin())return vipContent;// الأدمن يشوف كل شي حتى المنتهي (لإدارته)
+  return vipContent.filter(c=>!isContentExpired(c));
+}
+function isNewSinceVisit(createdAt){
+  if(!_prevVisitTime||!createdAt)return false;
+  return new Date(createdAt).getTime()>new Date(_prevVisitTime).getTime();
+}
+window._previewMode=sessionStorage.getItem('previewMode')==='1';
+window.enterPreviewMode=function(){
+  if(!isRealAdmin())return;
+  sessionStorage.setItem('previewMode','1');
+  location.reload();
+};
+window.exitPreviewMode=function(){
+  sessionStorage.removeItem('previewMode');
+  location.reload();
+};
+function updatePreviewBanner(){
+  const banner=document.getElementById('previewModeBanner');
+  if(!banner)return;
+  const active=window._previewMode&&isRealAdmin();
+  banner.style.display=active?'flex':'none';
+  document.body.classList.toggle('preview-active',active);
+}
 function shuffleArr(arr){
   const a=arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -3208,6 +3267,8 @@ onAuthStateChanged(auth,async u=>{
     document.getElementById("profileJoined").textContent=u.metadata?.creationTime?new Date(u.metadata.creationTime).toLocaleDateString("ar-SA"):"—";
     loadProfileData();
     if(isAdmin())document.getElementById("adminEmail").textContent=u.email;
+    const apEl=document.getElementById('adminPreviewSection');if(apEl)apEl.style.display=isRealAdmin()?'block':'none';
+    updatePreviewBanner();
   }
   renderActresses();renderLinks();renderFolders();renderAdmin();
 });
@@ -3691,12 +3752,14 @@ function renderVipAdmin(){
     const accessBadge=isFree
       ?'<div style="position:absolute;top:8px;right:8px;background:rgba(34,197,94,.85);color:#0a0a0a;font-size:9px;font-weight:900;padding:3px 8px;border-radius:100px;">🌍 مجاني</div>'
       :'<div style="position:absolute;top:8px;right:8px;background:rgba(241,183,109,.85);color:#0a0a0a;font-size:9px;font-weight:900;padding:3px 8px;border-radius:100px;">🔒 VIP</div>';
+    const expiredBadge=isContentExpired(c)?'<div style="position:absolute;bottom:8px;right:8px;background:rgba(220,38,38,.9);color:#fff;font-size:9px;font-weight:900;padding:3px 8px;border-radius:100px;">⏰ منتهي الصلاحية</div>':'';
     const viewFn=isYtVid?`openVipYoutubeViewer('${c.id}')`:`openVipViewer('${c.id}')`;
     card.innerHTML=`<div class="vip-card-media" onclick="${viewFn}">
       <img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x190/030303/F1B76D?text=VIP'" loading="lazy"/>
       <div class="vip-card-grad"></div>
       <div class="vip-card-type">${typeLabel}</div>
       ${accessBadge}
+      ${expiredBadge}
       <button class="vip-card-edit" onclick="event.stopPropagation();editVipContent('${c.id}')">✏️</button>
       <button class="vip-card-feature${c.featured?' on':''}" onclick="event.stopPropagation();toggleFeatured('${c.id}')" title="محتوى الأسبوع">⭐</button>
       <button class="vip-card-del" onclick="event.stopPropagation();deleteVipContent('${c.id}')">🗑️</button>
@@ -3712,8 +3775,8 @@ function renderVipAdmin(){
 function renderVipMember(){
   renderYtHomeGrid();
   renderFeaturedBanner();
-  let vipItems=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access!=='free');
-  let freeItems=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access==='free');
+  let vipItems=visibleContent().filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access!=='free');
+  let freeItems=visibleContent().filter(c=>!(c.type==='video'&&c.videoMode==='youtube')&&c.access==='free');
   if(window._vipDiscoverActive){vipItems=shuffleArr(vipItems);freeItems=shuffleArr(freeItems);}
   renderGroupedGrid(vipItems,'vipContentGrid','لا يوجد محتوى حصري بعد');
   renderGroupedGrid(freeItems,'vipFreeGrid','');
@@ -3862,11 +3925,11 @@ window.filterYtSearch=function(){
 function renderYtHomeGrid(){
   const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
   const discover=window._ytDiscoverActive;
-  let freeYt=applyYtFilters(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access==='free'));
+  let freeYt=applyYtFilters(visibleContent().filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access==='free'));
   if(discover)freeYt=shuffleArr(freeYt);
   renderYtFeed(freeYt,'ytFreeSection','ytFreeGrid');
   if(unlocked){
-    let vipYt=applyYtFilters(vipContent.filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access!=='free'));
+    let vipYt=applyYtFilters(visibleContent().filter(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access!=='free'));
     if(discover)vipYt=shuffleArr(vipYt);
     renderYtFeed(vipYt,'ytHomeSection','ytHomeGrid');
   }else{
@@ -3876,7 +3939,7 @@ function renderYtHomeGrid(){
     if(grid)grid.innerHTML='';
   }
   // بانر فتح الكود يظهر فقط إن كان هناك فيديوهات VIP لم تُفتح بعد
-  const hasVipYt=vipContent.some(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access!=='free');
+  const hasVipYt=visibleContent().some(c=>c.type==='video'&&c.videoMode==='youtube'&&c.access!=='free');
   const lockBanner=document.getElementById('ytPageLockBanner');
   if(lockBanner)lockBanner.style.display=(!unlocked&&hasVipYt)?'flex':'none';
   // رسالة "لا يوجد فيديوهات" فقط إن لم يظهر أي شيء إطلاقاً (لا حر ولا حصري ولا بانر)
@@ -3960,7 +4023,7 @@ function renderYtFeed(ytVideos,sectionId,gridId){
 }
 
 // ══ صفحة التصنيفات (ممثلات + فيديوهات بنفس الصفحة) ══
-const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','Hentai','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen','Harem'];
+const CATEGORY_LIST=['MILF','Anal','Asian','Cosplay','BBC','Big Tits','Hardcore','Bikini','Solo Girls','Oral','Hentai','Blonde','Redhead','Brunette','Latina','Ebony','Arab','Tattooed','Piercings','Curvy','Petite','Tall','POV','Threesome','Lesbian','Squirt','Creampie','Fetish','Roleplay','Massage','Public','Outdoor','Mature','Amateur','Studio','Teen','Harem','Big Ass','BBW','DP'];
 let catMode='actress';
 let catSelected=new Set();
 
@@ -3986,8 +4049,20 @@ window.setCatMode=function(mode){
   const ag=document.getElementById('catActressGrid'),vg=document.getElementById('catVideoGrid');
   if(ag)ag.style.display=mode==='actress'?'grid':'none';
   if(vg)vg.style.display=mode==='video'?'grid':'none';
+  const afWrap=document.getElementById('catActressFilterWrap');
+  if(afWrap)afWrap.style.display=mode==='video'?'block':'none';
+  if(mode==='video')populateCatActressFilter();
   renderCatResults();
 };
+function populateCatActressFilter(){
+  const sel=document.getElementById('catActressFilter');
+  if(!sel)return;
+  const cur=sel.value;
+  const namesInUse=[...new Set(vipContent.filter(c=>c.type==='video').flatMap(c=>getContentActressNames(c)))].sort((a,b)=>a.localeCompare(b));
+  sel.innerHTML='<option value="">🎭 كل الممثلات</option>'+namesInUse.map(n=>`<option value="${n}">${n}</option>`).join('');
+  if(namesInUse.includes(cur))sel.value=cur;
+}
+window.onCatActressFilterChange=function(){renderCatResults();};
 
 function renderCatResults(){
   const cntEl=document.getElementById('catCount');
@@ -4007,7 +4082,10 @@ function renderCatResults(){
     if(!grid)return;
     grid.innerHTML='';
     const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
-    const allMatches=vipContent.filter(c=>c.type==='video'&&(catSelected.size===0||[...catSelected].some(cat=>(c.categories||[]).includes(cat))));
+    const actressFilterName=document.getElementById('catActressFilter')?.value||'';
+    const allMatches=visibleContent().filter(c=>c.type==='video'
+      &&(catSelected.size===0||[...catSelected].some(cat=>(c.categories||[]).includes(cat)))
+      &&(!actressFilterName||getContentActressNames(c).includes(actressFilterName)));
     const visible=allMatches.filter(c=>c.access==='free'||unlocked);
     const hiddenCount=allMatches.length-visible.length;
     if(banner)banner.style.display=hiddenCount>0?'flex':'none';
@@ -4147,7 +4225,7 @@ function renderPinGrid(){
   const grid=document.getElementById('pinGrid');
   if(!grid)return;
   const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
-  const items=vipContent.filter(c=>c.type==='image'||c.type==='album');
+  const items=visibleContent().filter(c=>c.type==='image'||c.type==='album');
   const visible=applyPinFilters(items.filter(c=>c.access==='free'||unlocked));
   const hiddenCount=applyPinFilters(items).length-visible.length;
   const banner=document.getElementById('pinLockBanner');
@@ -4176,7 +4254,7 @@ function buildProfileVipCard(c){
     <div class="pdc-access-badge ${isFree?'free':'vip'}">${isFree?'🌍 مجاني':ICO.lock+' VIP'}</div>
     ${isVid?`<div class="pdc-play-center">${ICO.play}</div>`:''}
     <div class="pdc-info">
-      <div class="pdc-name">${c.name}</div>
+      <div class="pdc-name">${isNewSinceVisit(c.createdAt)?'🆕 ':''}${c.name}</div>
       ${c.price?`<div class="pdc-price">${c.price}</div>`:''}
     </div>`;
   return card;
@@ -4185,6 +4263,10 @@ function buildProfileVipCard(c){
 window.openPinDetail=function(id){
   const c=vipContent.find(x=>x.id===id);
   if(!c)return;
+  if(isContentExpired(c)&&!isAdmin()){
+    ss('⏰ انتهت صلاحية هذا المحتوى','error');
+    return;
+  }
   const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
   if(c.access!=='free'&&!unlocked){
     ss('🔒 افتح كودك أولاً لمشاهدة هذا المحتوى','error');
@@ -4200,7 +4282,7 @@ window.openPinDetail=function(id){
   // المزيد من كذا: نفس الممثلات أولاً، ثم نفس التصنيفات، صور وألبومات فقط
   const cAids=getContentActressIds(c);
   const cActresses=getContentActresses(c);
-  const pool=vipContent.filter(x=>x.id!==c.id&&(x.type==='image'||x.type==='album')&&(x.access==='free'||unlocked));
+  const pool=visibleContent().filter(x=>x.id!==c.id&&(x.type==='image'||x.type==='album')&&(x.access==='free'||unlocked));
   const sameActress=cAids.length?pool.filter(x=>getContentActressIds(x).some(aid=>cAids.includes(aid))):[];
   const sameCategory=pool.filter(x=>!sameActress.includes(x)&&(x.categories||[]).some(cat=>(c.categories||[]).includes(cat)));
   const more=[...sameActress,...sameCategory].slice(0,18);
@@ -4265,6 +4347,7 @@ function buildPinCard(c){
       <div class="pin-hover-ov"></div>
       ${c.access!=='free'?`<div class="pin-vip-badge">${ICO.lock} VIP</div>`:''}
       ${isAlbum?`<div class="pin-album-badge">${ICO.images} ${count}</div>`:''}
+      ${isNewSinceVisit(c.createdAt)?`<div class="new-badge">🆕</div>`:''}
       <button class="pin-save-btn${isSaved?' on':''}">${isSaved?ICO.check+' محفوظ':'حفظ'}</button>
       <button class="pin-more-btn">${ICO.dots}</button>
       <div class="pin-caption">
@@ -4319,6 +4402,7 @@ function createVipCard(c,i){
     <div class="vip-card-grad"></div>
     ${wmHtml}
     <div class="vip-card-type">${typeLabel}</div>
+    ${isNewSinceVisit(c.createdAt)?`<div class="new-badge" style="right:auto;left:8px;top:8px;">🆕 جديد</div>`:''}
     <div class="vip-card-info"><div class="vip-card-name">${c.name}</div></div>
   </div>`;
   return card;
@@ -4336,6 +4420,7 @@ function populateVipContentSelect(){
 window.openVipContentModal=function(preActressId=''){
   window._vipEditId='';
   ['vipCName','vipCUrl','vipCDesc','vipCPrice'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const expEl0=document.getElementById('vipCExpiresAt');if(expEl0)expEl0.value='';
   document.getElementById('vipCType').value='image';
   document.getElementById('vipAlbumWrap').style.display='none';
   const vmw=document.getElementById('vipVideoModeWrap');if(vmw)vmw.style.display='none';
@@ -4364,6 +4449,8 @@ window.editVipContent=function(id){
   document.getElementById('vipCUrl').value=c.url||'';
   document.getElementById('vipCDesc').value=c.desc||'';
   document.getElementById('vipCPrice').value=c.price||'';
+  const expEl=document.getElementById('vipCExpiresAt');
+  if(expEl)expEl.value=c.expiresAt?new Date(c.expiresAt).toISOString().slice(0,16):'';
   document.getElementById('vipCType').value=c.type||'image';
   const albumEl=document.getElementById('vipCAlbum');if(albumEl)albumEl.value=(c.album||[]).join('\n');
   document.getElementById('vipAlbumWrap').style.display=c.type==='album'?'block':'none';
@@ -4396,6 +4483,8 @@ window.saveVipContent=async function(){
   const desc=document.getElementById('vipCDesc').value.trim();
   const price=document.getElementById('vipCPrice').value.trim();
   const actressIds=[...document.querySelectorAll('.vCActressChk:checked')].map(c=>c.value);
+  const expiresAtRaw=document.getElementById('vipCExpiresAt')?.value||'';
+  const expiresAt=expiresAtRaw?new Date(expiresAtRaw).toISOString():null;
   const videoMode=type==='video'?(document.getElementById('vipCVideoMode')?.value||'reels'):'';
   const thumb=type==='video'?(document.getElementById('vipCThumb')?.value.trim()||''):'';
   const categories=type==='video'?[...document.querySelectorAll('.vCat')].filter(c=>c.checked).map(c=>c.value):[];
@@ -4421,7 +4510,7 @@ window.saveVipContent=async function(){
   if(editId){
     try{
       await updateDoc(doc(db,'vipContent',editId),{
-        name,type,url,desc,price,album,videoMode,thumb,access,categories,series,episode,
+        name,type,url,desc,price,album,videoMode,thumb,access,categories,series,episode,expiresAt,
         actressIds,
         actressId:primaryActress?.id||'',
         actressName:primaryActress?.name||'',
@@ -4436,7 +4525,7 @@ window.saveVipContent=async function(){
   try{
     const data={
       name,type,url,desc,price,album,
-      videoMode,thumb,access,categories,series,episode,
+      videoMode,thumb,access,categories,series,episode,expiresAt,
       actressIds,
       actressId:primaryActress?.id||'',
       actressName:primaryActress?.name||'',
@@ -4499,7 +4588,7 @@ window.toggleFeatured=async function(id){
 window.openVipViewer=function(id,discover){
   const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
   const admin=isAdmin();
-  let pool=vipContent.filter(c=>!(c.type==='video'&&c.videoMode==='youtube'));
+  let pool=visibleContent().filter(c=>!(c.type==='video'&&c.videoMode==='youtube'));
   if(!admin)pool=pool.filter(c=>c.access==='free'||unlocked);
   const startIdx=pool.findIndex(x=>x.id===id);
   if(startIdx===-1){
@@ -4703,6 +4792,10 @@ window.openVipDiscover=function(){
 window.openVipYoutubeViewer=function(id){
   const c=vipContent.find(x=>x.id===id);
   if(!c)return;
+  if(isContentExpired(c)&&!isAdmin()){
+    ss&&ss('⏰ انتهت صلاحية هذا الفيديو','error');
+    return;
+  }
   const unlocked=document.getElementById('vipUnlockedContent')?.style.display==='block';
   if(c.access!=='free'&&!unlocked&&!isAdmin()){
     ss&&ss('🔒 افتح كودك أولاً لمشاهدة هذا الفيديو','error');
@@ -4715,10 +4808,10 @@ window.openVipYoutubeViewer=function(id){
   const wmHtml=!isAdmin()?buildWatermarkHTML():'';
   const canSeeVip=unlocked||isAdmin();
   // فيديوهات يوتيوب أخرى كمقترحات (باستثناء الفيديو الحالي)
-  let suggestions=vipContent.filter(x=>x.id!==id&&x.type==='video'&&x.videoMode==='youtube'&&!(c.series&&x.series===c.series)&&(x.access==='free'||canSeeVip));
+  let suggestions=visibleContent().filter(x=>x.id!==id&&x.type==='video'&&x.videoMode==='youtube'&&!(c.series&&x.series===c.series)&&(x.access==='free'||canSeeVip));
   if(window._ytDiscoverActive)suggestions=shuffleArr(suggestions);
   // حلقات نفس المسلسل مرتبة برقم الحلقة
-  const episodes=c.series?vipContent.filter(x=>x.type==='video'&&x.videoMode==='youtube'&&x.series===c.series&&(x.access==='free'||canSeeVip)).sort((a,b)=>(a.episode||0)-(b.episode||0)):[];
+  const episodes=c.series?visibleContent().filter(x=>x.type==='video'&&x.videoMode==='youtube'&&x.series===c.series&&(x.access==='free'||canSeeVip)).sort((a,b)=>(a.episode||0)-(b.episode||0)):[];
   const curEpIdx=episodes.findIndex(e=>e.id===id);
   const nextEp=(curEpIdx>=0&&curEpIdx<episodes.length-1)?episodes[curEpIdx+1]:null;
   const embedUrl=getEmbedUrl(c.url);
@@ -5683,6 +5776,7 @@ function renderActresses(){
       <div class="agrad"></div>
       <div class="acard-checkbox">✓</div>
       <div class="abadges">${(a.types||[]).map(t=>`<span class="abadge" style="border-color:${TYPE_COLORS[t]||"var(--gold)"};color:${TYPE_COLORS[t]||"var(--gold)"};background:${TYPE_COLORS[t]||"var(--gold)"}18;">${t}</span>`).join("")}</div>
+      ${isNewSinceVisit(a.createdAt)?`<div class="new-badge" style="top:8px;left:8px;right:auto;">🆕</div>`:""}
       ${isAdmin()?`<div class="abtns-admin"><button class="abtn-edit" data-id="${a.id}">✏️</button><button class="abtn-del" data-id="${a.id}">🗑️</button></div>`:""}
       <button class="afav-btn${isFav?" on":""}">${isFav?"⭐":"☆"}</button>
     </div>
@@ -5730,7 +5824,7 @@ function showDet(id){
   const vipSec=document.getElementById("vipDetSection");
   const vipDetGrid=document.getElementById("vipDetGrid");
   const addVipBtn=document.getElementById("addVipFromDetBtn");
-  const actressVipAll=vipContent.filter(c=>getContentActressIds(c).includes(id));
+  const actressVipAll=visibleContent().filter(c=>getContentActressIds(c).includes(id));
   window._curDetActressId=id;
   if(vipSec){
     // تحقق هل المستخدم فعّل كود VIP (مفتوح المحتوى الحصري بالكامل)
